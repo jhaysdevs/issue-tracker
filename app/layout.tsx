@@ -1,18 +1,15 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
 import '@radix-ui/themes/styles.css'
+import './theme-config.css'
+import './globals.css'
 import { Theme } from '@radix-ui/themes'
 import NavBar from './NavBar'
+import { Inter } from 'next/font/google'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+	subsets: ["latin"],
+	display: "swap",
+	variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -26,13 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={inter.variable}
       >
-        <Theme>
+        <Theme accentColor="lime" grayColor="mauve">
           <NavBar />
-          <main className='px-5'>
+          <main className="px-5">
             {children}
           </main>
         </Theme>
