@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { createIssueSchema } from '@/app/validationSchemas'
 import { z } from 'zod'
 import ErrorMessage from '@/app/components/ErrorMessage'
+import Spinner from '@/app/components/Spinner'
 
 type IssueForm = z.infer<typeof createIssueSchema>
 
@@ -23,6 +24,7 @@ const NewIssuePage = () => {
 		resolver: zodResolver(createIssueSchema)
 	})
 	const [error, setError] = useState('')
+	const [isSubmitting, setIsSubmitting] = useState(false)
 
   return (
 		<div className='max-w-xl'>
@@ -40,13 +42,16 @@ const NewIssuePage = () => {
 				className='space-y-3'
 				onSubmit={handleSubmit(async (data) => {
 					console.log('data', data)
+					setIsSubmitting(true)
 					axios.post('/api/issues', data)
 						.then(() => {
 							router.push('/issues')
+							setIsSubmitting(false)
 						})
 						.catch(err => {
 							console.log('error', err)
 							setError(err.response.data)
+							setIsSubmitting(false)
 						})
 			})}>
 				<TextField.Root placeholder='Title' {...register('title')}>
@@ -61,7 +66,7 @@ const NewIssuePage = () => {
 					)}
 				/>
 				{errors.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
-				<Button>Submit New Issue</Button>
+				<Button disabled={isSubmitting}>Submit New Issue {isSubmitting && <Spinner />}</Button>
 			</form>
 		</div>
   )
