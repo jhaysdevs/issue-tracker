@@ -15,7 +15,7 @@ const NavBar = () => {
 
   return (
     <nav className='flex items-center space-x-6 border-b mb-5 px-5 h-14'>
-			<Link href="/">
+			<Link href='/'>
 				<AiFillBug className='text-2xl' />
 			</Link>
 			<ul className='flex space-x-6'>
@@ -23,9 +23,9 @@ const NavBar = () => {
 					<li key={link.href}>
 						<Link 
 							className={classnames({
-								'text-zinc-100': link.href === currentPath,
+								'text-zinc-800': link.href === currentPath,
 								'text-zinc-400': link.href !== currentPath,
-								'hover:text-zinc-100 transition-colors': true
+								'hover:text-zinc-900 transition-colors': true
 							})}
 							href={link.href}>
 								{link.label}
