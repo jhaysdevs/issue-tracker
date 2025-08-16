@@ -1,0 +1,12 @@
+FROM phpmyadmin:latest
+
+# Increase PHP upload limits
+COPY phpmyadmin-php.ini /usr/local/etc/php/conf.d/99-upload-size.ini
+
+# Set up Apache configuration for phpMyAdmin alias
+COPY phpmyadmin-apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+RUN a2enconf phpmyadmin
+
+# Override default site to block / and only allow /phpmyadmin
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+RUN mkdir -p /var/www/empty && a2ensite 000-default && apache2ctl -k graceful

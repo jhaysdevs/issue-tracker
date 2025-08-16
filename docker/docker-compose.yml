@@ -1,0 +1,41 @@
+# TODO: find/replace all the references to issue-tracker with directory name (and see TODO below)
+services:
+  db:
+    image: mariadb:latest
+    command: '--default-authentication-plugin=mysql_native_password'
+    container_name: issue-tracker
+    platform: linux/arm64
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/mariadb.conf.d/zz-my.cnf
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: issue_tracker
+      MYSQL_USER: issues
+      MYSQL_PASSWORD: issues
+    ports:
+      - "33060:3306"
+
+  phpmyadmin:
+    build:
+      context: .
+      dockerfile: Dockerfile-phpmyadmin
+    container_name: issue-tracker-phpmyadmin
+    platform: linux/arm64
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      # TODO: change to the correct path
+      - ~/www/issue-tracker:/var/www/issue-tracker
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      - db
+
+volumes:
+  db_data:
