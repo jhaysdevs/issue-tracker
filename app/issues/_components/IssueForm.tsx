@@ -33,6 +33,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 			await axios.patch(`/api/issues/${issue?.id}`, data)
 				.then(() => {
 					router.push('/issues')
+					router.refresh()
 					setIsSubmitting(false)
 				})
 				.catch(err => {
@@ -43,6 +44,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 			await axios.post(`/api/issues/${issue?.id}`, data)
 			.then(() => {
 				router.push('/issues')
+				router.refresh()
 				setIsSubmitting(false)
 			})
 			.catch(err => {
