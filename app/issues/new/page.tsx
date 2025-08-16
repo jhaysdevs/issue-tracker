@@ -26,6 +26,19 @@ const NewIssuePage = () => {
 	const [error, setError] = useState('')
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
+	const onSubmit = async (data: IssueForm) => {
+		setIsSubmitting(true)
+		await axios.post('/api/issues', data)
+			.then(() => {
+				router.push('/issues')
+				setIsSubmitting(false)
+			})
+			.catch(err => {
+				setError(err.response.data)
+				setIsSubmitting(false)
+			})
+	}
+
   return (
 		<div className='max-w-xl'>
 			{error && 
@@ -40,20 +53,7 @@ const NewIssuePage = () => {
 			}
 			<form 
 				className='space-y-3'
-				onSubmit={handleSubmit(async (data) => {
-					console.log('data', data)
-					setIsSubmitting(true)
-					axios.post('/api/issues', data)
-						.then(() => {
-							router.push('/issues')
-							setIsSubmitting(false)
-						})
-						.catch(err => {
-							console.log('error', err)
-							setError(err.response.data)
-							setIsSubmitting(false)
-						})
-			})}>
+				onSubmit={handleSubmit(onSubmit)}>
 				<TextField.Root placeholder='Title' {...register('title')}>
 					<TextField.Slot />
 				</TextField.Root>
