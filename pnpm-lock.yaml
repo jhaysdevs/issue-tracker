@@ -44,6 +44,9 @@ importers:
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
+      react-loading-skeleton:
+        specifier: ^3.5.0
+        version: 3.5.0(react@19.1.0)
       react-simplemde-editor:
         specifier: ^5.2.0
         version: 5.2.0(easymde@2.20.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -2690,6 +2693,11 @@ packages:
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  react-loading-skeleton@3.5.0:
+    resolution: {integrity: sha512-gxxSyLbrEAdXTKgfbpBEFZCO/P153DnqSCQau2+o6lNy1jgMRr2MmRmOzMmyrwSaSYLRB8g7b0waYPmUjz7IhQ==}
+    peerDependencies:
+      react: '>=16.8.0'
 
   react-remove-scroll-bar@2.3.8:
     resolution: {integrity: sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==}
@@ -5788,6 +5796,10 @@ snapshots:
       react: 19.1.0
 
   react-is@16.13.1: {}
+
+  react-loading-skeleton@3.5.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   react-remove-scroll-bar@2.3.8(@types/react@19.1.10)(react@19.1.0):
     dependencies:
