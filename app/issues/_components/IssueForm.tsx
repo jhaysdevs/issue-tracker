@@ -41,16 +41,16 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 					setIsSubmitting(false)
 				})
 		} else {
-			await axios.post(`/api/issues/${issue?.id}`, data)
-			.then(() => {
-				router.push('/issues')
-				router.refresh()
-				setIsSubmitting(false)
-			})
-			.catch(err => {
-				setError(err.response.data)
-				setIsSubmitting(false)
-			})
+			await axios.post(`/api/issues`, data)
+				.then(() => {
+					router.push('/issues')
+					router.refresh()
+					setIsSubmitting(false)
+				})
+				.catch(err => {
+					setError(err.response.data)
+					setIsSubmitting(false)
+				})
 		}
 	}
 
