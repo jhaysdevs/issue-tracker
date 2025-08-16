@@ -9,15 +9,15 @@ import { InfoCircledIcon } from '@radix-ui/react-icons'
 import { Button, Callout, TextField } from '@radix-ui/themes'
 import axios from 'axios'
 import 'easymde/dist/easymde.min.css'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import dynamic from 'next/dynamic'
 import { z } from 'zod'
 
-type IssueFormData = z.infer<typeof issueSchema>
-
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false })
+
+type IssueFormData = z.infer<typeof issueSchema>
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
 	const router = useRouter()

@@ -1,18 +1,19 @@
 import NextLink from 'next/link'
 import { Link as RadixLink } from '@radix-ui/themes'
-
 interface Props {
-	href: string
-	className?: string
-	children: React.ReactNode
+  href: string
+  className?: string
+  children: React.ReactNode
 }
 
 const Link = ({ href, className, children }: Props) => {
-	return (
-		<NextLink href={href} className={className} passHref legacyBehavior>
-			<RadixLink>{children}</RadixLink>
-		</NextLink>
-	)
-}
+  return (
+    <RadixLink asChild>
+      <NextLink href={href} className={className}>
+        {children}
+      </NextLink>
+    </RadixLink>
+  );
+};
 
-export default Link
+export default Link;
