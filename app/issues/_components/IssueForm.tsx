@@ -3,7 +3,7 @@
 import ErrorMessage from '@/app/components/ErrorMessage'
 import Spinner from '@/app/components/Spinner'
 import { Issue } from '@/app/generated/prisma'
-import { createIssueSchema } from '@/app/validationSchemas'
+import { issueSchema } from '@/app/validationSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { InfoCircledIcon } from '@radix-ui/react-icons'
 import { Button, Callout, TextField } from '@radix-ui/themes'
@@ -15,25 +15,21 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-type IssueFormData = z.infer<typeof createIssueSchema>
-
-interface Props {
-	issue?: Issue
-}
+type IssueFormData = z.infer<typeof issueSchema>
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false })
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
 	const router = useRouter()
 	const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>({
-		resolver: zodResolver(createIssueSchema)
+		resolver: zodResolver(issueSchema)
 	})
 	const [error, setError] = useState('')
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
 	const onSubmit = async (data: IssueFormData) => {
 		setIsSubmitting(true)
-		await axios.post('/api/issues', data)
+		await axios.patch(`/api/issues/${issue?.id}`, data)
 			.then(() => {
 				router.push('/issues')
 				setIsSubmitting(false)
@@ -72,7 +68,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 					)}
 				/>
 				{errors.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
-				<Button disabled={isSubmitting}>Submit New Issue {isSubmitting && <Spinner />}</Button>
+				<Button disabled={isSubmitting}>Update Issue {isSubmitting && <Spinner />}</Button>
 			</form>
 		</div>
   )

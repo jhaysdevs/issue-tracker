@@ -12,8 +12,7 @@ const IssueDetailPage = async ({ params }: Props) => {
 		where: { id: parseInt(params.id) }
 	})
 
-	if (!issue)
-		notFound()
+	if (!issue) notFound()
 
 	return (
 		<Grid columns={{ initial: '1', md: '2' }} gap='5'>
