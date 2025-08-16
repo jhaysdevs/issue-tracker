@@ -21,15 +21,28 @@ const IssuesPage = async () => {
 				</Table.Header>
 				<Table.Body>
 					{issues.map(issue => (
-						<Table.Row key={issue.id}>
+						<Table.Row
+							key={issue.id}
+							className="cursor-pointer hover:bg-gray-100 border-b border-gray-200"
+						>
 							<Table.Cell>
-								<Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-								<div className='block md:hidden'>
-									<IssueStatusBadge status={issue.status} />
-								</div>
+								<Link href={`/issues/${issue.id}`} className="block w-full">
+									{issue.title}
+									<div className="block md:hidden">
+										<IssueStatusBadge status={issue.status} />
+									</div>
+								</Link>
 							</Table.Cell>
-							<Table.Cell className='hidden md:table-cell'><IssueStatusBadge status={issue.status} /></Table.Cell>
-							<Table.Cell className='hidden md:table-cell'>{issue.createdAt.toLocaleDateString()}</Table.Cell>
+							<Table.Cell className="hidden md:table-cell">
+								<Link href={`/issues/${issue.id}`} className="block w-full">
+									<IssueStatusBadge status={issue.status} />
+								</Link>
+							</Table.Cell>
+							<Table.Cell className="hidden md:table-cell">
+								<Link href={`/issues/${issue.id}`} className="block w-full">
+									{issue.createdAt.toLocaleDateString()}
+								</Link>
+							</Table.Cell>
 						</Table.Row>
 					))}
 				</Table.Body>

@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { Button, Callout, Text, TextField } from '@radix-ui/themes'
+import { Button, Callout, TextField } from '@radix-ui/themes'
 import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
 import 'easymde/dist/easymde.min.css'
