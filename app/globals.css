@@ -20,6 +20,12 @@
   }
 }
 
+@layer utilities {
+  .nav-link {
+    @apply text-zinc-600 hover:text-zinc-800 transition-colors;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

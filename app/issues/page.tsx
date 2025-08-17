@@ -39,7 +39,7 @@ const IssuesPage = async () => {
 							</Table.Cell>
 							<Table.Cell className="hidden md:table-cell">
 								<Link href={`/issues/${issue.id}`} className="block w-full hover:underline">
-									{issue.createdAt.toLocaleDateString()}
+									{issue.createdAt.toDateString()}
 								</Link>
 							</Table.Cell>
 						</Table.Row>
