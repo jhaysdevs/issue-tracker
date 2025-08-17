@@ -13,7 +13,7 @@ const Link = ({ href, className, children }: Props) => {
         {children}
       </NextLink>
     </RadixLink>
-  );
-};
+  )
+}
 
-export default Link;
+export default Link

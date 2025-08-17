@@ -3,16 +3,12 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/prisma/client'
 import { NextAuthOptions } from 'next-auth'
 
-// Ensure Prisma client is properly initialized
-if (!prisma) {
+if (!prisma)
   throw new Error('Prisma client is not initialized')
-}
 
-// Create adapter with explicit configuration
 const adapter = PrismaAdapter(prisma)
 
 const authOptions: NextAuthOptions = {
-  // Temporarily comment out adapter to test OAuth flow
   adapter,
   providers: [
     GoogleProvider({
@@ -44,6 +40,6 @@ const authOptions: NextAuthOptions = {
       return token;
     },
   },
-};
+}
 
 export default authOptions
