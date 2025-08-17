@@ -29,6 +29,10 @@ enum Status {
   OPEN
   IN_PROGRESS
   CLOSED
+  ON_HOLD
+  CANCELLED
+  COMPLETED
+  ARCHIVED
 }
 
 model User {
