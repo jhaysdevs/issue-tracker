@@ -13,7 +13,7 @@ const adapter = PrismaAdapter(prisma)
 
 const authOptions: NextAuthOptions = {
   // Temporarily comment out adapter to test OAuth flow
-  // adapter,
+  adapter,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,

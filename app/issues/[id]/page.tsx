@@ -1,16 +1,18 @@
 import { prisma } from '@/prisma/client'
 import { Box, Flex, Grid } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
-import EditIssueButton from './EditIssueButton'
 import IssueDetails from './IssueDetails'
-import DeleteIssueButton from './DeleteIssueButton'
+import BackButton from '../_components/BackButton'
+import EditIssueButton from '../_components/EditIssueButton'
+import DeleteIssueButton from '../_components/DeleteIssueButton'
 interface Props {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
+	const { id } = await params
 	const issue = await prisma.issue.findUnique({
-		where: { id: parseInt(params.id) }
+		where: { id: parseInt(id) }
 	})
 
 	if (!issue) notFound()
@@ -20,7 +22,8 @@ const IssueDetailPage = async ({ params }: Props) => {
 			<Box>
 				<IssueDetails issue={issue} />
 			</Box>
-			<Flex gap='4'>
+			<Flex gap='4' wrap='wrap'>
+				<BackButton />
 				<EditIssueButton issueId={issue.id} />
 				<DeleteIssueButton issueId={issue.id} />
 			</Flex>

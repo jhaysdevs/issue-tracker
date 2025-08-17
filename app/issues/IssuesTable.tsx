@@ -28,7 +28,7 @@ const IssuesTable = ({ issues }: IssuesTableProps) => {
 					{issues.map(issue => (
 						<Table.Row key={issue.id} className='hover:bg-gray-100 cursor-pointer' onClick={() => router.push(`/issues/${issue.id}`)}>
 							<Table.Cell>
-								<Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+								<Link href={`/issues/${issue.id}`} className='block w-full hover:underline'>{issue.title}</Link>
 								<div className='block md:hidden'>
 									<IssueStatusBadge status={issue.status} />
 								</div>

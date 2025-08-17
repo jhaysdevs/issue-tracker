@@ -8,8 +8,8 @@ interface Props {
 
 const Link = ({ href, className, children }: Props) => {
   return (
-    <RadixLink asChild>
-      <NextLink href={href} className={className}>
+    <RadixLink asChild className={className}>
+      <NextLink href={href}>
         {children}
       </NextLink>
     </RadixLink>

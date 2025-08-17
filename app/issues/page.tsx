@@ -2,7 +2,7 @@ import { Table } from '@radix-ui/themes'
 import { prisma } from '@/prisma/client'
 import IssueStatusBadge from '@/components/IssueStatusBadge'
 import IssueActions from './IssueActions'
-import Link from '@/components/Link'
+import Link from 'next/link'
 
 const IssuesPage = async () => {
 	const issues = await prisma.issue.findMany()
@@ -25,7 +25,7 @@ const IssuesPage = async () => {
 							className="cursor-pointer hover:bg-gray-100 border-b border-gray-200"
 						>
 							<Table.Cell>
-								<Link href={`/issues/${issue.id}`} className="block w-full">
+								<Link href={`/issues/${issue.id}`} className="block w-full hover:underline">
 									{issue.title}
 									<div className="block md:hidden">
 										<IssueStatusBadge status={issue.status} />
@@ -33,12 +33,12 @@ const IssuesPage = async () => {
 								</Link>
 							</Table.Cell>
 							<Table.Cell className="hidden md:table-cell">
-								<Link href={`/issues/${issue.id}`} className="block w-full">
+								<Link href={`/issues/${issue.id}`} className="block w-full hover:underline">
 									<IssueStatusBadge status={issue.status} />
 								</Link>
 							</Table.Cell>
 							<Table.Cell className="hidden md:table-cell">
-								<Link href={`/issues/${issue.id}`} className="block w-full">
+								<Link href={`/issues/${issue.id}`} className="block w-full hover:underline">
 									{issue.createdAt.toLocaleDateString()}
 								</Link>
 							</Table.Cell>
