@@ -1,6 +1,6 @@
 'use client'
 
-import AssigneeSelect, { GetUsers } from '@/app/issues/_components/AssigneeSelect'
+import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -16,6 +16,6 @@ export default function UsersList() {
   }, [])
 
   return (
-		<AssigneeSelect users={users} />
+		<AssigneeSelect />
 	)
 }
