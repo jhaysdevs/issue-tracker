@@ -23,26 +23,22 @@ export const GetUsers = () => {
 }
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-	const { data: users, error, isLoading } = useQuery<User[]>({
-		queryKey: ['users'],
-		queryFn: () => axios.get('/api/users').then((res) => res.data.users),
-		staleTime: 1000 * 60, // 60s
-		retry: 3, // times to retry if the request fails
-		retryDelay: 1000, // delay between retries
-	})
+	const { data: users, error, isLoading } = useUsers()
 
 	if (isLoading) return <Skeleton height='5' width='250px' />
 	if (error || !users) return null
 
+	const assignIssue = (userId: string) => {
+		axios.patch(`/api/issues/${issue.id}`, {
+			assignedTo: userId === '0' || null ? null : userId,
+		}).catch((error) => {
+			toast.error('Error assigning issue')
+		})
+	}
+
 	return (
 		<>
-			<Select.Root defaultValue={issue.assignedTo || ''} onValueChange={(userId) => {
-				axios.patch(`/api/issues/${issue.id}`, {
-					assignedTo: userId === '0' || null ? null : userId,
-				}).catch((error) => {
-					toast.error('Error assigning issue')
-				})
-			}}>
+			<Select.Root defaultValue={issue.assignedTo || ''} onValueChange={assignIssue}>
 				<Select.Trigger placeholder='Assign...' />
 				<Select.Content>
 					<Select.Group>
@@ -66,5 +62,12 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 		</>
 	)
 }
+
+const useUsers = () => useQuery<User[]>({
+	queryKey: ['users'],
+	queryFn: () => axios.get('/api/users').then((res) => res.data.users),
+	staleTime: 1000 * 60 * 10080,
+	retry: 3,
+})
 
 export default AssigneeSelect
