@@ -1,19 +1,9 @@
-import { Container, Table } from '@radix-ui/themes'
-import { prisma } from '@/prisma/client'
-import IssueStatusBadge from '@/components/IssueStatusBadge'
 import IssueActions from '@/app/issues/_components/IssueActions'
+import { formatDate } from '@/app/lib/utilities'
+import IssueStatusBadge from '@/components/IssueStatusBadge'
+import { prisma } from '@/prisma/client'
+import { Container, Table } from '@radix-ui/themes'
 import Link from 'next/link'
-
-const formatDate = (date: Date) => {
-	return new Intl.DateTimeFormat('en-US', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
-		hour12: true
-	}).format(date)
-}
 
 const IssuesPage = async () => {
 	const issues = await prisma.issue.findMany()
