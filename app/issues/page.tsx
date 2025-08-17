@@ -1,4 +1,4 @@
-import { Table } from '@radix-ui/themes'
+import { Container, Table } from '@radix-ui/themes'
 import { prisma } from '@/prisma/client'
 import IssueStatusBadge from '@/components/IssueStatusBadge'
 import IssueActions from './IssueActions'
@@ -8,7 +8,7 @@ const IssuesPage = async () => {
 	const issues = await prisma.issue.findMany()
 
 	return (
-		<div>
+		<Container>
 			<IssueActions />
 			<Table.Root variant='surface'>
 				<Table.Header>
@@ -19,7 +19,7 @@ const IssuesPage = async () => {
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
-					{issues.map(issue => (
+					{issues && issues.map(issue => (
 						<Table.Row
 							key={issue.id}
 							className="cursor-pointer hover:bg-gray-100 border-b border-gray-200"
@@ -46,7 +46,7 @@ const IssuesPage = async () => {
 					))}
 				</Table.Body>
 			</Table.Root>
-		</div>
+		</Container>
 	)
 }
 
