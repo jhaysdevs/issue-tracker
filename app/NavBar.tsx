@@ -1,16 +1,17 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React from 'react'
-import { AiFillBug } from 'react-icons/ai'
+import { PersonIcon } from '@radix-ui/react-icons'
+import { Avatar, Box, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes'
 import classnames from 'classnames'
 import { useSession } from 'next-auth/react'
-import { Box, Container, Flex } from '@radix-ui/themes'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { AiFillBug } from 'react-icons/ai'
 
 const NavBar = () => {
 	const currentPath = usePathname()
-	const { status, data: session } = useSession()
+	const { status: isLoggedIn, data: session } = useSession()
+	const userAvatar = session?.user?.image || 'https://github.com/shadcn.png'
 
 	const links = [
 		{ label: 'Dashboard', href: '/' },
@@ -42,11 +43,35 @@ const NavBar = () => {
 						</ul>
 					</Flex>
 					<Box>
-						{status === 'authenticated' && (
-							<Link href='/api/auth/signout'>Logout</Link>
+						{isLoggedIn === 'authenticated' && (
+							<DropdownMenu.Root>
+								<DropdownMenu.Trigger>
+									{session?.user?.image ? (
+										<Avatar
+											src={userAvatar}
+											fallback='?'
+											size='2'
+											radius='full'
+											referrerPolicy='no-referrer'
+										/>
+									) : (
+										<PersonIcon />
+									)}
+								</DropdownMenu.Trigger>
+								<DropdownMenu.Content>
+								{session?.user?.email && (
+									<DropdownMenu.Label>
+										<Text>{session?.user?.email}</Text>
+									</DropdownMenu.Label>
+								)}
+									<DropdownMenu.Item>
+										<Link className='w-full' href='/api/auth/signout'>Logout</Link>
+									</DropdownMenu.Item>
+								</DropdownMenu.Content>
+							</DropdownMenu.Root>
 						)}
-						{status === 'unauthenticated' && (
-							<Link href='/api/auth/signin'>Login</Link>
+						{isLoggedIn === 'unauthenticated' && (
+							<Link className='w-full' href='/api/auth/signin'>Login</Link>
 						)}
 					</Box>
 				</Flex>
