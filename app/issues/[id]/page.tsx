@@ -7,6 +7,7 @@ import BackButton from '@/app/issues/_components/BackButton'
 import DeleteIssueButton from '@/app/issues/_components/DeleteIssueButton'
 import EditIssueButton from '@/app/issues/_components/EditIssueButton'
 import IssueDetails from './IssueDetails'
+import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
 interface Props {
 	params: Promise<{ id: string }>
 }
@@ -30,6 +31,7 @@ const IssueDetailPage = async ({ params }: Props) => {
 				{session && (
 				<Flex gap='4' wrap='wrap'>
 					<BackButton />
+					<AssigneeSelect issue={issue} />
 					<EditIssueButton issueId={issue.id} />
 					<DeleteIssueButton issueId={issue.id} />
 				</Flex>

@@ -1,10 +1,11 @@
 'use client'
 
 import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
-import { useEffect, useState } from 'react'
+import { Issue } from '@prisma/client'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
 
-export default function UsersList() {
+export default function UsersList({ issue }: { issue: Issue }) {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
@@ -16,6 +17,6 @@ export default function UsersList() {
   }, [])
 
   return (
-		<AssigneeSelect />
+		<AssigneeSelect issue={issue} />
 	)
 }
