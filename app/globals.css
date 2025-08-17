@@ -22,7 +22,7 @@
 
 @layer utilities {
   .nav-link {
-    @apply text-zinc-600 hover:text-zinc-800 transition-colors;
+    /* @apply text-zinc-600 hover:text-zinc-800 transition-colors; */
   }
 }
 

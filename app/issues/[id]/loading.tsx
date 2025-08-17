@@ -2,11 +2,8 @@
 
 import { Box, Card, Flex } from '@radix-ui/themes'
 import { Skeleton } from '@/app/components'
-interface Props {
-  params: { id: string }
-}
 
-const LoadingIssueDetailPage = ({ params }: Props) => {
+const LoadingIssueDetailPage = () => {
   return (
     <Box className='max-w-xl'>
       <Skeleton height={40} width="50%" />

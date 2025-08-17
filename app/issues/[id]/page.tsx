@@ -3,9 +3,9 @@ import { prisma } from '@/prisma/client'
 import { Box, Container, Flex, Grid } from '@radix-ui/themes'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
-import BackButton from '../_components/BackButton'
-import DeleteIssueButton from '../_components/DeleteIssueButton'
-import EditIssueButton from '../_components/EditIssueButton'
+import BackButton from '@/app/issues/_components/BackButton'
+import DeleteIssueButton from '@/app/issues/_components/DeleteIssueButton'
+import EditIssueButton from '@/app/issues/_components/EditIssueButton'
 import IssueDetails from './IssueDetails'
 interface Props {
 	params: Promise<{ id: string }>

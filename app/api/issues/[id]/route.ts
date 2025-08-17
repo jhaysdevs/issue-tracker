@@ -2,7 +2,7 @@ import authOptions from '@/app/auth/authOptions'
 import { prisma } from '@/prisma/client'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
-import { issueSchema } from '../../../validationSchemas'
+import { issueSchema } from '@/app/validationSchemas'
 
 export async function PATCH(
   request: NextRequest,
@@ -21,9 +21,8 @@ export async function PATCH(
   }
 
   const issue = await prisma.issue.findUnique({ where: { id: parseInt(id) } })
-  if (!issue) {
+  if (!issue)
     return NextResponse.json({ error: 'Invalid issue' }, { status: 404 })
-  }
 
   const updatedIssue = await prisma.issue.update({
     where: { id: issue.id },
@@ -43,9 +42,8 @@ export async function DELETE(
 
   const { id } = await params
   const issue = await prisma.issue.findUnique({ where: { id: parseInt(id) } })
-  if (!issue) {
+  if (!issue)
     return NextResponse.json({ error: 'Invalid issue' }, { status: 404 })
-  }
 
   const deletedIssue = await prisma.issue.delete({ where: { id: issue.id } })
   return NextResponse.json(deletedIssue, { status: 200 })
