@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+
+import QueryClientProvider from '@/app/components/QueryClientProvider'
 import '@/app/globals.css'
-import '@radix-ui/themes/styles.css'
 import '@/app/theme-config.css'
 import { Theme } from '@radix-ui/themes'
+import '@radix-ui/themes/styles.css'
+
 import NavBar from './NavBar'
-import { Inter } from 'next/font/google'
 import AuthProvider from './auth/Provider'
-import QueryClientProvider from '@/app/components/QueryClientProvider'
 
 const inter = Inter({
   subsets: ['latin'],

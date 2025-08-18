@@ -1,9 +1,11 @@
 'use client'
 
-import { Select, Badge } from '@radix-ui/themes'
+import { useEffect, useState } from 'react'
+
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+
 import { StatusBadges } from '@/lib/status'
+import { Badge, Select } from '@radix-ui/themes'
 
 const IssueStatusFilter = () => {
   const router = useRouter()

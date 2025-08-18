@@ -1,11 +1,12 @@
 'use client'
 
-import { PersonIcon } from '@radix-ui/react-icons'
-import { Avatar, Box, Container, DropdownMenu, Flex, Skeleton, Text } from '@radix-ui/themes'
-import classnames from 'classnames'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+
+import { PersonIcon } from '@radix-ui/react-icons'
+import { Avatar, Box, Container, DropdownMenu, Flex, Skeleton, Text } from '@radix-ui/themes'
+import classnames from 'classnames'
 import { AiFillBug } from 'react-icons/ai'
 
 const NavBar = () => {

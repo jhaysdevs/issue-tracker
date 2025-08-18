@@ -1,8 +1,9 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { Button } from '@radix-ui/themes'
-import { useRouter } from 'next/navigation'
 
 const BackButton = ({ ...props }: React.ComponentProps<typeof Button>) => {
   const router = useRouter()

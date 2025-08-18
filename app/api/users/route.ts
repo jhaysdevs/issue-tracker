@@ -1,5 +1,6 @@
-import { prisma } from '@/prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
+
+import { prisma } from '@/prisma/client'
 
 // TODO: refactor this to add sort order, pagination, search, etc.
 export async function GET(request: NextRequest) {

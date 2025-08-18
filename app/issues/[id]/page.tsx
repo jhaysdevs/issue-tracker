@@ -1,13 +1,16 @@
-import authOptions from '@/app/auth/authOptions'
-import { prisma } from '@/prisma/client'
-import { Container, Flex } from '@radix-ui/themes'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
+
+import authOptions from '@/app/auth/authOptions'
+import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
 import BackButton from '@/app/issues/_components/BackButton'
 import DeleteIssueButton from '@/app/issues/_components/DeleteIssueButton'
 import EditIssueButton from '@/app/issues/_components/EditIssueButton'
+import { prisma } from '@/prisma/client'
+import { Container, Flex } from '@radix-ui/themes'
+
 import IssueDetails from './IssueDetails'
-import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
+
 interface Props {
   params: Promise<{ id: string }>
 }

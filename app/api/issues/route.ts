@@ -1,8 +1,9 @@
-import authOptions from '@/app/auth/authOptions'
-import { prisma } from '@/prisma/client'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
+
+import authOptions from '@/app/auth/authOptions'
 import { issueSchema } from '@/app/validationSchemas'
+import { prisma } from '@/prisma/client'
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)

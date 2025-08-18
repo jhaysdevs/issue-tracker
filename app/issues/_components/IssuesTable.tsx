@@ -1,11 +1,13 @@
+import Link from 'next/link'
+
+import { TableCellLink } from '@/app/components/TableCellLink'
 import { Issue } from '@/app/generated/prisma'
 import IssueActions from '@/app/issues/_components/IssueActions'
-import IssueStatusBadge from '@/components/IssueStatusBadge'
-import { StatusBadges } from '@/lib/status'
 import { formatDate } from '@/app/lib/utils'
+import { StatusBadges } from '@/lib/status'
 import { Container, Table } from '@radix-ui/themes'
-import Link from 'next/link'
-import { TableCellLink } from '@/app/components/TableCellLink'
+
+import IssueStatusBadge from '@/components/IssueStatusBadge'
 
 const IssuesTable = async ({ issues }: { issues: Issue[] }) => {
   return (

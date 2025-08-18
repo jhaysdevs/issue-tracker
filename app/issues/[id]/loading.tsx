@@ -1,7 +1,7 @@
 'use client'
 
-import { Box, Card, Flex } from '@radix-ui/themes'
 import { Skeleton } from '@/app/components'
+import { Box, Card, Flex } from '@radix-ui/themes'
 
 const LoadingIssueDetailPage = () => {
   return (

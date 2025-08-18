@@ -1,5 +1,6 @@
-import Link from './Link'
 import { Flex } from '@radix-ui/themes'
+
+import Link from './Link'
 
 interface TableCellLinkProps extends React.ComponentProps<typeof Link> {
   href: string

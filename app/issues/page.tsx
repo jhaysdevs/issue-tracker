@@ -1,5 +1,5 @@
-import { prisma } from '@/prisma/client'
 import IssuesTable from '@/app/issues/_components/IssuesTable'
+import { prisma } from '@/prisma/client'
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany()

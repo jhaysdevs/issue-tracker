@@ -1,8 +1,9 @@
 'use client'
 
-import { Button, Flex } from '@radix-ui/themes'
 import Link from 'next/link'
+
 import IssueStatusFilter from '@/app/issues/_components/IssueStatusFilter'
+import { Button, Flex } from '@radix-ui/themes'
 
 const IssueActions = () => {
   return (

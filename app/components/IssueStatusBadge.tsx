@@ -1,6 +1,6 @@
+import { StatusBadges } from '@/lib/status'
 import { Status } from '@prisma/client'
 import { Badge } from '@radix-ui/themes'
-import { StatusBadges } from '@/lib/status'
 
 const IssueStatusBadge = ({
   status,

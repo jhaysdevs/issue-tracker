@@ -1,7 +1,8 @@
-import GoogleProvider from 'next-auth/providers/google'
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import { prisma } from '@/prisma/client'
 import { NextAuthOptions } from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
+
+import { prisma } from '@/prisma/client'
+import { PrismaAdapter } from '@auth/prisma-adapter'
 
 if (!prisma) throw new Error('Prisma client is not initialized')
 

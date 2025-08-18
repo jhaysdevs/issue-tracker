@@ -1,9 +1,14 @@
 'use client'
 
+import { useState } from 'react'
+
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
+
 import ErrorMessage from '@/app/components/ErrorMessage'
 import { Issue } from '@/app/generated/prisma'
-import BackButton from '@/app/issues/_components/BackButton'
 import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
+import BackButton from '@/app/issues/_components/BackButton'
 import IssueStatusUpdate from '@/app/issues/_components/IssueStatusUpdate'
 import { issueSchema } from '@/app/validationSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,11 +16,9 @@ import { InfoCircledIcon } from '@radix-ui/react-icons'
 import { Callout, Container, Flex, Separator, TextField } from '@radix-ui/themes'
 import axios from 'axios'
 import 'easymde/dist/easymde.min.css'
-import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
+
 import UpdateIssueButton from './UpdateIssueButton'
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false })

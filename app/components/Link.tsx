@@ -1,6 +1,8 @@
-import NextLink, { type LinkProps as NextLinkProps } from 'next/link'
-import { Link as RadixLink } from '@radix-ui/themes'
 import * as React from 'react'
+
+import NextLink, { type LinkProps as NextLinkProps } from 'next/link'
+
+import { Link as RadixLink } from '@radix-ui/themes'
 
 // Extend both, but keep them separate
 interface LinkProps extends NextLinkProps, React.ComponentProps<typeof RadixLink> {

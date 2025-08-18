@@ -1,6 +1,6 @@
-import { FaSave } from 'react-icons/fa'
-import { Button } from '@radix-ui/themes'
 import Spinner from '@/app/components/Spinner'
+import { Button } from '@radix-ui/themes'
+import { FaSave } from 'react-icons/fa'
 
 interface UpdateIssueButtonProps {
   onClick: () => void
