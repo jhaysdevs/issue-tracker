@@ -6,8 +6,8 @@ import Link from 'next/link'
 
 import { TableCellLink } from '@/app/components/TableCellLink'
 import { Issue } from '@/app/generated/prisma'
-import { useIssueContext, useStatus } from '@/app/providers'
 import { formatDate } from '@/app/lib/utils'
+import { useIssueContext, useStatus } from '@/app/providers'
 import { Container, Table } from '@radix-ui/themes'
 import axios from 'axios'
 
@@ -65,9 +65,7 @@ const IssuesTableClient = () => {
             issues.map((issue) => (
               <Table.Row key={issue.id} className='cursor-pointer hover:bg-gray-100'>
                 <Table.Cell>
-                  <TableCellLink
-                    href={`/issues/${issue.id}`}
-                    color={getStatusColor(issue.status)}>
+                  <TableCellLink href={`/issues/${issue.id}`} color={getStatusColor(issue.status)}>
                     {issue.title}
                   </TableCellLink>
                 </Table.Cell>
