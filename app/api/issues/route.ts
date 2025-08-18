@@ -5,6 +5,23 @@ import authOptions from '@/app/auth/authOptions'
 import { issueSchema } from '@/app/validationSchemas'
 import { prisma } from '@/prisma/client'
 
+export async function GET(request: NextRequest) {
+  const session = await getServerSession(authOptions)
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const { searchParams } = new URL(request.url)
+  const status = searchParams.get('status')
+
+  const where = status && status !== 'ALL' ? { status: status as any } : {}
+
+  const issues = await prisma.issue.findMany({
+    where,
+    orderBy: { createdAt: 'desc' },
+  })
+
+  return NextResponse.json(issues)
+}
+
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

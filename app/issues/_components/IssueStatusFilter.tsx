@@ -4,28 +4,54 @@ import { useEffect, useState } from 'react'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { useIssueContext } from '@/app/issues/_components/IssueContext'
 import { StatusBadges } from '@/lib/status'
 import { Badge, Select } from '@radix-ui/themes'
 
 const IssueStatusFilter = () => {
+  const [mounted, setMounted] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [value, setValue] = useState<string>('')
+
+  // Always call useIssueContext, even if we don't use it initially
+  let contextValue
+  try {
+    contextValue = useIssueContext()
+  } catch (error) {
+    // Context not available yet, use default values
+    contextValue = {
+      selectedStatus: 'ALL',
+      setSelectedStatus: () => {},
+      isLoading: false,
+      setIsLoading: () => {},
+    }
+  }
+
+  const { selectedStatus, setSelectedStatus, isLoading } = contextValue
 
   useEffect(() => {
-    const status = searchParams.get('status')
-    setValue(status || 'ALL')
-  }, [searchParams])
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (mounted) {
+      const status = searchParams.get('status')
+      setSelectedStatus(status || 'ALL')
+    }
+  }, [searchParams, setSelectedStatus, mounted])
 
   return (
     <Select.Root
-      value={value === 'ALL' ? '' : value}
+      value={selectedStatus === 'ALL' ? '' : selectedStatus}
       onValueChange={(status: string) => {
         const query = status && status !== 'ALL' ? `?status=${status}` : ''
         router.push(`/issues${query}`)
-        setValue(status)
-      }}>
-      <Select.Trigger placeholder='Filter by status...' />
+        setSelectedStatus(status)
+      }}
+      disabled={isLoading || !mounted}>
+      <Select.Trigger
+        placeholder={!mounted ? 'Loading...' : isLoading ? 'Loading...' : 'Filter by status...'}
+      />
       <Select.Content>
         {StatusBadges.map((status) => (
           <Select.Item key={status.key} value={status.key}>
