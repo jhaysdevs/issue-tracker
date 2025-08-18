@@ -48,12 +48,11 @@ pnpm install
 # Navigate to the docker directory
 cd docker
 
-# Start MySQL database and PHPMyAdmin
+# Start MySQL database
 docker-compose up -d
 
 # The database will be available at:
 # - MySQL: localhost:33060
-# - PHPMyAdmin: http://localhost:8080
 ```
 
 4. Configure your database connection:
@@ -84,17 +83,11 @@ pnpm dev
 The project includes a Docker Compose configuration that sets up:
 
 - **MySQL Database** (MariaDB):
-
   - Port: 33060
   - Database: `issue_tracker`
   - Username: `issues`
   - Password: `issues`
   - Root Password: `root`
-
-- **PHPMyAdmin**:
-  - URL: http://localhost:8080
-  - Username: `root`
-  - Password: `root`
 
 #### Docker Commands
 
@@ -144,20 +137,12 @@ docker-compose down -v
 - **Username**: issues
 - **Password**: issues
 
-#### PHPMyAdmin Access
-
-- **URL**: http://localhost:8080
-- **Server**: db
-- **Username**: root
-- **Password**: root
-
 **Note**: The database data is persisted in a Docker volume, so your data will survive container restarts. If you need to reset the database completely, use `docker-compose down -v` to remove the volume.
 
 #### Database Management
 
 The project provides several tools for database management:
 
-- **PHPMyAdmin**: Web-based MySQL administration tool at http://localhost:8080
 - **Prisma Studio**: Modern database GUI (run `pnpm db:studio` to open)
 - **Prisma Migrations**: Database schema management (run `pnpm db:migrate` to apply migrations)
 

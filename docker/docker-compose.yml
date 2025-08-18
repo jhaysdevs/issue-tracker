@@ -15,27 +15,7 @@ services:
       MYSQL_USER: issues
       MYSQL_PASSWORD: issues
     ports:
-      - "33060:3306"
-
-  phpmyadmin:
-    build:
-      context: .
-      dockerfile: Dockerfile-phpmyadmin
-    container_name: issue-tracker-phpmyadmin
-    platform: linux/arm64
-    restart: always
-    ports:
-      - "8080:80"
-    volumes:
-      # TODO: change to the correct path
-      - ~/www/issue-tracker:/var/www/issue-tracker
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_USER: root
-      PMA_PASSWORD: root
-    depends_on:
-      - db
+      - '33060:3306'
 
 volumes:
   db_data:
