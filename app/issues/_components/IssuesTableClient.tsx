@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
-import Link from 'next/link'
+import NextLink from 'next/link'
+import { useSearchParams } from 'next/navigation'
 
 import { TableCellLink } from '@/app/components/TableCellLink'
 import { Issue } from '@/app/generated/prisma'
@@ -18,14 +19,34 @@ const IssuesTableClient = () => {
   const { selectedStatus, isLoading, setIsLoading } = useIssueContext()
   const { getStatusColor } = useStatus()
 
+  const searchParams = useSearchParams()
+  const orderBy = searchParams.get('orderBy')
+  const orderDirection = searchParams.get('orderDirection')
+
+  // Convert URLSearchParams to plain object
+  const searchParamsObject = Object.fromEntries(searchParams.entries())
+
   useEffect(() => {
     const fetchIssues = async () => {
       setIsLoading(true)
       try {
-        const url =
-          selectedStatus && selectedStatus !== 'ALL'
-            ? `/api/issues?status=${selectedStatus}`
-            : '/api/issues'
+        const params = new URLSearchParams()
+
+        if (selectedStatus && selectedStatus !== 'ALL') {
+          params.append('status', selectedStatus)
+        }
+
+        if (orderBy) {
+          params.append('orderBy', orderBy)
+        }
+
+        if (orderDirection) {
+          params.append('orderDirection', orderDirection)
+        }
+
+        const queryString = params.toString()
+        const url = `/api/issues${queryString ? `?${queryString}` : ''}`
+
         const response = await axios.get(url)
         setIssues(response.data)
       } catch (error) {
@@ -36,7 +57,7 @@ const IssuesTableClient = () => {
     }
 
     fetchIssues()
-  }, [selectedStatus, setIsLoading])
+  }, [selectedStatus, orderBy, orderDirection, setIsLoading])
 
   if (isLoading) {
     return (
@@ -53,10 +74,41 @@ const IssuesTableClient = () => {
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>
+              <NextLink
+                href={{
+                  query: {
+                    ...searchParamsObject,
+                    orderBy: 'title',
+                    orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+                  },
+                }}>
+                Title
+              </NextLink>
+            </Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className='hidden md:table-cell'>
-              Created
+              <NextLink
+                href={{
+                  query: {
+                    ...searchParamsObject,
+                    orderBy: 'status',
+                    orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+                  },
+                }}>
+                Status
+              </NextLink>
+            </Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='hidden md:table-cell'>
+              <NextLink
+                href={{
+                  query: {
+                    ...searchParamsObject,
+                    orderBy: 'createdAt',
+                    orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+                  },
+                }}>
+                Created
+              </NextLink>
             </Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
@@ -70,14 +122,14 @@ const IssuesTableClient = () => {
                   </TableCellLink>
                 </Table.Cell>
                 <Table.Cell className='hidden md:table-cell'>
-                  <Link href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+                  <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
                     <IssueStatusBadge status={issue.status} />
-                  </Link>
+                  </NextLink>
                 </Table.Cell>
                 <Table.Cell className='hidden md:table-cell'>
-                  <Link href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+                  <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
                     {formatDate(issue.createdAt)}
-                  </Link>
+                  </NextLink>
                 </Table.Cell>
               </Table.Row>
             ))

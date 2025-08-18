@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import authOptions from '@/app/auth/authOptions'
 import { issueSchema } from '@/app/validationSchemas'
 import { prisma } from '@/prisma/client'
-import { Status } from '@prisma/client'
+import { Prisma, Status } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -12,12 +12,21 @@ export async function GET(request: NextRequest) {
 
   const { searchParams } = new URL(request.url)
   const status = searchParams.get('status')
+  const orderBy = searchParams.get('orderBy')
+  const orderDirection = searchParams.get('orderDirection')
 
   const where = status && status !== 'ALL' ? { status: status as Status } : {}
 
+  // Build orderBy object based on parameters
+  let orderByObject: Prisma.IssueOrderByWithRelationInput = { createdAt: 'desc' } // default
+  if (orderBy) {
+    const direction: Prisma.SortOrder = orderDirection === 'asc' ? 'asc' : 'desc'
+    orderByObject = { [orderBy]: direction } as Prisma.IssueOrderByWithRelationInput
+  }
+
   const issues = await prisma.issue.findMany({
     where,
-    orderBy: { createdAt: 'desc' },
+    orderBy: orderByObject,
   })
 
   return NextResponse.json(issues)
