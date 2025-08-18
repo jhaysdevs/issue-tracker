@@ -19,5 +19,13 @@
     "^[./]"
   ],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "overrides": [
+    {
+      "files": ["*.htm", "*.html", "*.css", "*.less", "*.scss"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
 }

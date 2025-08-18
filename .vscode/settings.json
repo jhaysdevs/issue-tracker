@@ -12,5 +12,11 @@
 
   // Optional: Auto-format on paste or type
   "editor.formatOnPaste": true,
-  "editor.formatOnType": true
+  "editor.formatOnType": true,
+
+  // CSS validation settings for Tailwind CSS v4
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "css.customData": [".vscode/css_custom_data.json"]
 }

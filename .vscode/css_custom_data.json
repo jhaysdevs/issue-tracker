@@ -1,0 +1,101 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@import",
+      "description": "Import CSS rules from other stylesheets"
+    },
+    {
+      "name": "@plugin",
+      "description": "Tailwind CSS v4 plugin directive"
+    },
+    {
+      "name": "@theme",
+      "description": "Tailwind CSS v4 theme configuration directive"
+    },
+    {
+      "name": "@layer",
+      "description": "Tailwind CSS layer directive for organizing styles"
+    },
+    {
+      "name": "@apply",
+      "description": "Tailwind CSS apply directive for using utility classes"
+    },
+    {
+      "name": "@screen",
+      "description": "Tailwind CSS screen directive for responsive design"
+    },
+    {
+      "name": "@variants",
+      "description": "Tailwind CSS variants directive for generating variants"
+    },
+    {
+      "name": "@responsive",
+      "description": "Tailwind CSS responsive directive"
+    },
+    {
+      "name": "@hover",
+      "description": "Tailwind CSS hover directive"
+    },
+    {
+      "name": "@focus",
+      "description": "Tailwind CSS focus directive"
+    },
+    {
+      "name": "@active",
+      "description": "Tailwind CSS active directive"
+    },
+    {
+      "name": "@group-hover",
+      "description": "Tailwind CSS group-hover directive"
+    },
+    {
+      "name": "@group-focus",
+      "description": "Tailwind CSS group-focus directive"
+    },
+    {
+      "name": "@dark",
+      "description": "Tailwind CSS dark mode directive"
+    },
+    {
+      "name": "@light",
+      "description": "Tailwind CSS light mode directive"
+    },
+    {
+      "name": "@supports",
+      "description": "CSS supports directive for feature queries"
+    },
+    {
+      "name": "@media",
+      "description": "CSS media query directive"
+    },
+    {
+      "name": "@keyframes",
+      "description": "CSS keyframes directive for animations"
+    },
+    {
+      "name": "@font-face",
+      "description": "CSS font-face directive for custom fonts"
+    },
+    {
+      "name": "@page",
+      "description": "CSS page directive for print styles"
+    },
+    {
+      "name": "@charset",
+      "description": "CSS charset directive"
+    },
+    {
+      "name": "@namespace",
+      "description": "CSS namespace directive"
+    },
+    {
+      "name": "@document",
+      "description": "CSS document directive (deprecated)"
+    },
+    {
+      "name": "@viewport",
+      "description": "CSS viewport directive (deprecated)"
+    }
+  ]
+}
