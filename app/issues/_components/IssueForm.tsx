@@ -40,7 +40,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 
   const onSubmit = async (data: IssueFormData) => {
     setIsSubmitting(true)
-    console.log('data', data)
+    console.log('onSubmit data', data)
     if (issue) {
       await axios
         .patch(`/api/issues/${issue?.id}`, data)

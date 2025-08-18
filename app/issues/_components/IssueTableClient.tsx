@@ -14,7 +14,7 @@ import axios from 'axios'
 
 import IssueStatusBadge from './IssueStatusBadge'
 
-const IssuesTableClient = () => {
+const IssueTableClient = () => {
   const [issues, setIssues] = useState<Issue[]>([])
   const { selectedStatus, isLoading, setIsLoading } = useIssueContext()
   const { getStatusColor } = useStatus()
@@ -146,4 +146,4 @@ const IssuesTableClient = () => {
   )
 }
 
-export default IssuesTableClient
+export default IssueTableClient
