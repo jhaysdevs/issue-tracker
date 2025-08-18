@@ -1,33 +1,46 @@
 # Issue Tracker
 
-A modern web application for tracking and managing project issues. Built with Next.js 15, React 19, TypeScript, and Prisma with MySQL database.
+A Next.js application for issue management with authentication, real-time updates, and comprehensive status tracking. Built with TypeScript, Prisma ORM, and Radix UI components.
+
+## Version Information
+
+- **Node.js**: v24.5.0
+- **pnpm**: v10.14.0
+- **Next.js**: 15.4.6
+- **React**: 19.1.0
+- **TypeScript**: Latest (strict mode enabled)
+- **Prisma**: 6.14.0
+- **MySQL**: MariaDB (via Docker)
+- **Tailwind CSS**: 4.1.12
+- **Radix UI Themes**: 3.2.1
+- **NextAuth.js**: 4.24.11
+- **TanStack Query**: 5.85.3
+- **React Hook Form**: 7.62.0
 
 ## Features
 
-- **Issue Management**: Create, edit, delete, and track project issues
-- **Status Management**: Comprehensive status tracking with color-coded badges (Open, In Progress, Closed, On Hold, Cancelled, Completed, Archived)
-- **Assignee System**: Assign issues to team members with user management
-- **Rich Text Editing**: Markdown support for issue descriptions using SimpleMDE
-- **Modern UI**: Clean and responsive interface built with Radix UI Themes and Tailwind CSS
-- **Type Safety**: Full TypeScript support with Prisma-generated types
-- **Form Validation**: Robust form validation using Zod schemas
-- **Authentication**: Google OAuth integration with NextAuth.js
-- **Real-time Updates**: Toast notifications and optimistic updates
+- Issue CRUD operations with status tracking
+- User authentication via Google OAuth
+- Assignee system for issue ownership
+- Markdown editor for issue descriptions
+- Responsive UI with Radix UI components
+- Type-safe database operations with Prisma
+- Form validation with Zod schemas
+- Toast notifications for user feedback
 
 ## Tech Stack
 
 - **Frontend**: React 19.1.0 with TypeScript
-- **Framework**: Next.js 15.4.6 (App Router with Turbopack)
-- **UI Components**: Radix UI Themes 3.2.1
+- **Framework**: Next.js 15.4.6 (App Router)
+- **UI**: Radix UI Themes 3.2.1
 - **Styling**: Tailwind CSS 4.1.12
-- **Database**: Prisma ORM 6.14.0 with MySQL (MariaDB)
-- **Form Management**: React Hook Form 7.62.0 with Zod validation
-- **HTTP Client**: Axios for API requests
-- **State Management**: TanStack Query 5.85.3 for server state
-- **Authentication**: NextAuth.js 4.24.11 with Google OAuth
-- **Rich Text Editor**: SimpleMDE with EasyMDE for markdown editing
+- **Database**: Prisma 6.14.0 with MySQL
+- **Forms**: React Hook Form 7.62.0 with Zod validation
+- **HTTP**: Axios
+- **State**: TanStack Query 5.85.3
+- **Auth**: NextAuth.js 4.24.11
+- **Editor**: SimpleMDE for markdown
 - **Package Manager**: pnpm
-- **Development**: ESLint, Prettier, and TypeScript for code quality
 
 ## Getting Started
 
@@ -138,23 +151,30 @@ pnpm db:studio
 
 ```
 issue-tracker/
-├── app/                    # Next.js App Router pages
+├── app/                    # Next.js App Router
 │   ├── api/               # API routes
 │   │   ├── auth/          # NextAuth.js endpoints
 │   │   ├── issues/        # Issue management endpoints
 │   │   └── users/         # User management endpoints
 │   ├── auth/              # Authentication configuration
-│   │   ├── authOptions.ts # NextAuth.js configuration
-│   │   └── Provider.tsx   # Auth provider component
+│   │   └── authOptions.ts # NextAuth.js configuration
 │   ├── components/        # Reusable UI components
 │   │   ├── BackButton.tsx
 │   │   ├── ErrorMessage.tsx
 │   │   ├── Link.tsx
-│   │   ├── QueryClientProvider.tsx
 │   │   ├── Skeleton.tsx
 │   │   ├── Spinner.tsx
 │   │   ├── TableCellLink.tsx
 │   │   └── index.ts       # Component exports
+│   ├── providers/         # React context providers
+│   │   ├── AuthProvider.tsx
+│   │   ├── QueryClientProvider.tsx
+│   │   ├── ThemeProvider.tsx
+│   │   ├── ToastProvider.tsx
+│   │   ├── FontProvider.tsx
+│   │   ├── IssueProvider.tsx
+│   │   ├── StatusProvider.tsx
+│   │   └── index.ts       # Provider exports
 │   ├── issues/            # Issue management pages
 │   │   ├── _components/   # Issue-specific components
 │   │   │   ├── IssueStatusBadge.tsx
@@ -163,6 +183,7 @@ issue-tracker/
 │   │   │   ├── IssueForm.tsx
 │   │   │   ├── IssueFormSkeleton.tsx
 │   │   │   ├── IssuesTable.tsx
+│   │   │   ├── IssuesTableClient.tsx
 │   │   │   ├── IssueActions.tsx
 │   │   │   ├── AssigneeSelect.tsx
 │   │   │   ├── EditIssueButton.tsx
@@ -171,8 +192,7 @@ issue-tracker/
 │   │   ├── [id]/          # Dynamic issue detail pages
 │   │   ├── edit/          # Issue editing pages
 │   │   └── new/           # Issue creation pages
-│   ├── lib/               # Utility functions and configurations
-│   │   ├── status.ts      # Status management utilities
+│   ├── lib/               # Utility functions
 │   │   └── utils.ts       # General utilities
 │   ├── users/             # User management pages
 │   ├── generated/         # Prisma-generated types
@@ -187,36 +207,31 @@ issue-tracker/
 └── package.json           # Dependencies and scripts
 ```
 
-## Key Features Implemented
+## Architecture
 
-### Issue Management
+### State Management
 
-- **CRUD Operations**: Full Create, Read, Update, Delete functionality for issues
-- **Status Tracking**: 8 different statuses with color-coded badges
-- **Assignee System**: Assign issues to team members with user relationship
-- **Rich Descriptions**: Markdown editor for detailed issue descriptions
+- **React Context**: Centralized providers for global state
+- **TanStack Query**: Server state management and caching
+- **Local State**: Component-level state with React hooks
 
-### User Interface
+### Provider Structure
 
-- **Responsive Design**: Mobile-friendly interface using Radix UI components
-- **Status Badges**: Color-coded status indicators with centralized configuration
-- **Form Validation**: Comprehensive validation using Zod schemas
-- **Loading States**: Skeleton components and loading indicators
-- **Error Handling**: Toast notifications and error messages
+```
+FontProvider
+└── QueryClientProvider
+    └── AuthProvider
+        └── ThemeProvider
+            └── StatusProvider
+                └── ToastProvider
+```
 
-### Authentication & Authorization
+### Database Schema
 
-- **Google OAuth**: Secure authentication with Google provider
-- **Session Management**: JWT-based sessions with NextAuth.js
-- **User Management**: User accounts with profile information
-- **Protected Routes**: API endpoints with authentication checks
-
-### Database & API
-
-- **Prisma ORM**: Type-safe database operations with MySQL
-- **RESTful API**: Clean API endpoints for issue and user management
-- **Type Safety**: End-to-end TypeScript with Prisma-generated types
-- **Migrations**: Database schema versioning and management
+- **Users**: Authentication and profile data
+- **Issues**: Core issue data with status and assignee relationships
+- **Accounts**: NextAuth.js account linking
+- **Sessions**: User session management
 
 ## Development
 
@@ -244,19 +259,19 @@ pnpm format       # Format code with Prettier
 ### Development Workflow
 
 1. **Database Changes**: Update `prisma/schema.prisma` and run `pnpm db:migrate`
-2. **API Development**: Add new endpoints in `app/api/` directory with proper validation
+2. **API Development**: Add new endpoints in `app/api/` with Zod validation
 3. **Component Development**:
-   - Create reusable components in `app/components/`
-   - Create feature-specific components in `app/[feature]/_components/`
-4. **Page Development**: Add new pages in the appropriate `app/` subdirectories
-5. **Status Management**: Update `app/lib/status.ts` for centralized status configuration
+   - Reusable components in `app/components/`
+   - Feature-specific components in `app/[feature]/_components/`
+4. **Provider Development**: Add new providers in `app/providers/`
+5. **Page Development**: Add pages in appropriate `app/` subdirectories
 
 ### Code Quality
 
-- **ESLint**: Code linting with Next.js configuration
+- **ESLint**: Next.js configuration
 - **Prettier**: Code formatting with import sorting
-- **TypeScript**: Strict type checking enabled
-- **Import Sorting**: Automatic import organization with `@trivago/prettier-plugin-sort-imports`
+- **TypeScript**: Strict type checking
+- **Import Sorting**: `@trivago/prettier-plugin-sort-imports`
 
 ## Contributing
 
@@ -272,15 +287,14 @@ pnpm format       # Format code with Prettier
 
 ### Coding Standards
 
-- Follow TypeScript best practices with strict type checking
-- Use React Hook Form with Zod validation for form management
-- Implement proper error handling with toast notifications
-- Add appropriate TypeScript types using Prisma-generated types
-- Follow the existing component patterns and organization
-- Use Radix UI components for consistency
-- Organize feature-specific components in `_components` directories
-- Use centralized status configuration from `app/lib/status.ts`
-- Implement proper API validation using Zod schemas
+- TypeScript strict mode with proper typing
+- React Hook Form with Zod validation
+- Error handling with toast notifications
+- Prisma-generated types for database operations
+- Radix UI components for consistency
+- Feature-specific components in `_components` directories
+- Centralized providers in `app/providers/`
+- API validation with Zod schemas
 
 ## License
 
