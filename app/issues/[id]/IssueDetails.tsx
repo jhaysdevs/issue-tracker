@@ -1,4 +1,4 @@
-import { IssueStatusBadge } from '@/app/components'
+import IssueStatusBadge from '@/app/issues/_components/IssueStatusBadge'
 import { formatDate } from '@/app/lib/utils'
 import { Issue } from '@prisma/client'
 import { Card, Flex, Heading, Text } from '@radix-ui/themes'

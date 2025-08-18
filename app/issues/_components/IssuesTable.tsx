@@ -7,7 +7,7 @@ import { formatDate } from '@/app/lib/utils'
 import { StatusBadges } from '@/lib/status'
 import { Container, Table } from '@radix-ui/themes'
 
-import IssueStatusBadge from '@/components/IssueStatusBadge'
+import IssueStatusBadge from './IssueStatusBadge'
 
 const IssuesTable = async ({ issues }: { issues: Issue[] }) => {
   return (
