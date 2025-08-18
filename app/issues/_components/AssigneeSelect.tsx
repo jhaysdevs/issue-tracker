@@ -22,10 +22,12 @@ export const GetUsers = () => {
   return users
 }
 
-const AssigneeSelect = ({ issue }: { issue: Issue }) => {
+const AssigneeSelect = ({ issue }: { issue: Issue | null }) => {
+  if (!issue) return null
+
   const { data: users, error, isLoading } = useUsers()
 
-  if (isLoading) return <Skeleton height='5' width='250px' />
+  if (isLoading) return <Skeleton height='2rem' width='10rem' />
   if (error || !users) return null
 
   const assignIssue = (userId: string) => {

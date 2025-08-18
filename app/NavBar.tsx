@@ -9,85 +9,93 @@ import { usePathname } from 'next/navigation'
 import { AiFillBug } from 'react-icons/ai'
 
 const NavBar = () => {
-
   return (
     <nav className='border-b mb-5 px-5'>
-			<Container>
-				<Flex justify='between' align='center' py='3'>
-					<Flex align='center'>
-						<Link href='/'>
-							<AiFillBug className='text-2xl' />
-						</Link>
-						<NavLinks />
-					</Flex>
-					<AuthStatus />
-				</Flex>
-			</Container>
-		</nav>
+      <Container>
+        <Flex justify='between' align='center' py='3'>
+          <Flex align='center'>
+            <Link href='/'>
+              <AiFillBug className='text-2xl' />
+            </Link>
+            <NavLinks />
+          </Flex>
+          <AuthStatus />
+        </Flex>
+      </Container>
+    </nav>
   )
 }
 
 const NavLinks = () => {
-	const currentPath = usePathname()
-	const links = [
-		{ label: 'Dashboard', href: '/' },
-		{ label: 'Issues', href: '/issues' },
-	]
+  const currentPath = usePathname()
+  const links = [
+    { label: 'Dashboard', href: '/' },
+    { label: 'Issues', href: '/issues' },
+  ]
 
-	return (
-		<ul className='flex space-x-6 px-5'>
-			{links.map(link => (
-				<li key={link.href}>
-					<Link 
-						className={classnames({
-							'nav-link': true,
-							'text-zinc-900': link.href === currentPath,
-						})}
-						href={link.href}>
-							{link.label}
-					</Link>
-				</li>
-			))}
-		</ul>		
-	)
+  return (
+    <ul className='flex space-x-6 px-5'>
+      {links.map((link) => (
+        <li key={link.href}>
+          <Link
+            className={classnames({
+              'nav-link': true,
+              'text-zinc-900': link.href === currentPath,
+            })}
+            href={link.href}>
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 const AuthStatus = () => {
-	const { status: isLoggedIn, data: session } = useSession()
-	const userAvatar = session?.user?.image || 'https://github.com/shadcn.png'
+  const { status: isLoggedIn, data: session } = useSession()
 
-	if (isLoggedIn === 'loading') return <Skeleton width='3rem' />
-	if (isLoggedIn === 'unauthenticated') return <Link className='nav-link' href='/api/auth/signin'><strong>Login</strong></Link>
+  if (isLoggedIn === 'loading') return <Skeleton width='3rem' />
+  if (isLoggedIn === 'unauthenticated')
+    return (
+      <Link className='nav-link' href='/api/auth/signin'>
+        <strong>Login</strong>
+      </Link>
+    )
 
-	return (
-		<Box>
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger>
-					{session!.user!.image ? (
-						<Avatar
-							src={userAvatar}
-							fallback='?'
-							size='2'
-							radius='full'
-							referrerPolicy='no-referrer'
-						/>
-					) : (
-						<PersonIcon />
-					)}
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content>
-				{session!.user!.email && (
-					<DropdownMenu.Label>
-						<Text>{session!.user!.email}</Text>
-					</DropdownMenu.Label>
-				)}
-					<DropdownMenu.Item>
-						<Link className='w-full nav-link' href='/api/auth/signout'><strong>Logout</strong></Link>
-					</DropdownMenu.Item>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
-		</Box>
-	)
+  return (
+    <Box>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <Flex align='center' gap='2'>
+            {session?.user?.name && <Text>Hi, {session?.user?.name.split(' ')[0]}</Text>}
+            {session?.user?.image ? (
+              <Avatar
+                src={session?.user?.image}
+                fallback='?'
+                size='2'
+                radius='full'
+                referrerPolicy='no-referrer'
+              />
+            ) : (
+              <PersonIcon />
+            )}
+          </Flex>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          {session!.user!.email && (
+            <DropdownMenu.Label>
+              <Text>{session!.user!.email}</Text>
+            </DropdownMenu.Label>
+          )}
+          <DropdownMenu.Item>
+            <Link className='w-full nav-link' href='/api/auth/signout'>
+              <strong>Logout</strong>
+            </Link>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </Box>
+  )
 }
 
 export default NavBar

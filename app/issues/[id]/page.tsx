@@ -1,6 +1,6 @@
 import authOptions from '@/app/auth/authOptions'
 import { prisma } from '@/prisma/client'
-import { Box, Container, Flex, Grid } from '@radix-ui/themes'
+import { Container, Flex } from '@radix-ui/themes'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import BackButton from '@/app/issues/_components/BackButton'
@@ -9,36 +9,42 @@ import EditIssueButton from '@/app/issues/_components/EditIssueButton'
 import IssueDetails from './IssueDetails'
 import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
 interface Props {
-	params: Promise<{ id: string }>
+  params: Promise<{ id: string }>
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
-	const { id } = await params
-	const issue = await prisma.issue.findUnique({
-		where: { id: parseInt(id) }
-	})
-	
-	if (!issue) notFound()
-		
-	const session = await getServerSession(authOptions);
+  const { id } = await params
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(id) },
+  })
 
-	return (
-		<Container>
-			<Grid columns={{ initial: '1', md: '2' }} gap='5'>
-				<Box>
-					<IssueDetails issue={issue} />
-				</Box>
-				{session && (
-				<Flex gap='4' wrap='wrap'>
-					<BackButton />
-					<AssigneeSelect issue={issue} />
-					<EditIssueButton issueId={issue.id} />
-					<DeleteIssueButton issueId={issue.id} />
-				</Flex>
-				)}
-			</Grid>
-		</Container>
-	)
+  if (!issue) notFound()
+
+  const session = await getServerSession(authOptions)
+
+  return (
+    <Container>
+      <Flex direction={{ initial: 'column', sm: 'row' }} className='w-full'>
+        <Flex direction={{ initial: 'column' }} className='flex-1'>
+          <IssueDetails issue={issue} />
+        </Flex>
+        {session && (
+          <Flex
+            direction={{ initial: 'row', sm: 'column' }}
+            justify='between'
+            flexGrow='1'
+            gap='2'
+            wrap='wrap'
+            className='md:max-w-[20%] md:ml-5'>
+            <EditIssueButton issueId={issue.id} />
+            <BackButton />
+            <AssigneeSelect issue={issue} />
+            <DeleteIssueButton issueId={issue.id} />
+          </Flex>
+        )}
+      </Flex>
+    </Container>
+  )
 }
 
 export default IssueDetailPage

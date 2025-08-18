@@ -5,11 +5,7 @@ import { QueryClient, QueryClientProvider as ReactQueryClientProvider } from '@t
 const queryClient = new QueryClient()
 
 const QueryClientProvider = ({ children }: { children: React.ReactNode }) => {
-	return (
-		<ReactQueryClientProvider client={queryClient}>
-			{children}
-		</ReactQueryClientProvider>
-	)
+  return <ReactQueryClientProvider client={queryClient}>{children}</ReactQueryClientProvider>
 }
 
 export default QueryClientProvider

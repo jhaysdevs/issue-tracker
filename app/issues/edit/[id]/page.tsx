@@ -3,20 +3,18 @@ import { notFound } from 'next/navigation'
 import IssueForm from '../../_components/IssueForm'
 
 interface Props {
-	params: Promise<{ id: string }>
+  params: Promise<{ id: string }>
 }
 
 const EditIssuePage = async ({ params }: Props) => {
-	const { id } = await params
-	const issue = await prisma.issue.findUnique({
-		where: { id: parseInt(id) }
-	})
+  const { id } = await params
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(id) },
+  })
 
-	if (!issue) notFound()
+  if (!issue) notFound()
 
-	return (
-		<IssueForm issue={issue} />
-	)
+  return <IssueForm issue={issue} />
 }
 
 export default EditIssuePage

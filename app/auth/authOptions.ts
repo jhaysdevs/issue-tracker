@@ -3,8 +3,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/prisma/client'
 import { NextAuthOptions } from 'next-auth'
 
-if (!prisma)
-  throw new Error('Prisma client is not initialized')
+if (!prisma) throw new Error('Prisma client is not initialized')
 
 const adapter = PrismaAdapter(prisma)
 
@@ -31,13 +30,13 @@ const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === 'development',
   callbacks: {
     async session({ session }) {
-      return session;
+      return session
     },
     async jwt({ token, user }) {
       if (user) {
-        token.sub = user.id;
+        token.sub = user.id
       }
-      return token;
+      return token
     },
   },
 }

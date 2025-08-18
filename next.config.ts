@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   // Example of how to set a header for all requests
@@ -10,6 +10,6 @@ const nextConfig: NextConfig = {
   //     }
   //   ]
   // }
-};
+}
 
-export default nextConfig;
+export default nextConfig

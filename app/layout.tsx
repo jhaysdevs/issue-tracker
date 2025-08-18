@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
+import '@/app/globals.css'
 import '@radix-ui/themes/styles.css'
 import '@/app/theme-config.css'
-import '@/app/globals.css'
 import { Theme } from '@radix-ui/themes'
 import NavBar from './NavBar'
 import { Inter } from 'next/font/google'
@@ -9,9 +9,9 @@ import AuthProvider from './auth/Provider'
 import QueryClientProvider from '@/app/components/QueryClientProvider'
 
 const inter = Inter({
-	subsets: ['latin'],
-	display: 'swap',
-	variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 })
 
 export const metadata: Metadata = {
@@ -26,16 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={inter.variable}>
-      <body
-        className={inter.variable}
-      >
+      <body className={inter.variable}>
         <QueryClientProvider>
           <AuthProvider>
             <Theme accentColor='lime' grayColor='mauve'>
               <NavBar />
-              <main className='px-5'>
-                {children}
-              </main>
+              <main className='px-5'>{children}</main>
             </Theme>
           </AuthProvider>
         </QueryClientProvider>

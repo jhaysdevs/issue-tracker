@@ -16,7 +16,5 @@ export default function UsersList({ issue }: { issue: Issue }) {
     fetchUsers()
   }, [])
 
-  return (
-		<AssigneeSelect issue={issue} />
-	)
+  return <AssigneeSelect issue={issue} />
 }
