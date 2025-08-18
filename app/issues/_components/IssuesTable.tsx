@@ -1,6 +1,7 @@
 import { Issue } from '@/app/generated/prisma'
 import IssueActions from '@/app/issues/_components/IssueActions'
-import IssueStatusBadge, { statusMap } from '@/components/IssueStatusBadge'
+import IssueStatusBadge from '@/components/IssueStatusBadge'
+import { StatusBadges } from '@/lib/status'
 import { formatDate } from '@/app/lib/utils'
 import { Container, Table } from '@radix-ui/themes'
 import Link from 'next/link'
@@ -25,7 +26,11 @@ const IssuesTable = async ({ issues }: { issues: Issue[] }) => {
             issues.map((issue) => (
               <Table.Row key={issue.id} className='cursor-pointer hover:bg-gray-100'>
                 <Table.Cell>
-                  <TableCellLink href={`/issues/${issue.id}`} color={statusMap[issue.status].color}>
+                  <TableCellLink
+                    href={`/issues/${issue.id}`}
+                    color={
+                      StatusBadges.find((s) => s.key === issue.status)?.color || ('gray' as any)
+                    }>
                     {issue.title}
                   </TableCellLink>
                 </Table.Cell>

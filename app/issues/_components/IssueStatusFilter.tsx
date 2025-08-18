@@ -1,19 +1,9 @@
 'use client'
 
-import { Select } from '@radix-ui/themes'
+import { Select, Badge } from '@radix-ui/themes'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
-
-const statuses = [
-  { label: 'All', value: 'ALL' },
-  { label: 'Open', value: 'OPEN' },
-  { label: 'Closed', value: 'CLOSED' },
-  { label: 'In Progress', value: 'IN_PROGRESS' },
-  { label: 'On Hold', value: 'ON_HOLD' },
-  { label: 'Cancelled', value: 'CANCELLED' },
-  { label: 'Completed', value: 'COMPLETED' },
-  { label: 'Archived', value: 'ARCHIVED' },
-]
+import { StatusBadges } from '@/lib/status'
 
 const IssueStatusFilter = () => {
   const router = useRouter()
@@ -32,13 +22,12 @@ const IssueStatusFilter = () => {
         const query = status && status !== 'ALL' ? `?status=${status}` : ''
         router.push(`/issues${query}`)
         setValue(status)
-      }}
-    >
-      <Select.Trigger placeholder="Filter by status..." />
+      }}>
+      <Select.Trigger placeholder='Filter by status...' />
       <Select.Content>
-        {statuses.map((status) => (
-          <Select.Item key={status.value} value={status.value}>
-            {status.label}
+        {StatusBadges.map((status) => (
+          <Select.Item key={status.key} value={status.key}>
+            <Badge color={status.color as any}>{status.label}</Badge>
           </Select.Item>
         ))}
       </Select.Content>
