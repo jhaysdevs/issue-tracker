@@ -1,4 +1,4 @@
-import IssueStatusBadge from '@/app/issues/_components/IssueStatusBadge'
+import IssueStatusBadgeServer from '@/app/issues/_components/IssueStatusBadgeServer'
 import { formatDate } from '@/app/lib/utils'
 import { Issue } from '@prisma/client'
 import { Card, Flex, Heading, Text } from '@radix-ui/themes'
@@ -11,7 +11,7 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
         <Heading>{issue.title}</Heading>
       </Flex>
       <Flex gap='4' my='2' justify='between' align='center'>
-        <IssueStatusBadge status={issue.status} size='3' />
+        <IssueStatusBadgeServer status={issue.status} size='3' />
         <Text color='gray' size='2'>
           {formatDate(issue.createdAt)}
         </Text>

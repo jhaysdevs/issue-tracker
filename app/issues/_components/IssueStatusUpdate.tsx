@@ -19,11 +19,13 @@ const IssueStatusUpdate = ({ value, onChange, defaultValue }: IssueStatusUpdateP
       onValueChange={(newValue) => onChange?.(newValue as Status)}>
       <Select.Trigger placeholder='Set status...' />
       <Select.Content>
-        {statusBadges.filter((status) => status.key !== 'ALL').map((status) => (
-          <Select.Item key={status.key} value={status.key}>
-            <Badge color={status.color as any}>{status.label}</Badge>
-          </Select.Item>
-        ))}
+        {statusBadges
+          .filter((status) => status.key !== 'ALL')
+          .map((status) => (
+            <Select.Item key={status.key} value={status.key}>
+              <Badge color={status.color}>{status.label}</Badge>
+            </Select.Item>
+          ))}
       </Select.Content>
     </Select.Root>
   )

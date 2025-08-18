@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 import { prisma } from '@/prisma/client'
 
 // TODO: refactor this to add sort order, pagination, search, etc.
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const users = await prisma.user.findMany()
     return NextResponse.json({ users }, { status: 200 })

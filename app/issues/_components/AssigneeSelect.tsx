@@ -24,10 +24,9 @@ export const GetUsers = () => {
 }
 
 const AssigneeSelect = ({ issue }: { issue: Issue | null }) => {
-  if (!issue) return null
-
   const { data: users, error, isLoading } = useUsers()
 
+  if (!issue) return null
   if (isLoading) return <Skeleton height='2rem' width='10rem' />
   if (error || !users) return null
 

@@ -37,3 +37,12 @@ export const StatusBadges: { key: string; label: string; color: BadgeColor }[] =
   { key: 'COMPLETED', label: 'Completed', color: 'green' },
   { key: 'ARCHIVED', label: 'Archived', color: 'gold' },
 ]
+
+export const getStatusByKey = (key: string) => {
+  return StatusBadges.find(status => status.key === key)
+}
+
+export const getStatusColor = (key: string): BadgeColor => {
+  const status = getStatusByKey(key)
+  return status?.color || 'gray'
+}

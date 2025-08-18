@@ -13,21 +13,8 @@ const IssueStatusFilter = () => {
   const searchParams = useSearchParams()
   const { statusBadges } = useStatus()
 
-  // Always call useIssueContext, even if we don't use it initially
-  let contextValue
-  try {
-    contextValue = useIssueContext()
-  } catch (error) {
-    // Context not available yet, use default values
-    contextValue = {
-      selectedStatus: 'ALL',
-      setSelectedStatus: () => {},
-      isLoading: false,
-      setIsLoading: () => {},
-    }
-  }
-
-  const { selectedStatus, setSelectedStatus, isLoading } = contextValue
+  // Always call useIssueContext - it will throw if not in provider, but that's expected
+  const { selectedStatus, setSelectedStatus, isLoading } = useIssueContext()
 
   useEffect(() => {
     setMounted(true)
@@ -55,7 +42,7 @@ const IssueStatusFilter = () => {
       <Select.Content>
         {statusBadges.map((status) => (
           <Select.Item key={status.key} value={status.key}>
-            <Badge color={status.color as any}>{status.label}</Badge>
+            <Badge color={status.color}>{status.label}</Badge>
           </Select.Item>
         ))}
       </Select.Content>
