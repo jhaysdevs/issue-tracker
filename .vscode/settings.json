@@ -1,0 +1,16 @@
+{
+  // Use Prettier as the default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  // Exclude build and dependency folders from VS Code
+  "files.exclude": {
+    "node_modules": true,
+    ".next": true,
+    "dist": true
+  },
+
+  // Optional: Auto-format on paste or type
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true
+}
