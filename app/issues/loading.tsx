@@ -1,5 +1,5 @@
 import IssueActions from '@/app/issues/_components/IssueActions'
-import { IssueProvider } from '@/app/issues/_components/IssueContext'
+import { IssueProvider } from '@/app/providers'
 import { Table } from '@radix-ui/themes'
 import Skeleton from 'react-loading-skeleton'
 

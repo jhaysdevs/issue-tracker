@@ -57,3 +57,5 @@ export const IssueContextDebug = () => {
     )
   }
 }
+
+export default IssueProvider

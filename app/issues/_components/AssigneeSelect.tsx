@@ -7,7 +7,7 @@ import { Issue, User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 export const GetUsers = () => {
   const [users, setUsers] = useState([])
@@ -43,24 +43,21 @@ const AssigneeSelect = ({ issue }: { issue: Issue | null }) => {
   }
 
   return (
-    <>
-      <Select.Root defaultValue={issue.assignedTo || ''} onValueChange={assignIssue}>
-        <Select.Trigger placeholder='Assign...' className='w-full min-w-0 text-center' />
-        <Select.Content>
-          <Select.Group>
-            <Select.Item value='0'>Unassigned</Select.Item>
-            <Select.Separator />
-            <Select.Label>Assign to:</Select.Label>
-            {users?.map((user: User) => (
-              <Select.Item key={user.id} value={user.id}>
-                {user.name}
-              </Select.Item>
-            ))}
-          </Select.Group>
-        </Select.Content>
-      </Select.Root>
-      <Toaster />
-    </>
+    <Select.Root defaultValue={issue.assignedTo || ''} onValueChange={assignIssue}>
+      <Select.Trigger placeholder='Assign...' className='w-full min-w-0 text-center' />
+      <Select.Content>
+        <Select.Group>
+          <Select.Item value='0'>Unassigned</Select.Item>
+          <Select.Separator />
+          <Select.Label>Assign to:</Select.Label>
+          {users?.map((user: User) => (
+            <Select.Item key={user.id} value={user.id}>
+              {user.name}
+            </Select.Item>
+          ))}
+        </Select.Group>
+      </Select.Content>
+    </Select.Root>
   )
 }
 

@@ -1,4 +1,4 @@
-import { StatusBadges } from '@/lib/status'
+import { useStatus } from '@/app/providers'
 import { Status } from '@prisma/client'
 import { Badge } from '@radix-ui/themes'
 
@@ -6,7 +6,8 @@ const IssueStatusBadge = ({
   status,
   ...props
 }: { status: Status } & React.ComponentProps<typeof Badge>) => {
-  const statusConfig = StatusBadges.find((s) => s.key === status)
+  const { getStatusByKey } = useStatus()
+  const statusConfig = getStatusByKey(status)
 
   return (
     <Badge color={statusConfig?.color} {...props}>

@@ -1,4 +1,4 @@
-import { IssueProvider, IssueContextDebug } from '@/app/issues/_components/IssueContext'
+import { IssueProvider, IssueContextDebug } from '@/app/providers'
 import IssuesTable from '@/app/issues/_components/IssuesTable'
 
 const IssuesPage = () => {

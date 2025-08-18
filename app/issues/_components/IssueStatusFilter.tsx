@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import { useIssueContext } from '@/app/issues/_components/IssueContext'
-import { StatusBadges } from '@/lib/status'
+import { useIssueContext, useStatus } from '@/app/providers'
 import { Badge, Select } from '@radix-ui/themes'
 
 const IssueStatusFilter = () => {
   const [mounted, setMounted] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { statusBadges } = useStatus()
 
   // Always call useIssueContext, even if we don't use it initially
   let contextValue
@@ -53,7 +53,7 @@ const IssueStatusFilter = () => {
         placeholder={!mounted ? 'Loading...' : isLoading ? 'Loading...' : 'Filter by status...'}
       />
       <Select.Content>
-        {StatusBadges.map((status) => (
+        {statusBadges.map((status) => (
           <Select.Item key={status.key} value={status.key}>
             <Badge color={status.color as any}>{status.label}</Badge>
           </Select.Item>

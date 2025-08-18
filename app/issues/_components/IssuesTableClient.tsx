@@ -6,9 +6,8 @@ import Link from 'next/link'
 
 import { TableCellLink } from '@/app/components/TableCellLink'
 import { Issue } from '@/app/generated/prisma'
-import { useIssueContext } from '@/app/issues/_components/IssueContext'
+import { useIssueContext, useStatus } from '@/app/providers'
 import { formatDate } from '@/app/lib/utils'
-import { StatusBadges } from '@/lib/status'
 import { Container, Table } from '@radix-ui/themes'
 import axios from 'axios'
 
@@ -17,6 +16,7 @@ import IssueStatusBadge from './IssueStatusBadge'
 const IssuesTableClient = () => {
   const [issues, setIssues] = useState<Issue[]>([])
   const { selectedStatus, isLoading, setIsLoading } = useIssueContext()
+  const { getStatusColor } = useStatus()
 
   useEffect(() => {
     const fetchIssues = async () => {
@@ -67,9 +67,7 @@ const IssuesTableClient = () => {
                 <Table.Cell>
                   <TableCellLink
                     href={`/issues/${issue.id}`}
-                    color={
-                      StatusBadges.find((s) => s.key === issue.status)?.color || ('gray' as any)
-                    }>
+                    color={getStatusColor(issue.status)}>
                     {issue.title}
                   </TableCellLink>
                 </Table.Cell>

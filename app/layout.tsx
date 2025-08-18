@@ -1,20 +1,18 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 
-import QueryClientProvider from '@/app/components/QueryClientProvider'
 import '@/app/globals.css'
 import '@/app/theme-config.css'
-import { Theme } from '@radix-ui/themes'
 import '@radix-ui/themes/styles.css'
 
 import NavBar from './NavBar'
-import AuthProvider from './auth/Provider'
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-})
+import { 
+  AuthProvider, 
+  QueryClientProvider, 
+  ThemeProvider, 
+  ToastProvider, 
+  FontProvider,
+  StatusProvider
+} from './providers'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -27,16 +25,22 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en' className={inter.variable}>
-      <body className={inter.variable} suppressHydrationWarning>
-        <QueryClientProvider>
-          <AuthProvider>
-            <Theme accentColor='lime' grayColor='mauve'>
-              <NavBar />
-              <main className='px-5'>{children}</main>
-            </Theme>
-          </AuthProvider>
-        </QueryClientProvider>
+    <html lang='en'>
+      <body suppressHydrationWarning>
+        <FontProvider>
+          <QueryClientProvider>
+            <AuthProvider>
+              <ThemeProvider>
+                <StatusProvider>
+                  <ToastProvider>
+                    <NavBar />
+                    <main className='px-5'>{children}</main>
+                  </ToastProvider>
+                </StatusProvider>
+              </ThemeProvider>
+            </AuthProvider>
+          </QueryClientProvider>
+        </FontProvider>
       </body>
     </html>
   )
