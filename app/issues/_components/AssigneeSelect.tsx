@@ -23,51 +23,50 @@ export const GetUsers = () => {
 }
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-	const { data: users, error, isLoading } = useUsers()
+  const { data: users, error, isLoading } = useUsers()
 
-	if (isLoading) return <Skeleton height='5' width='250px' />
-	if (error || !users) return null
+  if (isLoading) return <Skeleton height='5' width='250px' />
+  if (error || !users) return null
 
-	const assignIssue = (userId: string) => {
-		axios.patch(`/api/issues/${issue.id}`, {
-			assignedTo: userId === '0' || null ? null : userId,
-		}).catch((error) => {
-			toast.error('Error assigning issue')
-		})
-	}
+  const assignIssue = (userId: string) => {
+    axios
+      .patch(`/api/issues/${issue.id}`, {
+        assignedTo: userId === '0' || null ? null : userId,
+      })
+      .catch((error) => {
+        console.error(error)
+        toast.error('Error assigning issue')
+      })
+  }
 
-	return (
-		<>
-			<Select.Root defaultValue={issue.assignedTo || ''} onValueChange={assignIssue}>
-				<Select.Trigger placeholder='Assign...' />
-				<Select.Content>
-					<Select.Group>
-						<Select.Label>Suggestions</Select.Label>
-						<Select.Item value='0'>Unassigned</Select.Item>
-						{users?.map((user: User) => (
-							<Select.Item key={user.id} value={user.id}>
-								{user.name}
-							</Select.Item>
-						))}
-					</Select.Group>
-					<Select.Separator />
-					<Select.Group>
-						<Select.Label>Vegetables</Select.Label>
-						<Select.Item value='carrot'>Carrot</Select.Item>
-						<Select.Item value='potato'>Potato</Select.Item>
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
-			<Toaster />
-		</>
-	)
+  return (
+    <>
+      <Select.Root defaultValue={issue.assignedTo || ''} onValueChange={assignIssue}>
+        <Select.Trigger placeholder='Assign...' className='w-full min-w-0 text-center' />
+        <Select.Content>
+          <Select.Group>
+            <Select.Item value='0'>Unassigned</Select.Item>
+            <Select.Separator />
+            <Select.Label>Assign to:</Select.Label>
+            {users?.map((user: User) => (
+              <Select.Item key={user.id} value={user.id}>
+                {user.name}
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Toaster />
+    </>
+  )
 }
 
-const useUsers = () => useQuery<User[]>({
-	queryKey: ['users'],
-	queryFn: () => axios.get('/api/users').then((res) => res.data.users),
-	staleTime: 1000 * 60 * 10080,
-	retry: 3,
-})
+const useUsers = () =>
+  useQuery<User[]>({
+    queryKey: ['users'],
+    queryFn: () => axios.get('/api/users').then((res) => res.data.users),
+    staleTime: 1000 * 60 * 10080,
+    retry: 3,
+  })
 
 export default AssigneeSelect

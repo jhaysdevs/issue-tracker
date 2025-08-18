@@ -6,7 +6,7 @@ import { Issue } from '@/app/generated/prisma'
 import { issueSchema } from '@/app/validationSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { Button, Callout, TextField } from '@radix-ui/themes'
+import { Button, Callout, Container, TextField } from '@radix-ui/themes'
 import axios from 'axios'
 import 'easymde/dist/easymde.min.css'
 import { useRouter } from 'next/navigation'
@@ -55,7 +55,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 	}
 
   return (
-		<div className='max-w-xl'>
+		<Container>
 			{error && 
 				<Callout.Root color='red' className='mb-5' variant='soft'>
 					<Callout.Icon>
@@ -66,10 +66,8 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 					</Callout.Text>
 				</Callout.Root>
 			}
-			<form 
-				className='space-y-3'
-				onSubmit={handleSubmit(onSubmit)}>
-				<TextField.Root placeholder='Title' defaultValue={issue?.title} {...register('title')}>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<TextField.Root className='mb-3' placeholder='Title' defaultValue={issue?.title} {...register('title')}>
 					<TextField.Slot />
 				</TextField.Root>
 				{errors.title && <ErrorMessage>{errors.title?.message}</ErrorMessage>}
@@ -82,9 +80,12 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 					)}
 				/>
 				{errors.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
-				<Button disabled={isSubmitting}>{issue ? 'Update Issue' : 'Submit New Issue'}{' '} {isSubmitting && <Spinner />}</Button>
+				<Button disabled={isSubmitting}>
+					{issue ? 'Update Issue' : 'Submit New Issue'}{' '}
+					{isSubmitting && <Spinner />}
+				</Button>
 			</form>
-		</div>
+		</Container>
   )
 }
 
