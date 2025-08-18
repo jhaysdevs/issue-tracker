@@ -10,6 +10,7 @@
   "quoteProps": "as-needed",
   "bracketSameLine": true,
   "semi": false,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
     "^react$",
     "^next",
