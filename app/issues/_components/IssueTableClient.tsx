@@ -16,12 +16,14 @@ import IssueStatusBadge from './IssueStatusBadge'
 
 const IssueTableClient = () => {
   const [issues, setIssues] = useState<Issue[]>([])
-  const { selectedStatus, isLoading, setIsLoading } = useIssueContext()
+  const { isLoading, setIsLoading } = useIssueContext()
   const { getStatusColor } = useStatus()
 
   const searchParams = useSearchParams()
+  const status = searchParams.get('status')
   const orderBy = searchParams.get('orderBy')
   const orderDirection = searchParams.get('orderDirection')
+  const assignee = searchParams.get('assignee')
 
   // Convert URLSearchParams to plain object
   const searchParamsObject = Object.fromEntries(searchParams.entries())
@@ -32,8 +34,8 @@ const IssueTableClient = () => {
       try {
         const params = new URLSearchParams()
 
-        if (selectedStatus && selectedStatus !== 'ALL') {
-          params.append('status', selectedStatus)
+        if (status && status !== 'ALL') {
+          params.append('status', status)
         }
 
         if (orderBy) {
@@ -42,6 +44,10 @@ const IssueTableClient = () => {
 
         if (orderDirection) {
           params.append('orderDirection', orderDirection)
+        }
+
+        if (assignee) {
+          params.append('assignee', assignee)
         }
 
         const queryString = params.toString()
@@ -57,7 +63,7 @@ const IssueTableClient = () => {
     }
 
     fetchIssues()
-  }, [selectedStatus, orderBy, orderDirection, setIsLoading])
+  }, [status, orderBy, orderDirection, assignee, setIsLoading])
 
   if (isLoading) {
     return (
@@ -70,79 +76,77 @@ const IssueTableClient = () => {
   }
 
   return (
-    <Container>
-      <Table.Root variant='surface'>
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeaderCell>
-              <NextLink
-                href={{
-                  query: {
-                    ...searchParamsObject,
-                    orderBy: 'title',
-                    orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
-                  },
-                }}>
-                Title
-              </NextLink>
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='hidden md:table-cell'>
-              <NextLink
-                href={{
-                  query: {
-                    ...searchParamsObject,
-                    orderBy: 'status',
-                    orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
-                  },
-                }}>
-                Status
-              </NextLink>
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='hidden md:table-cell'>
-              <NextLink
-                href={{
-                  query: {
-                    ...searchParamsObject,
-                    orderBy: 'createdAt',
-                    orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
-                  },
-                }}>
-                Created
-              </NextLink>
-            </Table.ColumnHeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {issues && issues.length > 0 ? (
-            issues.map((issue) => (
-              <Table.Row key={issue.id} className='cursor-pointer hover:bg-gray-100'>
-                <Table.Cell>
-                  <TableCellLink href={`/issues/${issue.id}`} color={getStatusColor(issue.status)}>
-                    {issue.title}
-                  </TableCellLink>
-                </Table.Cell>
-                <Table.Cell className='hidden md:table-cell'>
-                  <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
-                    <IssueStatusBadge status={issue.status} />
-                  </NextLink>
-                </Table.Cell>
-                <Table.Cell className='hidden md:table-cell'>
-                  <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
-                    {formatDate(issue.createdAt)}
-                  </NextLink>
-                </Table.Cell>
-              </Table.Row>
-            ))
-          ) : (
-            <Table.Row>
-              <Table.Cell colSpan={3} className='text-center py-8 text-gray-500'>
-                No issues found
+    <Table.Root variant='surface'>
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeaderCell>
+            <NextLink
+              href={{
+                query: {
+                  ...searchParamsObject,
+                  orderBy: 'title',
+                  orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+                },
+              }}>
+              Title
+            </NextLink>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell className='hidden md:table-cell'>
+            <NextLink
+              href={{
+                query: {
+                  ...searchParamsObject,
+                  orderBy: 'status',
+                  orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+                },
+              }}>
+              Status
+            </NextLink>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell className='hidden md:table-cell'>
+            <NextLink
+              href={{
+                query: {
+                  ...searchParamsObject,
+                  orderBy: 'createdAt',
+                  orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+                },
+              }}>
+              Created
+            </NextLink>
+          </Table.ColumnHeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {issues && issues.length > 0 ? (
+          issues.map((issue) => (
+            <Table.Row key={issue.id} className='cursor-pointer hover:bg-gray-100'>
+              <Table.Cell>
+                <TableCellLink href={`/issues/${issue.id}`} color={getStatusColor(issue.status)}>
+                  {issue.title}
+                </TableCellLink>
+              </Table.Cell>
+              <Table.Cell className='hidden md:table-cell'>
+                <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+                  <IssueStatusBadge status={issue.status} />
+                </NextLink>
+              </Table.Cell>
+              <Table.Cell className='hidden md:table-cell'>
+                <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+                  {formatDate(issue.createdAt)}
+                </NextLink>
               </Table.Cell>
             </Table.Row>
-          )}
-        </Table.Body>
-      </Table.Root>
-    </Container>
+          ))
+        ) : (
+          <Table.Row>
+            <Table.Cell colSpan={3} className='text-center py-8 text-gray-500'>
+              No issues found
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Table.Body>
+    </Table.Root>
   )
 }
 

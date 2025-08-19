@@ -31,8 +31,17 @@ const IssueStatusFilter = () => {
     <Select.Root
       value={selectedStatus === 'ALL' ? '' : selectedStatus}
       onValueChange={(status: string) => {
-        const query = status && status !== 'ALL' ? `?status=${status}` : ''
-        router.push(`/issues${query}`)
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+
+        if (status === 'ALL' || status === '') {
+          newSearchParams.delete('status')
+        } else {
+          newSearchParams.set('status', status)
+        }
+
+        const queryString = newSearchParams.toString()
+        const newUrl = `/issues${queryString ? `?${queryString}` : ''}`
+        router.push(newUrl)
         setSelectedStatus(status)
       }}
       disabled={isLoading || !mounted}>

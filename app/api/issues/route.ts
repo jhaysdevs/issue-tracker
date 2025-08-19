@@ -12,10 +12,30 @@ export async function GET(request: NextRequest) {
 
   const { searchParams } = new URL(request.url)
   const status = searchParams.get('status')
+  const assignee = searchParams.get('assignee')
   const orderBy = searchParams.get('orderBy')
   const orderDirection = searchParams.get('orderDirection')
 
-  const where = status && status !== 'ALL' ? { status: status as Status } : {}
+  console.log('api/issues searchParams:', searchParams)
+  console.log('api/issues assignee:', assignee)
+
+  // Build where clause
+  const where: Prisma.IssueWhereInput = {}
+
+  if (status && status !== 'ALL') {
+    where.status = status as Status
+  }
+
+  if (assignee && assignee === 'unassigned') {
+    // Filter for unassigned issues
+    where.assignedTo = null
+    console.log('Filtering for unassigned issues')
+  } else if (assignee && assignee !== 'all') {
+    where.assignedTo = assignee
+    console.log('Filtering by assignee:', assignee)
+  }
+
+  console.log('api/issues where:', where)
 
   // Build orderBy object based on parameters
   let orderByObject: Prisma.IssueOrderByWithRelationInput = { createdAt: 'desc' } // default
@@ -26,10 +46,28 @@ export async function GET(request: NextRequest) {
 
   const issues = await prisma.issue.findMany({
     where,
+    include: { assignee: true }, // so you can see the User
     orderBy: orderByObject,
   })
 
-  return NextResponse.json(issues)
+  console.log('api/issues findMany:', {
+    where,
+    include: { assignee: true }, // so you can see the User
+    orderBy: orderByObject,
+  })
+
+  console.log('api/issues results count:', issues.length)
+  console.log(
+    'api/issues results:',
+    issues.map((issue) => ({
+      id: issue.id,
+      title: issue.title,
+      assignedTo: issue.assignedTo,
+      assignee: issue.assignee?.name,
+    }))
+  )
+
+  return NextResponse.json(issues, { status: 200 })
 }
 
 export async function POST(request: NextRequest) {

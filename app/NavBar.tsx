@@ -12,17 +12,15 @@ import { AiFillBug } from 'react-icons/ai'
 const NavBar = () => {
   return (
     <nav className='border-b mb-5 px-5'>
-      <Container>
-        <Flex justify='between' align='center' py='3'>
-          <Flex align='center'>
-            <Link href='/'>
-              <AiFillBug className='text-2xl' />
-            </Link>
-            <NavLinks />
-          </Flex>
-          <AuthStatus />
+      <Flex justify='between' align='center' py='3'>
+        <Flex align='center'>
+          <Link href='/'>
+            <AiFillBug className='text-2xl' />
+          </Link>
+          <NavLinks />
         </Flex>
-      </Container>
+        <AuthStatus />
+      </Flex>
     </nav>
   )
 }
@@ -66,7 +64,7 @@ const AuthStatus = () => {
   return (
     <Box>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger>
+        <DropdownMenu.Trigger className='cursor-pointer'>
           <Flex align='center' gap='2'>
             {session?.user?.name && <Text>Hi, {session?.user?.name.split(' ')[0]}</Text>}
             {session?.user?.image ? (

@@ -7,7 +7,7 @@ import AssigneeSelect from '@/app/issues/_components/AssigneeSelect'
 import DeleteIssueButton from '@/app/issues/_components/DeleteIssueButton'
 import EditIssueButton from '@/app/issues/_components/EditIssueButton'
 import { prisma } from '@/prisma/client'
-import { Container, Flex } from '@radix-ui/themes'
+import { Flex } from '@radix-ui/themes'
 
 import IssueDetails from './IssueDetails'
 
@@ -26,27 +26,24 @@ const IssueDetailPage = async ({ params }: Props) => {
   const session = await getServerSession(authOptions)
 
   return (
-    <Container>
-      <Flex direction={{ initial: 'column', sm: 'row' }} className='w-full'>
-        <Flex direction={{ initial: 'column' }} className='flex-1'>
-          <IssueDetails issue={issue} />
-        </Flex>
-        {session && (
-          <Flex
-            direction={{ initial: 'row', sm: 'column' }}
-            justify='between'
-            flexGrow='1'
-            gap='2'
-            wrap='wrap'
-            className='md:max-w-[20%] md:ml-5'>
-            <EditIssueButton issueId={issue.id} />
-            <BackButton />
-            <AssigneeSelect issue={issue} />
-            <DeleteIssueButton issueId={issue.id} />
-          </Flex>
-        )}
+    <Flex direction={{ initial: 'column', sm: 'row' }} className='w-full'>
+      <Flex direction={{ initial: 'column' }} className='flex-1'>
+        <IssueDetails issue={issue} />
       </Flex>
-    </Container>
+      {session && (
+        <Flex
+          direction={{ initial: 'row', sm: 'column' }}
+          flexGrow='1'
+          gap='2'
+          wrap='wrap'
+          className='md:max-w-[20%] md:ml-5'>
+          <EditIssueButton issueId={issue.id} />
+          <BackButton />
+          <AssigneeSelect issue={issue} />
+          <DeleteIssueButton issueId={issue.id} />
+        </Flex>
+      )}
+    </Flex>
   )
 }
 
