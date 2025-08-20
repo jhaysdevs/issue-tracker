@@ -11,13 +11,13 @@ const UpdateIssueButton = ({ onClick, isSubmitting }: UpdateIssueButtonProps) =>
   const buttonContent = isSubmitting ? (
     <>
       <FaSave />
-      Updating Issue
+      Saving Issue
       <Spinner />
     </>
   ) : (
     <>
       <FaSave />
-      Update Issue
+      Save Issue
     </>
   )
 

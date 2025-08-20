@@ -9,7 +9,7 @@ import { Button, Flex } from '@radix-ui/themes'
 
 const IssueActions = () => {
   return (
-    <Flex mb='5' justify='between' align='center' gap='3'>
+    <Flex mb='2' justify='between' align='center' gap='3'>
       <Flex gap='3'>
         <IssueStatusFilterWrapper />
         <AssigneeFilterWrapper />

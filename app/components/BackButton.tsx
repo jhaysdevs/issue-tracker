@@ -7,12 +7,16 @@ import { Button } from '@radix-ui/themes'
 
 const BackButton = ({ ...props }: React.ComponentProps<typeof Button>) => {
   const router = useRouter()
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    router.back()
+  }
 
   return (
     <Button
       color={props.color || 'gray'}
       variant={props.variant || 'soft'}
-      onClick={() => router.back()}
+      onClick={handleClick}
       {...props}>
       <ArrowLeftIcon />
       Back

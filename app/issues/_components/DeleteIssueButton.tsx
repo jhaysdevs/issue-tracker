@@ -9,7 +9,10 @@ import { TrashIcon } from '@radix-ui/react-icons'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 import axios from 'axios'
 
-const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
+const DeleteIssueButton = ({
+  issueId,
+  ...props
+}: { issueId: number } & React.ComponentProps<typeof Button>) => {
   const [error, setError] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const router = useRouter()
@@ -31,7 +34,11 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color='red' disabled={isDeleting} className='w-full min-w-0 text-center'>
+          <Button
+            color='red'
+            disabled={isDeleting}
+            className='w-full min-w-0 text-center'
+            {...props}>
             <TrashIcon />
             Delete Issue {isDeleting && <Spinner />}
           </Button>

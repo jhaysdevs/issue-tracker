@@ -16,6 +16,21 @@ const IssueStatusFilter = () => {
   // Always call useIssueContext - it will throw if not in provider, but that's expected
   const { selectedStatus, setSelectedStatus, isLoading } = useIssueContext()
 
+  const handleStatusChange = (status: string) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString())
+
+    if (status === 'ALL' || status === '') {
+      newSearchParams.delete('status')
+    } else {
+      newSearchParams.set('status', status)
+    }
+
+    const queryString = newSearchParams.toString()
+    const newUrl = `/issues${queryString ? `?${queryString}` : ''}`
+    router.push(newUrl)
+    setSelectedStatus(status)
+  }
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -30,20 +45,7 @@ const IssueStatusFilter = () => {
   return (
     <Select.Root
       value={selectedStatus === 'ALL' ? '' : selectedStatus}
-      onValueChange={(status: string) => {
-        const newSearchParams = new URLSearchParams(searchParams.toString())
-
-        if (status === 'ALL' || status === '') {
-          newSearchParams.delete('status')
-        } else {
-          newSearchParams.set('status', status)
-        }
-
-        const queryString = newSearchParams.toString()
-        const newUrl = `/issues${queryString ? `?${queryString}` : ''}`
-        router.push(newUrl)
-        setSelectedStatus(status)
-      }}
+      onValueChange={handleStatusChange}
       disabled={isLoading || !mounted}>
       <Select.Trigger
         placeholder={!mounted ? 'Loading...' : isLoading ? 'Loading...' : 'Filter by status...'}

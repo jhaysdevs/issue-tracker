@@ -6,8 +6,8 @@ const IssuesPage = () => {
   return (
     <IssueProvider>
       <IssueActions />
-      <IssueContextDebug />
       <IssueTableClient />
+      <IssueContextDebug />
     </IssueProvider>
   )
 }
