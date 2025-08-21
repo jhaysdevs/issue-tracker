@@ -3,7 +3,7 @@ import { Box } from '@radix-ui/themes'
 
 const IssueFormSkeleton = () => {
   return (
-    <Box className='max-w-xl'>
+    <Box className='full-width'>
       <Skeleton height='2rem' />
       <Skeleton height='20rem' />
     </Box>

@@ -14,10 +14,10 @@ const IssueEditActions = async ({ issue }: { issue: Issue }) => {
   if (!session) return null
 
   return (
-    <Flex direction={{ initial: 'column', sm: 'row' }} gap='2'>
-      <EditIssueButton issueId={issue.id} />
+    <Flex justify='end' direction={{ initial: 'column', sm: 'row' }} gap='2'>
+      <BackButton mr={{ initial: '0', sm: 'auto' }} />
       <DeleteIssueButton issueId={issue.id} />
-      <BackButton ml={{ initial: '0', sm: 'auto' }} />
+      <EditIssueButton issueId={issue.id} />
     </Flex>
   )
 }

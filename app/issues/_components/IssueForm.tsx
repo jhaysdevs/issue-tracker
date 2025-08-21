@@ -81,23 +81,6 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex justify='between' align='center' mb='3'>
           <BackButton />
-          {issue && (
-            <>
-              <AssigneeSelect issue={issue} />
-              <Controller
-                control={control}
-                defaultValue={issue.status}
-                name='status'
-                render={({ field }) => (
-                  <IssueStatusUpdate
-                    value={field.value}
-                    onChange={field.onChange}
-                    defaultValue={field.value}
-                  />
-                )}
-              />
-            </>
-          )}
           <UpdateIssueButton onClick={handleSubmit(onSubmit)} isSubmitting={isSubmitting} />
         </Flex>
         <Separator />
@@ -126,6 +109,23 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           )}
         />
         {errors.description && <ErrorMessage>{errors.description?.message}</ErrorMessage>}
+        {issue && (
+          <Flex gap='2'>
+            <Controller
+              control={control}
+              defaultValue={issue.status}
+              name='status'
+              render={({ field }) => (
+                <IssueStatusUpdate
+                  value={field.value}
+                  onChange={field.onChange}
+                  defaultValue={field.value}
+                />
+              )}
+            />
+            <AssigneeSelect issue={issue} />
+          </Flex>
+        )}
       </form>
     </Container>
   )

@@ -9,8 +9,8 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
   return (
     <Flex direction={{ initial: 'column' }} className='w-full md-pr-5'>
       <Flex gap='4' direction='column' mb='2'>
-        <Heading>{issue.title}</Heading>
         <IssueEditActions issue={issue} />
+        <Heading>{issue.title}</Heading>
       </Flex>
       <Card className='prose w-full max-w-full min-h-100'>
         <ReactMarkdown>{issue.description}</ReactMarkdown>
