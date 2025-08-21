@@ -43,20 +43,34 @@ export async function GET(request: NextRequest) {
   if (orderBy) {
     const direction: Prisma.SortOrder = orderDirection === 'asc' ? 'asc' : 'desc'
 
+    // Validate orderBy is a valid column
+    const validColumns = [
+      'id',
+      'title',
+      'description',
+      'status',
+      'createdAt',
+      'updatedAt',
+      'assignedTo',
+    ]
+
     if (orderBy === 'assignee') {
       orderByObject = { assignee: { name: direction } }
-    } else {
+    } else if (validColumns.includes(orderBy)) {
       orderByObject = { [orderBy]: direction } as Prisma.IssueOrderByWithRelationInput
+    } else {
+      // Invalid orderBy, use default
+      orderByObject = { createdAt: 'desc' }
     }
   }
 
-  const issues = await prisma.issue.findMany({
+  console.log('api/issues findMany:', {
     where,
     include: { assignee: true }, // so you can see the User
     orderBy: orderByObject,
   })
 
-  console.log('api/issues findMany:', {
+  const issues = await prisma.issue.findMany({
     where,
     include: { assignee: true }, // so you can see the User
     orderBy: orderByObject,
