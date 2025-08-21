@@ -5,10 +5,9 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Skeleton } from '@/app/components'
+import { useUsers } from '@/app/lib/hooks'
 import { User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 
 const AssigneeFilter = () => {
   const [mounted, setMounted] = useState(false)
@@ -64,13 +63,5 @@ const AssigneeFilter = () => {
     </Select.Root>
   )
 }
-
-const useUsers = () =>
-  useQuery<User[]>({
-    queryKey: ['users'],
-    queryFn: () => axios.get('/api/users').then((res) => res.data.users),
-    staleTime: 1000 * 60 * 10080,
-    retry: 3,
-  })
 
 export default AssigneeFilter

@@ -2,11 +2,13 @@
 
 import { Suspense } from 'react'
 
+import { Skeleton } from '@radix-ui/themes'
+
 import AssigneeFilter from './AssigneeFilter'
 
 const AssigneeFilterWrapper = () => {
   return (
-    <Suspense fallback={<div>Loading assignee filter...</div>}>
+    <Suspense fallback={<Skeleton height='2rem' width='10rem' />}>
       <AssigneeFilter />
     </Suspense>
   )

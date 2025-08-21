@@ -1,27 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
 import { Skeleton } from '@/app/components'
+import { useUsers } from '@/app/lib/hooks'
 import { Issue, User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
-import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-
-export const GetUsers = () => {
-  const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data } = await axios.get('/api/users')
-      setUsers(data.users)
-    }
-    fetchUsers()
-  }, [])
-
-  return users
-}
 
 const AssigneeSelect = ({ issue }: { issue: Issue | null }) => {
   const { data: users, error, isLoading } = useUsers()
@@ -59,13 +43,5 @@ const AssigneeSelect = ({ issue }: { issue: Issue | null }) => {
     </Select.Root>
   )
 }
-
-const useUsers = () =>
-  useQuery<User[]>({
-    queryKey: ['users'],
-    queryFn: () => axios.get('/api/users').then((res) => res.data.users),
-    staleTime: 1000 * 60 * 10080,
-    retry: 3,
-  })
 
 export default AssigneeSelect

@@ -75,11 +75,59 @@ const IssueTableClient = () => {
     )
   }
 
+  const columns = [
+    {
+      label: 'Title',
+      href: {
+        query: {
+          ...searchParamsObject,
+          orderBy: 'title',
+          orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+        },
+      },
+    },
+    {
+      label: 'Status',
+      href: {
+        query: {
+          ...searchParamsObject,
+          orderBy: 'status',
+          orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+        },
+      },
+    },
+    {
+      label: 'Created',
+      href: {
+        query: {
+          ...searchParamsObject,
+          orderBy: 'createdAt',
+          orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+        },
+      },
+    },
+    {
+      label: 'Assignee',
+      href: {
+        query: {
+          ...searchParamsObject,
+          orderBy: 'assignee',
+          orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
+        },
+      },
+    },
+  ]
+
   return (
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell>
+          {columns.map((column) => (
+            <Table.ColumnHeaderCell key={column.label}>
+              <NextLink href={column.href}>{column.label}</NextLink>
+            </Table.ColumnHeaderCell>
+          ))}
+          {/* <Table.ColumnHeaderCell>
             <NextLink
               href={{
                 query: {
@@ -114,7 +162,7 @@ const IssueTableClient = () => {
               }}>
               Created
             </NextLink>
-          </Table.ColumnHeaderCell>
+          </Table.ColumnHeaderCell> */}
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -134,6 +182,11 @@ const IssueTableClient = () => {
               <Table.Cell className='hidden md:table-cell'>
                 <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
                   {formatDate(issue.createdAt)}
+                </NextLink>
+              </Table.Cell>
+              <Table.Cell>
+                <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+                  {issue.assignee?.name || 'Unassigned'}
                 </NextLink>
               </Table.Cell>
             </Table.Row>
