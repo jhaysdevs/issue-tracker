@@ -38,10 +38,16 @@ export async function GET(request: NextRequest) {
   console.log('api/issues where:', where)
 
   // Build orderBy object based on parameters
-  let orderByObject: Prisma.IssueOrderByWithRelationInput = { createdAt: 'desc' } // default
+  let orderByObject: Prisma.IssueOrderByWithRelationInput = { createdAt: 'desc' }
+
   if (orderBy) {
     const direction: Prisma.SortOrder = orderDirection === 'asc' ? 'asc' : 'desc'
-    orderByObject = { [orderBy]: direction } as Prisma.IssueOrderByWithRelationInput
+
+    if (orderBy === 'assignee') {
+      orderByObject = { assignee: { name: direction } }
+    } else {
+      orderByObject = { [orderBy]: direction } as Prisma.IssueOrderByWithRelationInput
+    }
   }
 
   const issues = await prisma.issue.findMany({

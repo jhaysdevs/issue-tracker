@@ -6,16 +6,19 @@ import NextLink from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
 import { TableCellLink } from '@/app/components/TableCellLink'
-import { Issue } from '@/app/generated/prisma'
+import { Issue, User } from '@/app/generated/prisma'
 import { formatDate } from '@/app/lib/utils'
 import { useIssueContext, useStatus } from '@/app/providers'
-import { Container, Table } from '@radix-ui/themes'
+import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
+import { Container, Flex, Table } from '@radix-ui/themes'
 import axios from 'axios'
 
 import IssueStatusBadge from './IssueStatusBadge'
 
+type IssueWithAssignee = Issue & { assignee: User }
+
 const IssueTableClient = () => {
-  const [issues, setIssues] = useState<Issue[]>([])
+  const [issues, setIssues] = useState<IssueWithAssignee[]>([])
   const { isLoading, setIsLoading } = useIssueContext()
   const { getStatusColor } = useStatus()
 
@@ -55,6 +58,7 @@ const IssueTableClient = () => {
 
         const response = await axios.get(url)
         setIssues(response.data)
+        console.log('fetchIssues axios.get', { url: url, response: response.data })
       } catch (error) {
         console.error('Error fetching issues:', error)
       } finally {
@@ -118,51 +122,28 @@ const IssueTableClient = () => {
     },
   ]
 
+  const orderArrow = (columnOrderBy: string) => {
+    return orderBy && orderDirection && columnOrderBy === orderBy ? (
+      orderDirection === 'asc' ? (
+        <ArrowUpIcon className='w-4 h-4' />
+      ) : (
+        <ArrowDownIcon className='w-4 h-4' />
+      )
+    ) : null
+  }
+
   return (
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
           {columns.map((column) => (
             <Table.ColumnHeaderCell key={column.label}>
-              <NextLink href={column.href}>{column.label}</NextLink>
+              <Flex align='center' gap='2'>
+                <NextLink href={column.href}>{column.label}</NextLink>
+                {orderArrow(column.href.query.orderBy)}
+              </Flex>
             </Table.ColumnHeaderCell>
           ))}
-          {/* <Table.ColumnHeaderCell>
-            <NextLink
-              href={{
-                query: {
-                  ...searchParamsObject,
-                  orderBy: 'title',
-                  orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
-                },
-              }}>
-              Title
-            </NextLink>
-          </Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className='hidden md:table-cell'>
-            <NextLink
-              href={{
-                query: {
-                  ...searchParamsObject,
-                  orderBy: 'status',
-                  orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
-                },
-              }}>
-              Status
-            </NextLink>
-          </Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className='hidden md:table-cell'>
-            <NextLink
-              href={{
-                query: {
-                  ...searchParamsObject,
-                  orderBy: 'createdAt',
-                  orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
-                },
-              }}>
-              Created
-            </NextLink>
-          </Table.ColumnHeaderCell> */}
         </Table.Row>
       </Table.Header>
       <Table.Body>
