@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { useIssueContext, useStatus } from '@/app/providers'
-import { Badge, Select } from '@radix-ui/themes'
+import { Badge, Select, Skeleton } from '@radix-ui/themes'
 
 const IssueStatusFilter = () => {
   const [mounted, setMounted] = useState(false)
@@ -42,14 +42,14 @@ const IssueStatusFilter = () => {
     }
   }, [searchParams, setSelectedStatus, mounted])
 
+  if (isLoading) return <Skeleton height='2rem' width='10rem' />
+
   return (
     <Select.Root
       value={selectedStatus === 'ALL' ? '' : selectedStatus}
       onValueChange={handleStatusChange}
-      disabled={isLoading || !mounted}>
-      <Select.Trigger
-        placeholder={!mounted ? 'Loading...' : isLoading ? 'Loading...' : 'Filter by status...'}
-      />
+      disabled={!mounted}>
+      <Select.Trigger placeholder='Filter by status...' />
       <Select.Content>
         {statusBadges.map((status) => (
           <Select.Item key={status.key} value={status.key}>

@@ -70,7 +70,7 @@ interface StatusProviderProps extends PropsWithChildren {
 
 const StatusProvider = ({ children, statusBadges = defaultStatusBadges }: StatusProviderProps) => {
   const getStatusByKey = (key: string) => {
-    return statusBadges.find(status => status.key === key)
+    return statusBadges.find((status) => status.key === key)
   }
 
   const getStatusColor = (key: string) => {
@@ -84,11 +84,7 @@ const StatusProvider = ({ children, statusBadges = defaultStatusBadges }: Status
     getStatusColor,
   }
 
-  return (
-    <StatusContext.Provider value={contextValue}>
-      {children}
-    </StatusContext.Provider>
-  )
+  return <StatusContext.Provider value={contextValue}>{children}</StatusContext.Provider>
 }
 
 export default StatusProvider
