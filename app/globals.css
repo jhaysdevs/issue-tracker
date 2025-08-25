@@ -144,6 +144,50 @@
     @apply border-gray-600 text-gray-300;
   }
 
+  /* Override preview content area in dark mode */
+  .dark .EasyMDEContainer.editor-preview-active .editor-preview {
+    background-color: rgb(17 24 39) !important; /* gray-900 */
+    color: rgb(229 231 235) !important; /* gray-200 */
+  }
+
+  /* Force all preview content to be dark */
+  .dark .EasyMDEContainer.editor-preview-active .editor-preview * {
+    background-color: rgb(17 24 39) !important; /* gray-900 */
+    color: rgb(229 231 235) !important; /* gray-200 */
+  }
+
+  /* Override any white backgrounds in preview mode */
+  .dark .EasyMDEContainer.editor-preview-active {
+    background-color: rgb(17 24 39) !important; /* gray-900 */
+  }
+
+  .dark .EasyMDEContainer.editor-preview-active * {
+    background-color: rgb(17 24 39) !important; /* gray-900 */
+    color: rgb(229 231 235) !important; /* gray-200 */
+  }
+
+  /* Additional aggressive overrides for preview mode */
+  .dark .EasyMDEContainer.editor-preview-active .CodeMirror {
+    background-color: rgb(17 24 39) !important; /* gray-900 */
+  }
+
+  .dark .EasyMDEContainer.editor-preview-active .CodeMirror * {
+    background-color: rgb(17 24 39) !important; /* gray-900 */
+    color: rgb(229 231 235) !important; /* gray-200 */
+  }
+
+  /* Override the specific .editor-preview class background */
+  .dark .EasyMDEContainer .editor-preview {
+    background-color: rgb(17 24 39) !important; /* gray-900 */
+    color: rgb(229 231 235) !important; /* gray-200 */
+  }
+
+  /* Override the specific .editor-toolbar.fullscreen class background */
+  .dark .EasyMDEContainer .editor-toolbar.fullscreen {
+    background-color: rgb(31 41 55) !important; /* gray-800 */
+    border-color: rgb(75 85 99) !important; /* gray-600 */
+  }
+
   /* Force CodeMirror textarea dark mode */
   .dark .EasyMDEContainer .CodeMirror {
     background-color: rgb(17 24 39) !important;
@@ -151,6 +195,25 @@
 
   .dark .EasyMDEContainer .CodeMirror.CodeMirror-focused {
     background-color: rgb(17 24 39) !important;
+  }
+
+  /* Override preview mode styling in dark mode */
+  .dark .EasyMDEContainer.editor-preview-active .CodeMirror {
+    background-color: rgb(17 24 39) !important;
+    color: rgb(229 231 235) !important;
+  }
+
+  .dark .EasyMDEContainer.editor-preview-active .CodeMirror .CodeMirror-line {
+    color: rgb(229 231 235) !important;
+  }
+
+  .dark .EasyMDEContainer.editor-preview-active .CodeMirror .CodeMirror-gutters {
+    background-color: rgb(17 24 39) !important;
+    border-color: rgb(75 85 99) !important;
+  }
+
+  .dark .EasyMDEContainer.editor-preview-active .CodeMirror .CodeMirror-linenumber {
+    color: rgb(107 114 128) !important;
   }
 
   .dark .EasyMDEContainer .CodeMirror .CodeMirror-gutters {
