@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import {
   ChevronLeftIcon,
@@ -8,33 +10,52 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons'
-import { Button, Flex, Text } from '@radix-ui/themes'
+import { Button, Text } from '@radix-ui/themes'
 
-interface PaginationProps {
-  itemCount: number
+type PaginationProps = {
   perPage: number
+  itemCount: number
   currentPage?: number
-}
+} & Omit<React.ComponentProps<'div'>, 'itemCount' | 'perPage' | 'currentPage'>
 
-const Pagination = ({ itemCount, perPage, currentPage = 1 }: PaginationProps) => {
-  if (!itemCount || !perPage) return null
-  const pageCount = Math.ceil(itemCount / perPage)
-  const validCurrentPage = currentPage > pageCount ? pageCount : currentPage
+const Pagination = ({
+  perPage = 10,
+  itemCount,
+  currentPage = 1,
+  className,
+  ...props
+}: PaginationProps) => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const pageCount = Math.max(1, Math.ceil(itemCount / perPage))
+  const validCurrentPage = Math.min(Math.max(1, currentPage), pageCount)
 
   const [page, setPage] = useState(validCurrentPage)
+
+  // Update page state when currentPage prop changes
+  useEffect(() => {
+    setPage(validCurrentPage)
+  }, [validCurrentPage])
+
+  // Don't render pagination if perPage is invalid
+  if (perPage < 1) return null
 
   const changePage = (newPage: number) => {
     if (newPage < 1 || newPage > pageCount) return false
     setPage(newPage)
+    const newSearchParams = new URLSearchParams(searchParams.toString())
+    newSearchParams.set('page', newPage.toString())
+    newSearchParams.set('perPage', perPage.toString())
+    router.push(`?${newSearchParams.toString()}`)
   }
 
   return (
-    <Flex align='center' gap='2'>
+    <div className={`flex items-center gap-2 ${className || ''}`} {...props}>
       <Button
         variant='soft'
         size='1'
         color='gray'
-        disabled={page === 1}
+        disabled={page <= 1}
         onClick={() => changePage(1)}>
         <DoubleArrowLeftIcon />
       </Button>
@@ -42,7 +63,7 @@ const Pagination = ({ itemCount, perPage, currentPage = 1 }: PaginationProps) =>
         variant='soft'
         size='1'
         color='gray'
-        disabled={page === 1}
+        disabled={page <= 1}
         onClick={() => changePage(page - 1)}>
         <ChevronLeftIcon />
       </Button>
@@ -53,7 +74,7 @@ const Pagination = ({ itemCount, perPage, currentPage = 1 }: PaginationProps) =>
         variant='soft'
         size='1'
         color='gray'
-        disabled={page === pageCount}
+        disabled={page >= pageCount}
         onClick={() => changePage(page + 1)}>
         <ChevronRightIcon />
       </Button>
@@ -61,11 +82,11 @@ const Pagination = ({ itemCount, perPage, currentPage = 1 }: PaginationProps) =>
         variant='soft'
         size='1'
         color='gray'
-        disabled={page === pageCount}
+        disabled={page >= pageCount}
         onClick={() => changePage(pageCount)}>
         <DoubleArrowRightIcon />
       </Button>
-    </Flex>
+    </div>
   )
 }
 

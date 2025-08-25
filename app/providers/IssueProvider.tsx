@@ -7,6 +7,8 @@ interface IssueContextType {
   setSelectedStatus: (status: string) => void
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
+  totalCount: number
+  setTotalCount: (count: number) => void
   refreshIssues: () => void
 }
 
@@ -28,6 +30,7 @@ interface IssueProviderProps {
 export const IssueProvider = ({ children }: IssueProviderProps) => {
   const [selectedStatus, setSelectedStatus] = useState<string>('ALL')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [totalCount, setTotalCount] = useState<number>(0)
 
   const refreshIssues = () => {
     // This function can be called to trigger a refresh of issues
@@ -40,6 +43,8 @@ export const IssueProvider = ({ children }: IssueProviderProps) => {
     setSelectedStatus,
     isLoading,
     setIsLoading,
+    totalCount,
+    setTotalCount,
     refreshIssues,
   }
 
@@ -54,7 +59,8 @@ export const IssueContextDebug = ({ ...props }: React.ComponentProps<'div'>) => 
     const context = useIssueContext()
     return (
       <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }} {...props}>
-        Context Debug: Status={context.selectedStatus}, Loading={context.isLoading.toString()}
+        Context Debug: Status={context.selectedStatus}, Loading={context.isLoading.toString()},
+        TotalCount={context.totalCount}
       </div>
     )
   } catch (error) {

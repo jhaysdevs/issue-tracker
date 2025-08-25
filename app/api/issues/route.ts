@@ -15,9 +15,10 @@ export async function GET(request: NextRequest) {
   const assignee = searchParams.get('assignee')
   const orderBy = searchParams.get('orderBy')
   const orderDirection = searchParams.get('orderDirection')
+  const currentPage = parseInt(searchParams.get('currentPage') || '1')
+  const perPage = parseInt(searchParams.get('perPage') || '10')
 
   console.log('api/issues searchParams:', searchParams)
-  console.log('api/issues assignee:', assignee)
 
   // Build where clause
   const where: Prisma.IssueWhereInput = {}
@@ -68,15 +69,23 @@ export async function GET(request: NextRequest) {
     where,
     include: { assignee: true }, // so you can see the User
     orderBy: orderByObject,
+    skip: (currentPage - 1) * perPage,
+    take: perPage,
   })
+
+  // Get total count of issues that match the filters
+  const totalCount = await prisma.issue.count({ where })
 
   const issues = await prisma.issue.findMany({
     where,
     include: { assignee: true }, // so you can see the User
     orderBy: orderByObject,
+    skip: (currentPage - 1) * perPage,
+    take: perPage,
   })
 
   console.log('api/issues results count:', issues.length)
+  console.log('api/issues total count:', totalCount)
   console.log(
     'api/issues results:',
     issues.map((issue) => ({
@@ -87,7 +96,7 @@ export async function GET(request: NextRequest) {
     }))
   )
 
-  return NextResponse.json(issues, { status: 200 })
+  return NextResponse.json({ issues, totalCount }, { status: 200 })
 }
 
 export async function POST(request: NextRequest) {

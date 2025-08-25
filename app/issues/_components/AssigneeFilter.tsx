@@ -26,6 +26,9 @@ const AssigneeFilter = () => {
   const handleAssigneeChange = (assigneeId: string) => {
     const newSearchParams = new URLSearchParams(searchParams.toString())
 
+    newSearchParams.delete('page')
+    newSearchParams.delete('perPage')
+
     if (assigneeId === 'all' || assigneeId === '') {
       newSearchParams.delete('assignee')
     } else {

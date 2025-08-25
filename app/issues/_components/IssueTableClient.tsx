@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation'
 import { TableCellLink } from '@/app/components/TableCellLink'
 import { Issue, User } from '@/app/generated/prisma'
 import { formatDate } from '@/app/lib/utils'
-import { useIssueContext, useStatus } from '@/app/providers'
+import { IssueContextDebug, useIssueContext, useStatus } from '@/app/providers'
 import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
 import { Container, Flex, Table } from '@radix-ui/themes'
 import axios from 'axios'
@@ -17,16 +17,23 @@ import IssueStatusBadge from './IssueStatusBadge'
 
 type IssueWithAssignee = Issue & { assignee: User }
 
+interface ApiResponse {
+  issues: IssueWithAssignee[]
+  totalCount: number
+}
+
 const IssueTableClient = () => {
   const [issues, setIssues] = useState<IssueWithAssignee[]>([])
-  const { isLoading, setIsLoading } = useIssueContext()
+  const { isLoading, setIsLoading, setTotalCount } = useIssueContext()
   const { getStatusColor } = useStatus()
 
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
+  const assignee = searchParams.get('assignee')
   const orderBy = searchParams.get('orderBy')
   const orderDirection = searchParams.get('orderDirection')
-  const assignee = searchParams.get('assignee')
+  const page = parseInt(searchParams.get('page') || '1')
+  const perPage = parseInt(searchParams.get('perPage') || '10')
 
   // Convert URLSearchParams to plain object
   const searchParamsObject = Object.fromEntries(searchParams.entries())
@@ -53,11 +60,20 @@ const IssueTableClient = () => {
           params.append('assignee', assignee)
         }
 
+        if (page) {
+          params.append('currentPage', page.toString())
+        }
+
+        if (perPage) {
+          params.append('perPage', perPage.toString())
+        }
+
         const queryString = params.toString()
         const url = `/api/issues${queryString ? `?${queryString}` : ''}`
 
-        const response = await axios.get(url)
-        setIssues(response.data)
+        const response = await axios.get<ApiResponse>(url)
+        setIssues(response.data.issues)
+        setTotalCount(response.data.totalCount)
         console.log('fetchIssues axios.get', { url: url, response: response.data })
       } catch (error) {
         console.error('Error fetching issues:', error)
@@ -67,7 +83,7 @@ const IssueTableClient = () => {
     }
 
     fetchIssues()
-  }, [status, orderBy, orderDirection, assignee, setIsLoading])
+  }, [status, orderBy, orderDirection, assignee, setIsLoading, setTotalCount, page, perPage])
 
   if (isLoading) {
     return (
@@ -157,39 +173,42 @@ const IssueTableClient = () => {
   }
 
   return (
-    <Table.Root variant='surface'>
-      <Table.Header>
-        <Table.Row>
-          {columns.map((column) => (
-            <Table.ColumnHeaderCell key={column.label} className={column.className}>
-              <Flex align='center' gap='2'>
-                <NextLink href={column.href}>{column.label}</NextLink>
-                {orderArrow(column.href.query.orderBy)}
-              </Flex>
-            </Table.ColumnHeaderCell>
-          ))}
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {issues && issues.length > 0 ? (
-          issues.map((issue) => (
-            <Table.Row key={issue.id} className='cursor-pointer hover:bg-gray-100'>
-              {columns.map((column) => (
-                <Table.Cell key={column.label} className={column.className}>
-                  {column.renderCell(issue)}
-                </Table.Cell>
-              ))}
-            </Table.Row>
-          ))
-        ) : (
+    <>
+      <Table.Root variant='surface'>
+        <Table.Header>
           <Table.Row>
-            <Table.Cell colSpan={columns.length} className='text-center py-8 text-gray-500'>
-              No issues found
-            </Table.Cell>
+            {columns.map((column) => (
+              <Table.ColumnHeaderCell key={column.label} className={column.className}>
+                <Flex align='center' gap='2'>
+                  <NextLink href={column.href}>{column.label}</NextLink>
+                  {orderArrow(column.href.query.orderBy)}
+                </Flex>
+              </Table.ColumnHeaderCell>
+            ))}
           </Table.Row>
-        )}
-      </Table.Body>
-    </Table.Root>
+        </Table.Header>
+        <Table.Body>
+          {issues && issues.length > 0 ? (
+            issues.map((issue) => (
+              <Table.Row key={issue.id} className='cursor-pointer hover:bg-gray-100'>
+                {columns.map((column) => (
+                  <Table.Cell key={column.label} className={column.className}>
+                    {column.renderCell(issue)}
+                  </Table.Cell>
+                ))}
+              </Table.Row>
+            ))
+          ) : (
+            <Table.Row>
+              <Table.Cell colSpan={columns.length} className='text-center py-8 text-gray-500'>
+                No issues found
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table.Root>
+      <IssueContextDebug className='hidden md:flex justify-center' />
+    </>
   )
 }
 

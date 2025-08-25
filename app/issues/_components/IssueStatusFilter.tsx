@@ -20,6 +20,9 @@ const IssueStatusFilter = () => {
     (status: string) => {
       const newSearchParams = new URLSearchParams(searchParams.toString())
 
+      newSearchParams.delete('page')
+      newSearchParams.delete('perPage')
+
       if (status === 'ALL' || status === '') {
         newSearchParams.delete('status')
         setSelectedStatus('ALL')
