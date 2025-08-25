@@ -7,6 +7,7 @@ interface IssueContextType {
   setSelectedStatus: (status: string) => void
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
+  refreshIssues: () => void
 }
 
 const IssueContext = createContext<IssueContextType | undefined>(undefined)
@@ -28,11 +29,18 @@ export const IssueProvider = ({ children }: IssueProviderProps) => {
   const [selectedStatus, setSelectedStatus] = useState<string>('ALL')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const refreshIssues = () => {
+    // This function can be called to trigger a refresh of issues
+    // The actual refresh logic is handled in the IssueTableClient component
+    console.log('Refresh issues triggered')
+  }
+
   const contextValue: IssueContextType = {
     selectedStatus,
     setSelectedStatus,
     isLoading,
     setIsLoading,
+    refreshIssues,
   }
 
   console.log('IssueProvider rendered with context:', contextValue)

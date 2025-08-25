@@ -34,7 +34,9 @@ const AssigneeFilter = () => {
 
     const queryString = newSearchParams.toString()
     const newUrl = `/issues${queryString ? `?${queryString}` : ''}`
-    router.push(newUrl)
+
+    // Update URL without full page refresh using replace
+    router.replace(newUrl, { scroll: false })
   }
 
   if (isLoading) return <Skeleton height='2rem' width='10rem' />

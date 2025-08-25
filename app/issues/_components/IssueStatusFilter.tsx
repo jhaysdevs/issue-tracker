@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -16,20 +16,25 @@ const IssueStatusFilter = () => {
   // Always call useIssueContext - it will throw if not in provider, but that's expected
   const { selectedStatus, setSelectedStatus, isLoading } = useIssueContext()
 
-  const handleStatusChange = (status: string) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString())
+  const handleStatusChange = useCallback(
+    (status: string) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString())
 
-    if (status === 'ALL' || status === '') {
-      newSearchParams.delete('status')
-    } else {
-      newSearchParams.set('status', status)
-    }
+      if (status === 'ALL' || status === '') {
+        newSearchParams.delete('status')
+      } else {
+        newSearchParams.set('status', status)
+      }
 
-    const queryString = newSearchParams.toString()
-    const newUrl = `/issues${queryString ? `?${queryString}` : ''}`
-    router.push(newUrl)
-    setSelectedStatus(status)
-  }
+      const queryString = newSearchParams.toString()
+      const newUrl = `/issues${queryString ? `?${queryString}` : ''}`
+
+      // Update URL without full page refresh using replace
+      router.replace(newUrl, { scroll: false })
+      setSelectedStatus(status)
+    },
+    [searchParams, router, setSelectedStatus]
+  )
 
   useEffect(() => {
     setMounted(true)
