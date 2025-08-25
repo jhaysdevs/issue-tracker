@@ -161,7 +161,7 @@ const IssueTableClient = () => {
       <Table.Header>
         <Table.Row>
           {columns.map((column) => (
-            <Table.ColumnHeaderCell key={column.label}>
+            <Table.ColumnHeaderCell key={column.label} className={column.className}>
               <Flex align='center' gap='2'>
                 <NextLink href={column.href}>{column.label}</NextLink>
                 {orderArrow(column.href.query.orderBy)}

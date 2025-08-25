@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import AssigneeFilterWrapper from '@/app/issues/_components/AssigneeFilterWrapper'
 import IssueStatusFilterWrapper from '@/app/issues/_components/IssueStatusFilterWrapper'
+import { IssueContextDebug } from '@/app/providers'
 import { Pencil2Icon } from '@radix-ui/react-icons'
 import { Button, Flex } from '@radix-ui/themes'
 
@@ -14,6 +15,7 @@ const IssueActions = () => {
         <IssueStatusFilterWrapper />
         <AssigneeFilterWrapper />
       </Flex>
+      <IssueContextDebug className='hidden md:flex' />
       <Button asChild>
         <Link href='/issues/new'>
           <Pencil2Icon />

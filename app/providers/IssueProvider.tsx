@@ -49,17 +49,17 @@ export const IssueProvider = ({ children }: IssueProviderProps) => {
 }
 
 // Debug component to test context
-export const IssueContextDebug = () => {
+export const IssueContextDebug = ({ ...props }: React.ComponentProps<'div'>) => {
   try {
     const context = useIssueContext()
     return (
-      <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }}>
+      <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }} {...props}>
         Context Debug: Status={context.selectedStatus}, Loading={context.isLoading.toString()}
       </div>
     )
   } catch (error) {
     return (
-      <div style={{ fontSize: '12px', color: 'red', padding: '4px' }}>
+      <div style={{ fontSize: '12px', color: 'red', padding: '4px' }} {...props}>
         Context Error: {error instanceof Error ? error.message : 'Unknown error'}
       </div>
     )
