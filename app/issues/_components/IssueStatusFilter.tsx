@@ -22,8 +22,10 @@ const IssueStatusFilter = () => {
 
       if (status === 'ALL' || status === '') {
         newSearchParams.delete('status')
+        setSelectedStatus('ALL')
       } else {
         newSearchParams.set('status', status)
+        setSelectedStatus(status)
       }
 
       const queryString = newSearchParams.toString()
@@ -31,7 +33,6 @@ const IssueStatusFilter = () => {
 
       // Update URL without full page refresh using replace
       router.replace(newUrl, { scroll: false })
-      setSelectedStatus(status)
     },
     [searchParams, router, setSelectedStatus]
   )
@@ -47,13 +48,10 @@ const IssueStatusFilter = () => {
     }
   }, [searchParams, setSelectedStatus, mounted])
 
-  if (isLoading) return <Skeleton height='2rem' width='10rem' />
+  if (isLoading || !mounted) return <Skeleton height='2rem' width='10rem' />
 
   return (
-    <Select.Root
-      value={selectedStatus === 'ALL' ? '' : selectedStatus}
-      onValueChange={handleStatusChange}
-      disabled={!mounted}>
+    <Select.Root value={selectedStatus} onValueChange={handleStatusChange}>
       <Select.Trigger placeholder='Filter by status...' />
       <Select.Content>
         {statusBadges.map((status) => (
