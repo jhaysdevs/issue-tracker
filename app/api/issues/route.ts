@@ -56,7 +56,9 @@ export async function GET(request: NextRequest) {
     ]
 
     if (orderBy === 'assignee') {
-      orderByObject = { assignee: { name: direction } }
+      // For assignee sorting, we'll handle it manually in the query
+      // to properly sort unassigned issues
+      orderByObject = { createdAt: 'desc' } // Default fallback
     } else if (validColumns.includes(orderBy)) {
       orderByObject = { [orderBy]: direction } as Prisma.IssueOrderByWithRelationInput
     } else {
@@ -76,13 +78,40 @@ export async function GET(request: NextRequest) {
   // Get total count of issues that match the filters
   const totalCount = await prisma.issue.count({ where })
 
-  const issues = await prisma.issue.findMany({
-    where,
-    include: { assignee: true }, // so you can see the User
-    orderBy: orderByObject,
-    skip: (currentPage - 1) * perPage,
-    take: perPage,
-  })
+  let issues
+  if (orderBy === 'assignee') {
+    // For assignee sorting, we need to handle unassigned issues properly
+    // We'll fetch all issues and sort them in memory to handle null assignees correctly
+    const allIssues = await prisma.issue.findMany({
+      where,
+      include: { assignee: true },
+    })
+
+    // Sort issues by assignee name, treating unassigned as 'Unassigned'
+    issues = allIssues.sort((a, b) => {
+      const aName = a.assignee?.name || 'Unassigned'
+      const bName = b.assignee?.name || 'Unassigned'
+
+      if (orderDirection === 'asc') {
+        return aName.localeCompare(bName)
+      } else {
+        return bName.localeCompare(aName)
+      }
+    })
+
+    // Apply pagination after sorting
+    const startIndex = (currentPage - 1) * perPage
+    issues = issues.slice(startIndex, startIndex + perPage)
+  } else {
+    // For other sorting, use Prisma's built-in sorting
+    issues = await prisma.issue.findMany({
+      where,
+      include: { assignee: true },
+      orderBy: orderByObject,
+      skip: (currentPage - 1) * perPage,
+      take: perPage,
+    })
+  }
 
   console.log('api/issues results count:', issues.length)
   console.log('api/issues total count:', totalCount)
