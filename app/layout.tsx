@@ -5,13 +5,13 @@ import '@/app/theme-config.css'
 import '@radix-ui/themes/styles.css'
 
 import NavBar from './NavBar'
-import { 
-  AuthProvider, 
-  QueryClientProvider, 
-  ThemeProvider, 
-  ToastProvider, 
+import {
+  AuthProvider,
   FontProvider,
-  StatusProvider
+  QueryClientProvider,
+  StatusProvider,
+  ThemeProvider,
+  ToastProvider,
 } from './providers'
 
 export const metadata: Metadata = {

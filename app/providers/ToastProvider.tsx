@@ -5,19 +5,25 @@ import React, { PropsWithChildren } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 interface ToastProviderProps extends PropsWithChildren {
-  position?: 'top-right' | 'top-center' | 'top-left' | 'bottom-right' | 'bottom-center' | 'bottom-left'
+  position?:
+    | 'top-right'
+    | 'top-center'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-center'
+    | 'bottom-left'
   duration?: number
 }
 
-const ToastProvider = ({ 
-  children, 
+const ToastProvider = ({
+  children,
   position = 'top-right',
-  duration = 4000
+  duration = 4000,
 }: ToastProviderProps) => {
   return (
     <>
       {children}
-      <Toaster 
+      <Toaster
         position={position}
         toastOptions={{
           duration,

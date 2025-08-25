@@ -39,7 +39,7 @@ export const StatusBadges: { key: string; label: string; color: BadgeColor }[] =
 ]
 
 export const getStatusByKey = (key: string) => {
-  return StatusBadges.find(status => status.key === key)
+  return StatusBadges.find((status) => status.key === key)
 }
 
 export const getStatusColor = (key: string): BadgeColor => {

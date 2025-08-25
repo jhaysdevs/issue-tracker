@@ -15,11 +15,7 @@ interface FontProviderProps extends PropsWithChildren {
 }
 
 const FontProvider = ({ children, className = '' }: FontProviderProps) => {
-  return (
-    <div className={`${inter.variable} ${className}`}>
-      {children}
-    </div>
-  )
+  return <div className={`${inter.variable} ${className}`}>{children}</div>
 }
 
 export default FontProvider

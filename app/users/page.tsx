@@ -53,7 +53,9 @@ export default function UsersPage() {
 
   return (
     <Container>
-      <Heading size='6' mb='4'>Users</Heading>
+      <Heading size='6' mb='4'>
+        Users
+      </Heading>
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
