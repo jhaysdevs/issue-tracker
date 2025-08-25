@@ -180,8 +180,10 @@ const IssueTableClient = () => {
             {columns.map((column) => (
               <Table.ColumnHeaderCell key={column.label} className={column.className}>
                 <Flex align='center' gap='2'>
-                  <NextLink href={column.href}>{column.label}</NextLink>
-                  {orderArrow(column.href.query.orderBy)}
+                  <NextLink href={column.href} className='flex items-center gap-2'>
+                    {column.label}
+                    {orderArrow(column.href.query.orderBy)}
+                  </NextLink>
                 </Flex>
               </Table.ColumnHeaderCell>
             ))}
