@@ -48,11 +48,11 @@ const IssueStatusFilter = () => {
     }
   }, [searchParams, setSelectedStatus, mounted])
 
-  if (isLoading || !mounted) return <Skeleton height='2rem' width='10rem' />
+  if (!mounted) return <Skeleton height='2rem' width='10rem' />
 
   return (
     <Select.Root value={selectedStatus} onValueChange={handleStatusChange}>
-      <Select.Trigger placeholder='Filter by status...' />
+      <Select.Trigger placeholder='Filter by status...' disabled={!mounted} />
       <Select.Content>
         {statusBadges.map((status) => (
           <Select.Item key={status.key} value={status.key}>
