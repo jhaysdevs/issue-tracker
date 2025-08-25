@@ -4,10 +4,12 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { PersonIcon } from '@radix-ui/react-icons'
+import { MoonIcon, PersonIcon, SunIcon } from '@radix-ui/react-icons'
 import { Avatar, Box, Container, DropdownMenu, Flex, Skeleton, Text } from '@radix-ui/themes'
 import classnames from 'classnames'
 import { AiFillBug } from 'react-icons/ai'
+
+import { useTheme } from './providers'
 
 const NavBar = () => {
   return (
@@ -52,6 +54,7 @@ const NavLinks = () => {
 
 const AuthStatus = () => {
   const { status: isLoggedIn, data: session } = useSession()
+  const { theme, toggleTheme } = useTheme()
 
   if (isLoggedIn === 'loading') return <Skeleton width='3rem' />
   if (isLoggedIn === 'unauthenticated')
@@ -86,6 +89,14 @@ const AuthStatus = () => {
               <Text>{session!.user!.email}</Text>
             </DropdownMenu.Label>
           )}
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item onClick={toggleTheme}>
+            <Flex align='center' gap='2'>
+              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+              <Text>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</Text>
+            </Flex>
+          </DropdownMenu.Item>
+          <DropdownMenu.Separator />
           <DropdownMenu.Item>
             <Link className='w-full nav-link' href='/api/auth/signout'>
               <strong>Logout</strong>
