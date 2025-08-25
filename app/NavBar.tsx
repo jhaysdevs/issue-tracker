@@ -91,7 +91,7 @@ const AuthStatus = () => {
           )}
           <DropdownMenu.Separator />
           <DropdownMenu.Item onClick={toggleTheme}>
-            <Flex align='center' gap='2'>
+            <Flex align='center' gap='2' className='cursor-pointer w-full'>
               {theme === 'light' ? <MoonIcon /> : <SunIcon />}
               <Text>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</Text>
             </Flex>
