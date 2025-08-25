@@ -89,6 +89,12 @@ const IssueTableClient = () => {
           orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
         },
       },
+      renderCell: (issue: IssueWithAssignee) => (
+        <TableCellLink href={`/issues/${issue.id}`} color={getStatusColor(issue.status)}>
+          {issue.title}
+        </TableCellLink>
+      ),
+      className: '',
     },
     {
       label: 'Status',
@@ -99,6 +105,12 @@ const IssueTableClient = () => {
           orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
         },
       },
+      renderCell: (issue: IssueWithAssignee) => (
+        <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+          <IssueStatusBadge status={issue.status} />
+        </NextLink>
+      ),
+      className: 'hidden md:table-cell',
     },
     {
       label: 'Created',
@@ -109,6 +121,12 @@ const IssueTableClient = () => {
           orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
         },
       },
+      renderCell: (issue: IssueWithAssignee) => (
+        <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+          {formatDate(issue.createdAt)}
+        </NextLink>
+      ),
+      className: 'hidden md:table-cell',
     },
     {
       label: 'Assignee',
@@ -119,6 +137,12 @@ const IssueTableClient = () => {
           orderDirection: orderDirection === 'asc' ? 'desc' : 'asc',
         },
       },
+      renderCell: (issue: IssueWithAssignee) => (
+        <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
+          {issue.assignee?.name || 'Unassigned'}
+        </NextLink>
+      ),
+      className: '',
     },
   ]
 
@@ -150,31 +174,16 @@ const IssueTableClient = () => {
         {issues && issues.length > 0 ? (
           issues.map((issue) => (
             <Table.Row key={issue.id} className='cursor-pointer hover:bg-gray-100'>
-              <Table.Cell>
-                <TableCellLink href={`/issues/${issue.id}`} color={getStatusColor(issue.status)}>
-                  {issue.title}
-                </TableCellLink>
-              </Table.Cell>
-              <Table.Cell className='hidden md:table-cell'>
-                <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
-                  <IssueStatusBadge status={issue.status} />
-                </NextLink>
-              </Table.Cell>
-              <Table.Cell className='hidden md:table-cell'>
-                <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
-                  {formatDate(issue.createdAt)}
-                </NextLink>
-              </Table.Cell>
-              <Table.Cell>
-                <NextLink href={`/issues/${issue.id}`} className='block w-full hover:underline'>
-                  {issue.assignee?.name || 'Unassigned'}
-                </NextLink>
-              </Table.Cell>
+              {columns.map((column) => (
+                <Table.Cell key={column.label} className={column.className}>
+                  {column.renderCell(issue)}
+                </Table.Cell>
+              ))}
             </Table.Row>
           ))
         ) : (
           <Table.Row>
-            <Table.Cell colSpan={3} className='text-center py-8 text-gray-500'>
+            <Table.Cell colSpan={columns.length} className='text-center py-8 text-gray-500'>
               No issues found
             </Table.Cell>
           </Table.Row>
