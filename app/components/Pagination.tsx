@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { useTheme } from '@/app/providers'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -31,11 +32,34 @@ const Pagination = ({
   const validCurrentPage = Math.min(Math.max(1, currentPage), pageCount)
 
   const [page, setPage] = useState(validCurrentPage)
+  const [editingPage, setEditingPage] = useState<string>(validCurrentPage.toString())
+  const [isEditing, setIsEditing] = useState(false)
+  const [inputWidth, setInputWidth] = useState<number>(0)
+  const { theme } = useTheme()
 
   // Update page state when currentPage prop changes
   useEffect(() => {
     setPage(validCurrentPage)
+    setEditingPage(validCurrentPage.toString())
   }, [validCurrentPage])
+
+  // Calculate input width based on content
+  const calculateInputWidth = (text: string) => {
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    if (context) {
+      context.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+      const width = context.measureText(text).width
+      return Math.max(width + 16, 32) // Add padding and minimum width
+    }
+    return 32 // Fallback minimum width
+  }
+
+  // Update input width when editing or page changes
+  useEffect(() => {
+    const text = isEditing ? editingPage : page.toString()
+    setInputWidth(calculateInputWidth(text))
+  }, [isEditing, editingPage, page])
 
   // Don't render pagination if perPage is invalid
   if (perPage < 1 || page > pageCount) return null
@@ -43,10 +67,52 @@ const Pagination = ({
   const changePage = (newPage: number) => {
     if (newPage < 1 || newPage > pageCount) return false
     setPage(newPage)
+    setEditingPage(newPage.toString())
     const newSearchParams = new URLSearchParams(searchParams.toString())
     newSearchParams.set('page', newPage.toString())
     newSearchParams.set('perPage', perPage.toString())
     router.push(`?${newSearchParams.toString()}`)
+  }
+
+  const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (/^\d*$/.test(value)) {
+      const numValue = parseInt(value)
+      if (numValue > pageCount) {
+        setEditingPage(pageCount.toString())
+      } else {
+        setEditingPage(value)
+      }
+    }
+  }
+
+  const handlePageInputBlur = () => {
+    setIsEditing(false)
+    const newPage = parseInt(editingPage)
+    if (!isNaN(newPage) && newPage >= 1 && newPage <= pageCount) {
+      changePage(newPage)
+    } else {
+      setEditingPage(page.toString())
+    }
+  }
+
+  const handlePageInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handlePageInputBlur()
+    } else if (e.key === 'Escape') {
+      setIsEditing(false)
+      setEditingPage(page.toString())
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      const currentValue = parseInt(editingPage) || 1
+      const newValue = Math.min(currentValue + 1, pageCount)
+      setEditingPage(newValue.toString())
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      const currentValue = parseInt(editingPage) || 1
+      const newValue = Math.max(currentValue - 1, 1)
+      setEditingPage(newValue.toString())
+    }
   }
 
   return (
@@ -67,8 +133,21 @@ const Pagination = ({
         onClick={() => changePage(page - 1)}>
         <ChevronLeftIcon />
       </Button>
-      <Text size='2' color='gray'>
-        Page {page} of {pageCount}
+      <Text size='2' color='gray' className='flex items-center gap-1'>
+        Page{' '}
+        <input
+          type='text'
+          value={isEditing ? editingPage : page}
+          onChange={handlePageInputChange}
+          onFocus={() => setIsEditing(true)}
+          onBlur={handlePageInputBlur}
+          onKeyDown={handlePageInputKeyDown}
+          className={`text-center bg-transparent border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${
+            theme === 'dark' ? 'border-gray-600' : 'border-gray-300'
+          }`}
+          style={{ width: `${inputWidth}px` }}
+        />{' '}
+        of <span className='font-medium'>{pageCount}</span>
       </Text>
       <Button
         variant='soft'
