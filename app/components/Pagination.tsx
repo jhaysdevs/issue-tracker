@@ -38,7 +38,7 @@ const Pagination = ({
   }, [validCurrentPage])
 
   // Don't render pagination if perPage is invalid
-  if (perPage < 1 || page === pageCount) return null
+  if (perPage < 1 || page > pageCount) return null
 
   const changePage = (newPage: number) => {
     if (newPage < 1 || newPage > pageCount) return false
