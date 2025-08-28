@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Link from 'next/link'
+
 import IssueStatusBadge from '@/app/issues/_components/IssueStatusBadge'
 import { prisma } from '@/prisma/client'
 import { Avatar, Card, Flex, Heading, Table } from '@radix-ui/themes'
@@ -24,18 +26,29 @@ const LatestIssues = async () => {
       </Heading>
       <Table.Root>
         <Table.Body>
-          {issues.map((issue) => (
+          {issues.map((issue, index) => (
             <Table.Row key={issue.id}>
-              <Table.Cell>
+              <Table.Cell
+                className={index === issues.length - 1 ? '!border-b-0' : ''}
+                style={
+                  index === issues.length - 1
+                    ? ({
+                        borderBottom: 'none',
+                        '--table-row-box-shadow': 'none',
+                      } as React.CSSProperties)
+                    : {}
+                }>
                 <Flex justify='between' height='100%'>
-                  <Flex direction='column' align='start' gap='2' className='w-full'>
-                    <TableCellLink href={`/issues/${issue.id}`} color='gray'>
+                  <TableCellLink href={`/issues/${issue.id}`} color='gray'>
+                    <Flex direction='column' align='start' gap='2' className='w-full'>
                       {issue.title}
-                    </TableCellLink>
-                    <IssueStatusBadge status={issue.status} radius='medium' size='2' />
-                  </Flex>
+                      <IssueStatusBadge status={issue.status} radius='medium' size='2' />
+                    </Flex>
+                  </TableCellLink>
                   {issue.assignee && (
-                    <Avatar src={issue.assignee.image!} fallback='?' radius='full' size='2' />
+                    <Link href={`/issues/${issue.id}`} className='flex items-center'>
+                      <Avatar src={issue.assignee.image!} fallback='?' radius='full' size='4' />
+                    </Link>
                   )}
                 </Flex>
               </Table.Cell>
