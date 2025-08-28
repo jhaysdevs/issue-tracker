@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import { Card } from '@radix-ui/themes'
@@ -18,6 +20,7 @@ interface IssueChartProps {
 
 const IssueChart = ({ statuses }: IssueChartProps) => {
   const router = useRouter()
+  const [barSize, setBarSize] = useState(30)
 
   const data = statuses.map((status) => ({
     label: status.label,
@@ -25,6 +28,30 @@ const IssueChart = ({ statuses }: IssueChartProps) => {
     color: status.color,
     status: status.value,
   }))
+
+  // Responsive bar size based on screen width
+  useEffect(() => {
+    const updateBarSize = () => {
+      const width = window.innerWidth
+      if (width < 640) {
+        // sm
+        setBarSize(20)
+      } else if (width < 768) {
+        // md
+        setBarSize(25)
+      } else if (width < 1024) {
+        // lg
+        setBarSize(30)
+      } else {
+        // xl and above
+        setBarSize(35)
+      }
+    }
+
+    updateBarSize()
+    window.addEventListener('resize', updateBarSize)
+    return () => window.removeEventListener('resize', updateBarSize)
+  }, [])
 
   const handleBarClick = (data: any) => {
     if (data && data.status) {
@@ -37,10 +64,13 @@ const IssueChart = ({ statuses }: IssueChartProps) => {
   return (
     <Card>
       <ResponsiveContainer width='100%' height={300}>
-        <BarChart data={data} style={{ outline: 'none' }} className='[&_*]:outline-none'>
+        <BarChart
+          data={data}
+          style={{ outline: 'none', marginLeft: '-20px' }}
+          className='[&_*]:outline-none'>
           <XAxis dataKey='label' />
           <YAxis />
-          <Bar dataKey='value' barSize={30} cursor='pointer' onClick={handleBarClick}>
+          <Bar dataKey='value' barSize={barSize} cursor='pointer' onClick={handleBarClick}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getBadgeColorHex(entry.color)} />
             ))}
