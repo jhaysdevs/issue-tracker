@@ -143,7 +143,7 @@ const Pagination = ({
           onBlur={handlePageInputBlur}
           onKeyDown={handlePageInputKeyDown}
           className={`text-center bg-transparent border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${
-            theme === 'dark' ? 'border-gray-600' : 'border-gray-300'
+            theme === 'dark' ? 'border-gray-800' : 'border-gray-300'
           }`}
           style={{ width: `${inputWidth}px` }}
         />{' '}
