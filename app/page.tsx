@@ -1,9 +1,11 @@
 import { Container } from '@radix-ui/themes'
 
+import LatestIssues from './LatestIssues'
+
 export default function Home() {
   return (
     <Container>
-      <h1>Hello World</h1>
+      <LatestIssues />
     </Container>
   )
 }
