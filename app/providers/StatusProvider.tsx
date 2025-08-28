@@ -51,9 +51,7 @@ const defaultStatusBadges: StatusConfig[] = [
   { key: 'CLOSED', label: 'Closed', color: 'gray' },
   { key: 'IN_PROGRESS', label: 'In Progress', color: 'orange' },
   { key: 'ON_HOLD', label: 'On Hold', color: 'amber' },
-  { key: 'CANCELLED', label: 'Cancelled', color: 'red' },
   { key: 'COMPLETED', label: 'Completed', color: 'green' },
-  { key: 'ARCHIVED', label: 'Archived', color: 'gold' },
 ]
 
 export const useStatus = () => {
