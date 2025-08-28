@@ -6,8 +6,6 @@ import IssueStatusBadge from '@/app/issues/_components/IssueStatusBadge'
 import { prisma } from '@/prisma/client'
 import { Avatar, Card, Flex, Heading, Table } from '@radix-ui/themes'
 
-import { TableCellLink } from './components/TableCellLink'
-
 interface LatestIssuesProps extends React.ComponentProps<'div'> {
   grow?: boolean
 }
