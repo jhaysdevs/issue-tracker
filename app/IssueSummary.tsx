@@ -1,35 +1,19 @@
-import { prisma } from '@/prisma/client'
 import { Status } from '@prisma/client'
 import { Card, Flex, Heading, Text } from '@radix-ui/themes'
 
 import Link from './components/Link'
 import StatusBadge from './issues/_components/IssueStatusBadge'
-import { StatusBadges } from './lib/status'
 
-const IssueSummary = async () => {
-  // Get counts for all status types (excluding 'ALL')
-  const statusCounts = await Promise.all(
-    StatusBadges.filter((status) => status.key !== 'ALL').map(async (status) => {
-      const count = await prisma.issue.count({
-        where: { status: status.key as Status },
-      })
-      return {
-        key: status.key,
-        count,
-      }
-    })
-  )
+interface IssueSummaryProps {
+  statuses: {
+    label: string
+    value: string
+    color: string
+    count: number
+  }[]
+}
 
-  // Create a map for easy lookup
-  const countMap = Object.fromEntries(statusCounts.map(({ key, count }) => [key, count]))
-
-  const statuses = StatusBadges.filter((status) => status.key !== 'ALL').map((status) => ({
-    label: status.label,
-    value: status.key,
-    color: status.color,
-    count: countMap[status.key] || 0,
-  }))
-
+const IssueSummary = ({ statuses }: IssueSummaryProps) => {
   return (
     <Flex direction='column'>
       <Heading size='4' mb='5'>
@@ -52,7 +36,5 @@ const IssueSummary = async () => {
     </Flex>
   )
 }
-
-export const dynamic = 'force-dynamic'
 
 export default IssueSummary
