@@ -54,9 +54,10 @@ const IssueChart = ({ statuses }: IssueChartProps) => {
     return () => window.removeEventListener('resize', updateBarSize)
   }, [])
 
-  const handleBarClick = (data: any) => {
-    if (data && data.status) {
-      router.push(`/issues?status=${data.status}`)
+  const handleBarClick = (data: unknown) => {
+    const chartData = data as { status?: string }
+    if (chartData && chartData.status) {
+      router.push(`/issues?status=${chartData.status}`)
     }
   }
 
