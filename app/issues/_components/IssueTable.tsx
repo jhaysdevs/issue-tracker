@@ -1,6 +1,5 @@
 import IssueActions from '@/app/issues/_components/IssueActions'
 import IssueTableClient from '@/app/issues/_components/IssueTableClient'
-import { IssueContextDebug } from '@/app/providers'
 import { Container } from '@radix-ui/themes'
 
 const IssueTable = () => {

@@ -5,24 +5,36 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { MoonIcon, PersonIcon, SunIcon } from '@radix-ui/react-icons'
-import { Avatar, Box, Container, DropdownMenu, Flex, Skeleton, Text } from '@radix-ui/themes'
+import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Avatar, Box, DropdownMenu, Flex, Skeleton, Text } from '@radix-ui/themes'
 import classnames from 'classnames'
 import { AiFillBug } from 'react-icons/ai'
 
 import { useTheme } from './providers'
 
 const NavBar = () => {
+  const { theme } = useTheme()
+
   return (
-    <nav className='border-b mb-5 px-5'>
-      <Flex justify='between' align='center' py='3'>
-        <Flex align='center'>
-          <Link href='/'>
-            <AiFillBug className='text-2xl' />
-          </Link>
-          <NavLinks />
+    <nav
+      className='fixed top-0 left-0 right-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
+      style={{
+        borderColor:
+          theme === 'light'
+            ? 'color(display-p3 0.098 0.008 0.224 / 0.126)'
+            : 'lab(16.1051 -1.18239 -11.7533)',
+      }}>
+      <div className='mx-auto px-3'>
+        <Flex justify='between' align='center' py='3'>
+          <Flex align='center' gap='2'>
+            <Link href='/' style={{ marginLeft: '5px' }}>
+              <AiFillBug className='text-2xl' />
+            </Link>
+            <NavLinks />
+          </Flex>
+          <AuthStatus />
         </Flex>
-        <AuthStatus />
-      </Flex>
+      </div>
     </nav>
   )
 }
@@ -35,20 +47,26 @@ const NavLinks = () => {
   ]
 
   return (
-    <ul className='flex space-x-6 px-5'>
-      {links.map((link) => (
-        <li key={link.href}>
-          <Link
-            className={classnames({
-              'nav-link': true,
-              'text-zinc-900': link.href === currentPath,
-            })}
-            href={link.href}>
-            {link.label}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <NavigationMenu.Root className='flex'>
+      <NavigationMenu.List className='flex'>
+        {links.map((link) => (
+          <NavigationMenu.Item key={link.href}>
+            <NavigationMenu.Link asChild>
+              <Link
+                className={classnames(
+                  'block select-none rounded-md px-3 py-2 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                  {
+                    'bg-accent text-accent-foreground': link.href === currentPath,
+                  }
+                )}
+                href={link.href}>
+                {link.label}
+              </Link>
+            </NavigationMenu.Link>
+          </NavigationMenu.Item>
+        ))}
+      </NavigationMenu.List>
+    </NavigationMenu.Root>
   )
 }
 

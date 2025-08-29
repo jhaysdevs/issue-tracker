@@ -33,8 +33,8 @@ export default async function Home() {
   }))
 
   return (
-    <Container>
-      <Flex direction={{ initial: 'column', md: 'row' }} gap='5' mb='5'>
+    <Container mb='5' mt='3'>
+      <Flex direction={{ initial: 'column', md: 'row' }} gap='5'>
         <Flex direction='column' gap='5'>
           <IssueSummary statuses={statuses} />
           <IssueChart statuses={statuses} />

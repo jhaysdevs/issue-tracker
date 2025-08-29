@@ -34,7 +34,7 @@ export default function RootLayout({
                 <StatusProvider>
                   <ToastProvider>
                     <NavBar />
-                    <main className='px-5'>{children}</main>
+                    <main className='pt-16 px-5'>{children}</main>
                   </ToastProvider>
                 </StatusProvider>
               </ThemeProvider>
