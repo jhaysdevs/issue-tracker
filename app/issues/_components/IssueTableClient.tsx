@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
+import Pagination from '@/app/components/Pagination'
 import { TableCellLink } from '@/app/components/TableCellLink'
 import { Issue, User } from '@/app/generated/prisma'
 import { formatDate } from '@/app/lib/utils'
@@ -24,7 +25,7 @@ interface ApiResponse {
 
 const IssueTableClient = () => {
   const [issues, setIssues] = useState<IssueWithAssignee[]>([])
-  const { isLoading, setIsLoading, setTotalCount } = useIssueContext()
+  const { isLoading, setIsLoading, setTotalCount, totalCount } = useIssueContext()
   const { getStatusColor } = useStatus()
 
   const searchParams = useSearchParams()
@@ -209,7 +210,13 @@ const IssueTableClient = () => {
           )}
         </Table.Body>
       </Table.Root>
-      <IssueContextDebug className='hidden md:flex justify-center' />
+      <Pagination
+        perPage={perPage}
+        currentPage={page}
+        itemCount={totalCount}
+        className='my-3 justify-center'
+      />
+      <IssueContextDebug className='hidden sm:flex justify-center' />
     </>
   )
 }

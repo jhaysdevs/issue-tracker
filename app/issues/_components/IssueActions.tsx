@@ -1,34 +1,18 @@
-'use client'
-
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 
-import Pagination from '@/app/components/Pagination'
 import AssigneeFilterWrapper from '@/app/issues/_components/AssigneeFilterWrapper'
 import IssueStatusFilterWrapper from '@/app/issues/_components/IssueStatusFilterWrapper'
-import { useIssueContext } from '@/app/providers'
 import { Pencil2Icon } from '@radix-ui/react-icons'
 import { Button, Flex } from '@radix-ui/themes'
 
 const IssueActions = () => {
-  const searchParams = useSearchParams()
-  const currentPage = parseInt(searchParams.get('page') || '1')
-  const perPage = parseInt(searchParams.get('perPage') || '10')
-  const { totalCount } = useIssueContext()
-
   return (
-    <Flex mb='2' justify='between' align='center' gap='3'>
-      <Flex gap='3' align='center'>
+    <Flex my='3' justify='between' align='center' gap='3' className='flex-col sm:flex-row'>
+      <Flex gap='3' align='center' className='order-2 sm:order-1'>
         <IssueStatusFilterWrapper />
         <AssigneeFilterWrapper />
       </Flex>
-      <Pagination
-        perPage={perPage}
-        currentPage={currentPage}
-        itemCount={totalCount}
-        className='hidden md:flex'
-      />
-      <Button asChild>
+      <Button asChild className='!order-1 !sm:order-2'>
         <Link href='/issues/new'>
           <Pencil2Icon />
           New Issue
