@@ -7,9 +7,6 @@ import { prisma } from '@/prisma/client'
 import { Prisma, Status } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
-  const session = await getServerSession(authOptions)
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-
   const { searchParams } = new URL(request.url)
   const status = searchParams.get('status')
   const assignee = searchParams.get('assignee')
@@ -17,8 +14,6 @@ export async function GET(request: NextRequest) {
   const orderDirection = searchParams.get('orderDirection')
   const currentPage = parseInt(searchParams.get('currentPage') || '1')
   const perPage = parseInt(searchParams.get('perPage') || '10')
-
-  console.log('api/issues searchParams:', searchParams)
 
   // Build where clause
   const where: Prisma.IssueWhereInput = {}
@@ -30,13 +25,9 @@ export async function GET(request: NextRequest) {
   if (assignee && assignee === 'unassigned') {
     // Filter for unassigned issues
     where.assignedTo = null
-    console.log('Filtering for unassigned issues')
   } else if (assignee && assignee !== 'all') {
     where.assignedTo = assignee
-    console.log('Filtering by assignee:', assignee)
   }
-
-  console.log('api/issues where:', where)
 
   // Build orderBy object based on parameters
   let orderByObject: Prisma.IssueOrderByWithRelationInput = { createdAt: 'desc' }
@@ -66,14 +57,6 @@ export async function GET(request: NextRequest) {
       orderByObject = { createdAt: 'desc' }
     }
   }
-
-  console.log('api/issues findMany:', {
-    where,
-    include: { assignee: true }, // so you can see the User
-    orderBy: orderByObject,
-    skip: (currentPage - 1) * perPage,
-    take: perPage,
-  })
 
   // Get total count of issues that match the filters
   const totalCount = await prisma.issue.count({ where })
@@ -112,18 +95,6 @@ export async function GET(request: NextRequest) {
       take: perPage,
     })
   }
-
-  console.log('api/issues results count:', issues.length)
-  console.log('api/issues total count:', totalCount)
-  console.log(
-    'api/issues results:',
-    issues.map((issue) => ({
-      id: issue.id,
-      title: issue.title,
-      assignedTo: issue.assignedTo,
-      assignee: issue.assignee?.name,
-    }))
-  )
 
   return NextResponse.json({ issues, totalCount }, { status: 200 })
 }

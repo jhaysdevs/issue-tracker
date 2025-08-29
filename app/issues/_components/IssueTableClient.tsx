@@ -75,7 +75,6 @@ const IssueTableClient = () => {
         const response = await axios.get<ApiResponse>(url)
         setIssues(response.data.issues)
         setTotalCount(response.data.totalCount)
-        console.log('fetchIssues axios.get', { url: url, response: response.data })
       } catch (error) {
         console.error('Error fetching issues:', error)
       } finally {

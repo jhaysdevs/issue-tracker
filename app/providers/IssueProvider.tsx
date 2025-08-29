@@ -48,8 +48,6 @@ export const IssueProvider = ({ children }: IssueProviderProps) => {
     refreshIssues,
   }
 
-  console.log('IssueProvider rendered with context:', contextValue)
-
   return <IssueContext.Provider value={contextValue}>{children}</IssueContext.Provider>
 }
 

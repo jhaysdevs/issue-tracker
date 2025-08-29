@@ -60,8 +60,6 @@ const IssueChart = ({ statuses }: IssueChartProps) => {
     }
   }
 
-  console.log('IssueChart data:', data)
-
   return (
     <Card>
       <ResponsiveContainer width='100%' height={300}>
