@@ -11,7 +11,7 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons'
-import { Button, Text } from '@radix-ui/themes'
+import { Button, Select, Text } from '@radix-ui/themes'
 
 type PaginationProps = {
   perPage: number
@@ -116,55 +116,82 @@ const Pagination = ({
   }
 
   return (
-    <div className={`flex items-center gap-2 ${className || ''}`} {...props}>
-      <Button
-        variant='soft'
-        size='1'
-        color='gray'
-        disabled={page <= 1}
-        onClick={() => changePage(1)}>
-        <DoubleArrowLeftIcon />
-      </Button>
-      <Button
-        variant='soft'
-        size='1'
-        color='gray'
-        disabled={page <= 1}
-        onClick={() => changePage(page - 1)}>
-        <ChevronLeftIcon />
-      </Button>
-      <Text size='2' color='gray' className='flex items-center gap-1'>
-        Page{' '}
-        <input
-          type='text'
-          value={isEditing ? editingPage : page}
-          onChange={handlePageInputChange}
-          onFocus={() => setIsEditing(true)}
-          onBlur={handlePageInputBlur}
-          onKeyDown={handlePageInputKeyDown}
-          className={`text-center bg-transparent border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${
-            theme === 'dark' ? 'border-gray-800' : 'border-gray-300'
-          }`}
-          style={{ width: `${inputWidth}px` }}
-        />{' '}
-        of <span className='font-medium'>{pageCount}</span>
-      </Text>
-      <Button
-        variant='soft'
-        size='1'
-        color='gray'
-        disabled={page >= pageCount}
-        onClick={() => changePage(page + 1)}>
-        <ChevronRightIcon />
-      </Button>
-      <Button
-        variant='soft'
-        size='1'
-        color='gray'
-        disabled={page >= pageCount}
-        onClick={() => changePage(pageCount)}>
-        <DoubleArrowRightIcon />
-      </Button>
+    <div className='flex flex-col'>
+      <div className={`flex items-center gap-2 ${className || ''}`} {...props}>
+        <Button
+          variant='soft'
+          size='1'
+          color='gray'
+          disabled={page <= 1}
+          onClick={() => changePage(1)}>
+          <DoubleArrowLeftIcon />
+        </Button>
+        <Button
+          variant='soft'
+          size='1'
+          color='gray'
+          disabled={page <= 1}
+          onClick={() => changePage(page - 1)}>
+          <ChevronLeftIcon />
+        </Button>
+        <Text size='2' color='gray' className='flex items-center gap-1'>
+          Page{' '}
+          <input
+            type='text'
+            value={isEditing ? editingPage : page}
+            onChange={handlePageInputChange}
+            onFocus={() => setIsEditing(true)}
+            onBlur={handlePageInputBlur}
+            onKeyDown={handlePageInputKeyDown}
+            className={`text-center bg-transparent border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${
+              theme === 'dark' ? 'border-gray-800' : 'border-gray-300'
+            }`}
+            style={{ width: `${inputWidth}px` }}
+          />{' '}
+          of <span className='font-medium'>{pageCount}</span>
+        </Text>
+        <Button
+          variant='soft'
+          size='1'
+          color='gray'
+          disabled={page >= pageCount}
+          onClick={() => changePage(page + 1)}>
+          <ChevronRightIcon />
+        </Button>
+        <Button
+          variant='soft'
+          size='1'
+          color='gray'
+          disabled={page >= pageCount}
+          onClick={() => changePage(pageCount)}>
+          <DoubleArrowRightIcon />
+        </Button>
+      </div>
+      <div className='flex items-center justify-center gap-2'>
+        <Text size='2' color='gray'>
+          Showing
+        </Text>
+        <Select.Root
+          value={perPage.toString()}
+          onValueChange={(value) => {
+            const newPerPage = parseInt(value)
+            const newSearchParams = new URLSearchParams(searchParams.toString())
+            newSearchParams.set('perPage', newPerPage.toString())
+            newSearchParams.set('page', '1') // Reset to first page when changing perPage
+            router.push(`?${newSearchParams.toString()}`)
+          }}>
+          <Select.Trigger />
+          <Select.Content>
+            <Select.Item value='10'>10</Select.Item>
+            <Select.Item value='25'>25</Select.Item>
+            <Select.Item value='50'>50</Select.Item>
+            <Select.Item value='100'>100</Select.Item>
+          </Select.Content>
+        </Select.Root>
+        <Text size='2' color='gray'>
+          items per page
+        </Text>
+      </div>
     </div>
   )
 }
