@@ -3,6 +3,7 @@ import { Card, Flex, Heading, Text } from '@radix-ui/themes'
 
 import Link from './components/Link'
 import StatusBadge from './issues/_components/IssueStatusBadge'
+import { getBadgeColorHex } from './lib/colors'
 
 interface IssueSummaryProps {
   statuses: {
@@ -22,7 +23,9 @@ const IssueSummary = ({ statuses }: IssueSummaryProps) => {
       <Flex gap='4' wrap='wrap' direction={{ initial: 'column', xs: 'row' }}>
         {statuses.map((status) => (
           <Card key={status.value}>
-            <Link href={`/issues?status=${status.value}`} color={status.color}>
+            <Link
+              href={`/issues?status=${status.value}`}
+              style={{ color: getBadgeColorHex(status.color) }}>
               <Flex direction='column' align='center' justify='center' gap='2'>
                 <Text size='6' weight='bold'>
                   {status.count}
