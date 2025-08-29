@@ -29,22 +29,23 @@ const IssueChart = ({ statuses }: IssueChartProps) => {
     status: status.value,
   }))
 
-  // Responsive bar size based on screen width
+  // Responsive bar size based on screen width (mobile-first)
   useEffect(() => {
     const updateBarSize = () => {
       const width = window.innerWidth
-      if (width < 640) {
-        // sm
-        setBarSize(20)
-      } else if (width < 768) {
-        // md
-        setBarSize(25)
-      } else if (width < 1024) {
-        // lg
-        setBarSize(30)
-      } else {
+      // Mobile first: start with smallest, then scale up
+      if (width >= 1024) {
         // xl and above
-        setBarSize(35)
+        setBarSize(65)
+      } else if (width >= 768) {
+        // lg
+        setBarSize(60)
+      } else if (width >= 640) {
+        // md
+        setBarSize(45)
+      } else {
+        // sm and below (mobile)
+        setBarSize(30)
       }
     }
 
