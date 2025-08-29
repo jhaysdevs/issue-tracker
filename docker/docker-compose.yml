@@ -1,4 +1,3 @@
-# TODO: find/replace all the references to issue-tracker with directory name (and see TODO below)
 services:
   db:
     image: mariadb:latest
