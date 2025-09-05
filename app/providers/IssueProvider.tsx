@@ -53,13 +53,13 @@ export const IssueProvider = ({ children }: IssueProviderProps) => {
 
 // Debug component to test context
 export const IssueContextDebug = ({ ...props }: React.ComponentProps<'div'>) => {
+  // Call hook at the top level - before any early returns
+  const context = useIssueContext()
+
   // Only show in development or local environment
   if (process.env.NODE_ENV === 'production') {
     return null
   }
-
-  // Call hook at the top level
-  const context = useIssueContext()
 
   return (
     <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }} {...props}>
