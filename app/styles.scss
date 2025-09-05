@@ -323,12 +323,11 @@ body {
   .rt-Button {
     &:not([disabled]) {
       &:hover {
-        background-color: rgb(55 65 81) !important;
-        color: rgb(229 231 235) !important;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3) !important;
       }
 
       &:active {
-        background-color: rgb(75 85 99) !important;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4) !important;
       }
     }
   }
