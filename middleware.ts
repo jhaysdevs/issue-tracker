@@ -6,6 +6,7 @@ export const config = {
     '/issues/edit',
     '/issues/edit/:id+',
     '/users',
+    '/api/issues/:id+',
     // '/((?!api|_next/static|_next/image|favicon.ico).*)'
   ],
 }

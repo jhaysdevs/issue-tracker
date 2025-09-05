@@ -1,9 +1,7 @@
-import Link from 'next/link'
-
 import AssigneeFilterWrapper from '@/app/issues/_components/AssigneeFilterWrapper'
 import IssueStatusFilterWrapper from '@/app/issues/_components/IssueStatusFilterWrapper'
-import { Pencil2Icon } from '@radix-ui/react-icons'
-import { Button, Flex } from '@radix-ui/themes'
+import NewIssueButton from '@/app/issues/_components/NewIssueButton'
+import { Flex } from '@radix-ui/themes'
 
 const IssueActions = () => {
   return (
@@ -12,12 +10,7 @@ const IssueActions = () => {
         <IssueStatusFilterWrapper />
         <AssigneeFilterWrapper />
       </Flex>
-      <Button asChild className='!order-1 !sm:order-2'>
-        <Link href='/issues/new'>
-          <Pencil2Icon />
-          New Issue
-        </Link>
-      </Button>
+      <NewIssueButton className='!order-1 !sm:order-2' />
     </Flex>
   )
 }

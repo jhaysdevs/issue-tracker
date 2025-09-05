@@ -9,10 +9,6 @@ import DeleteIssueButton from './DeleteIssueButton'
 import EditIssueButton from './EditIssueButton'
 
 const IssueEditActions = async ({ issue }: { issue: Issue }) => {
-  const session = await getServerSession(authOptions)
-
-  if (!session) return null
-
   return (
     <Flex justify='end' direction={{ initial: 'column', sm: 'row' }} gap='2'>
       <BackButton mr={{ initial: '0', sm: 'auto' }} />

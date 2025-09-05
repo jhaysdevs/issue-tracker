@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 import Spinner from '@/app/components/Spinner'
@@ -15,7 +16,18 @@ const DeleteIssueButton = ({
 }: { issueId: number } & React.ComponentProps<typeof Button>) => {
   const [error, setError] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [showAuthDialog, setShowAuthDialog] = useState(false)
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const router = useRouter()
+  const { data: session, status } = useSession()
+
+  const handleDeleteClick = () => {
+    if (!session) {
+      setShowAuthDialog(true)
+    } else {
+      setShowConfirmDialog(true)
+    }
+  }
 
   const deleteIssue = async () => {
     try {
@@ -32,17 +44,17 @@ const DeleteIssueButton = ({
 
   return (
     <>
-      <AlertDialog.Root>
-        <AlertDialog.Trigger>
-          <Button
-            color='red'
-            disabled={isDeleting}
-            className='w-full min-w-0 text-center'
-            {...props}>
-            <TrashIcon />
-            Delete Issue {isDeleting && <Spinner />}
-          </Button>
-        </AlertDialog.Trigger>
+      <Button
+        color='red'
+        disabled={isDeleting}
+        className='w-full min-w-0 text-center'
+        onClick={handleDeleteClick}
+        {...props}>
+        <TrashIcon />
+        Delete Issue {isDeleting && <Spinner />}
+      </Button>
+
+      <AlertDialog.Root open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialog.Content>
           <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
           <AlertDialog.Description>
@@ -71,6 +83,26 @@ const DeleteIssueButton = ({
             <Button color='gray' variant='soft' mt='2' onClick={() => setError(false)}>
               OK
             </Button>
+          </AlertDialog.Content>
+        </AlertDialog.Root>
+      )}
+      {showAuthDialog && (
+        <AlertDialog.Root open={showAuthDialog} onOpenChange={setShowAuthDialog}>
+          <AlertDialog.Content>
+            <AlertDialog.Title>Authentication Required</AlertDialog.Title>
+            <AlertDialog.Description>
+              You must be logged in to delete issues. Please sign in to continue.
+            </AlertDialog.Description>
+            <Flex gap='3' mt='4'>
+              <AlertDialog.Cancel>
+                <Button variant='soft' color='gray'>
+                  Cancel
+                </Button>
+              </AlertDialog.Cancel>
+              <Button color='blue' onClick={() => router.push('/api/auth/signin')}>
+                Sign In
+              </Button>
+            </Flex>
           </AlertDialog.Content>
         </AlertDialog.Root>
       )}

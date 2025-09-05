@@ -8,16 +8,14 @@ import { useRouter } from 'next/navigation'
 import { Pencil2Icon } from '@radix-ui/react-icons'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 
-interface EditIssueButtonProps extends React.ComponentProps<typeof Button> {
-  issueId: number
-}
+interface NewIssueButtonProps extends React.ComponentProps<typeof Button> {}
 
-const EditIssueButton = ({ issueId, ...props }: EditIssueButtonProps) => {
+const NewIssueButton = ({ ...props }: NewIssueButtonProps) => {
   const [showAuthDialog, setShowAuthDialog] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
 
-  const handleEditClick = (e: React.MouseEvent) => {
+  const handleNewIssueClick = (e: React.MouseEvent) => {
     if (!session) {
       e.preventDefault()
       setShowAuthDialog(true)
@@ -26,10 +24,10 @@ const EditIssueButton = ({ issueId, ...props }: EditIssueButtonProps) => {
 
   return (
     <>
-      <Button asChild {...props} onClick={handleEditClick}>
-        <a href={`/issues/edit/${issueId}`}>
+      <Button asChild {...props} onClick={handleNewIssueClick}>
+        <a href='/issues/new'>
           <Pencil2Icon />
-          Edit Issue
+          New Issue
         </a>
       </Button>
 
@@ -38,7 +36,7 @@ const EditIssueButton = ({ issueId, ...props }: EditIssueButtonProps) => {
           <AlertDialog.Content>
             <AlertDialog.Title>Authentication Required</AlertDialog.Title>
             <AlertDialog.Description>
-              You must be logged in to edit issues. Please sign in to continue.
+              You must be logged in to create new issues. Please sign in to continue.
             </AlertDialog.Description>
             <Flex gap='3' mt='4'>
               <AlertDialog.Cancel>
@@ -57,4 +55,4 @@ const EditIssueButton = ({ issueId, ...props }: EditIssueButtonProps) => {
   )
 }
 
-export default EditIssueButton
+export default NewIssueButton
