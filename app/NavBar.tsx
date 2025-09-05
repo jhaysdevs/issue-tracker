@@ -32,7 +32,10 @@ const NavBar = () => {
             </Link>
             <NavLinks />
           </Flex>
-          <AuthStatus />
+          <Flex align='center' gap='3'>
+            <ThemeToggle />
+            <AuthStatus />
+          </Flex>
         </Flex>
       </div>
     </nav>
@@ -71,9 +74,21 @@ const NavLinks = () => {
   )
 }
 
+const ThemeToggle = () => {
+  const { theme, toggleTheme } = useTheme()
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className='flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
+      {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+    </button>
+  )
+}
+
 const AuthStatus = () => {
   const { status: isLoggedIn, data: session } = useSession()
-  const { theme, toggleTheme } = useTheme()
   const pathname = usePathname()
 
   // Define protected routes from middleware matcher
@@ -123,13 +138,6 @@ const AuthStatus = () => {
               <Text>{session!.user!.email}</Text>
             </DropdownMenu.Label>
           )}
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item onClick={toggleTheme}>
-            <Flex align='center' gap='2' className='cursor-pointer w-full'>
-              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-              <Text>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</Text>
-            </Flex>
-          </DropdownMenu.Item>
           <DropdownMenu.Separator />
           <DropdownMenu.Item onClick={handleLogout}>
             <strong>Logout</strong>
