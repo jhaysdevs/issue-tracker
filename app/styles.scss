@@ -386,6 +386,6 @@ body {
   }
 }
 
-.radix-themes .rt-Button {
+.radix-themes .rt-Button:not([disabled]) {
   cursor: pointer;
 }
