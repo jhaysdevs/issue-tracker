@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Card } from '@radix-ui/themes'
-import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import { getBadgeColorHex } from './lib/colors'
 
-interface IssueChartProps {
+interface IssueBarChartProps {
   statuses: {
     label: string
     value: string
@@ -18,7 +18,7 @@ interface IssueChartProps {
   }[]
 }
 
-const IssueChart = ({ statuses }: IssueChartProps) => {
+const IssueBarChart = ({ statuses }: IssueBarChartProps) => {
   const router = useRouter()
   const [barSize, setBarSize] = useState(30)
 
@@ -61,15 +61,37 @@ const IssueChart = ({ statuses }: IssueChartProps) => {
     }
   }
 
+  const CustomTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: boolean
+    payload?: Array<{ payload: { label: string; value: number; color: string; status: string } }>
+  }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload
+      return (
+        <div className='bg-gray-800 border border-gray-600 rounded-lg p-3 shadow-lg'>
+          <p className='text-gray-200 font-medium'>{data.label}</p>
+          <p className='text-gray-300'>
+            Total Issues: <span className='font-semibold'>{data.value}</span>
+          </p>
+        </div>
+      )
+    }
+    return null
+  }
+
   return (
     <Card>
       <ResponsiveContainer width='100%' height={300}>
         <BarChart
           data={data}
           style={{ outline: 'none', marginLeft: '-20px' }}
-          className='[&_*]:outline-none'>
+          className='[&_*]:outline-none [&_.recharts-tooltip-cursor]:!fill-transparent'>
           <XAxis dataKey='label' />
           <YAxis />
+          <Tooltip content={<CustomTooltip />} cursor={false} />
           <Bar dataKey='value' barSize={barSize} cursor='pointer' onClick={handleBarClick}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getBadgeColorHex(entry.color)} />
@@ -81,4 +103,4 @@ const IssueChart = ({ statuses }: IssueChartProps) => {
   )
 }
 
-export default IssueChart
+export default IssueBarChart

@@ -2,7 +2,7 @@ import { Status } from '@/app/generated/prisma'
 import { prisma } from '@/prisma/client'
 import { Container, Flex, Grid } from '@radix-ui/themes'
 
-import IssueChart from './IssueChart'
+import IssueBarChart from './IssueBarChart'
 import IssuePieChart from './IssuePieChart'
 import IssueSummary from './IssueSummary'
 import LatestIssues from './LatestIssues'
@@ -41,7 +41,7 @@ const Home = async () => {
         <IssueSummary statuses={statuses} />
 
         <Grid columns={{ initial: '1', md: '2' }} gap='6'>
-          <IssueChart statuses={statuses} />
+          <IssueBarChart statuses={statuses} />
           <IssuePieChart statuses={statuses} />
         </Grid>
 
