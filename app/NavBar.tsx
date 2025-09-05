@@ -2,7 +2,7 @@
 
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import { MoonIcon, PersonIcon, SunIcon } from '@radix-ui/react-icons'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'

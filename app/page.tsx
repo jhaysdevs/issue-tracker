@@ -1,3 +1,4 @@
+import { Status } from '@/app/generated/prisma'
 import { prisma } from '@/prisma/client'
 import { Container, Flex, Grid } from '@radix-ui/themes'
 
@@ -13,7 +14,7 @@ const Home = async () => {
     StatusBadges.filter((status) => status.key !== 'ALL').map(async (status) => {
       const count = await prisma.issue.count({
         where: {
-          status: status.key as any,
+          status: status.key as Status,
         },
       })
       return {

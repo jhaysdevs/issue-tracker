@@ -14,7 +14,7 @@ const IssueStatusFilter = () => {
   const { statusBadges } = useStatus()
 
   // Always call useIssueContext - it will throw if not in provider, but that's expected
-  const { selectedStatus, setSelectedStatus, isLoading } = useIssueContext()
+  const { selectedStatus, setSelectedStatus } = useIssueContext()
 
   const handleStatusChange = useCallback(
     (status: string) => {
