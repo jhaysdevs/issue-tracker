@@ -10,6 +10,10 @@ body {
     &.light {
       background: url("/backgrounds/p2.webp");
     }
+
+    &.dark {
+      background: url("/backgrounds/dark-moulin.webp");
+    }
   }
 
   main {

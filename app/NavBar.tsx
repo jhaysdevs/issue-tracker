@@ -80,10 +80,14 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className='group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground hover:scale-105 focus:bg-accent focus:text-accent-foreground focus:outline-none'
+      className='group flex items-center gap-2 rounded-md px-2 py-2 text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground hover:scale-105 focus:bg-accent focus:text-accent-foreground focus:outline-none'
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
       <span className='transition-transform duration-200 group-hover:rotate-12'>
-        {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+        {theme === 'light' ? (
+          <MoonIcon width={20} height={20} />
+        ) : (
+          <SunIcon width={20} height={20} />
+        )}
       </span>
     </button>
   )
