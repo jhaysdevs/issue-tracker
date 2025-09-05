@@ -32,7 +32,7 @@ const NavBar = () => {
             </Link>
             <NavLinks />
           </Flex>
-          <Flex align='center' gap='3'>
+          <Flex align='center' gap='2'>
             <ThemeToggle />
             <AuthStatus />
           </Flex>
@@ -53,7 +53,7 @@ const NavLinks = () => {
     <NavigationMenu.Root>
       <NavigationMenu.List className='flex'>
         {links.map((link) => (
-          <NavigationMenu.Item key={link.href} style={{ marginLeft: '-2px' }}>
+          <NavigationMenu.Item key={link.href}>
             <NavigationMenu.Link asChild>
               <Link
                 className={classnames(

@@ -355,6 +355,10 @@ body {
 }
 
 @layer utilities {
+  #logged-in-user {
+    font-size: 14px;
+  }
+
   .nav-link {
     @apply text-zinc-600 hover:text-zinc-800 transition-colors;
   }
