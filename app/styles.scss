@@ -348,6 +348,28 @@ body {
       color: rgb(229 231 235) !important;
     }
   }
+
+  /* Remove outline from pie chart slices when clicked */
+  .recharts-pie-sector,
+  .recharts-pie-sector:focus,
+  .recharts-pie-sector:active,
+  .recharts-pie-sector:focus-visible,
+  .recharts-pie-sector:focus-within {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Additional selectors for pie chart elements */
+  .recharts-pie,
+  .recharts-pie * {
+    outline: none !important;
+  }
+
+  /* Target the specific path elements that make up pie slices */
+  .recharts-pie-sector path {
+    outline: none !important;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -402,4 +424,18 @@ body {
 
 .radix-themes .rt-Button:not([disabled]) {
   cursor: pointer;
+}
+
+/* Global pie chart outline removal - applies to all themes */
+.recharts-pie-sector,
+.recharts-pie-sector:focus,
+.recharts-pie-sector:active,
+.recharts-pie-sector:focus-visible,
+.recharts-pie-sector:focus-within,
+.recharts-pie,
+.recharts-pie *,
+.recharts-pie-sector path {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
 }
