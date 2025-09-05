@@ -117,6 +117,13 @@ The project includes a Docker Compose configuration that sets up:
   - Password: `issues`
   - Root Password: `root`
 
+Make sure Docker is running, and then run this in your terminal from the project root directory:
+
+```bash
+cd docker
+docker-compose up -d
+```
+
 #### Database Commands
 
 ```bash
