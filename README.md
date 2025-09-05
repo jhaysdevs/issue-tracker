@@ -84,7 +84,7 @@ Create a `.env` file in the root directory with the following configuration:
 # Database
 DATABASE_URL="mysql://issues:issues@localhost:33060/issue_tracker"
 
-# NextAuth.js
+# NextAuth.js secret key - copy/paste output of "openssl rand -base64 32" in terminal
 NEXTAUTH_SECRET="your-secret-key"
 
 # Google OAuth API - https://console.cloud.google.com/apis/credentials
