@@ -358,6 +358,16 @@ body {
     font-size: 14px;
   }
 
+  .hide-below-360 {
+    display: block;
+  }
+
+  @media (max-width: 359px) {
+    .hide-below-360 {
+      display: none !important;
+    }
+  }
+
   .nav-link {
     @apply text-zinc-600 hover:text-zinc-800 transition-colors;
   }

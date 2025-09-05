@@ -57,7 +57,7 @@ const NavLinks = () => {
             <NavigationMenu.Link asChild>
               <Link
                 className={classnames(
-                  'block select-none rounded-md px-3 py-2 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                  'block select-none rounded-md px-3 py-2 text-base font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
                   {
                     'bg-accent text-accent-foreground': link.href === currentPath,
                   }
@@ -119,7 +119,9 @@ const AuthStatus = () => {
         <DropdownMenu.Trigger className='cursor-pointer'>
           <Flex align='center' gap='2'>
             {session?.user?.name && (
-              <Text id='logged-in-user'>Hi, {session?.user?.name.split(' ')[0]}</Text>
+              <Text id='logged-in-user' className='hide-below-360'>
+                Hi, {session?.user?.name.split(' ')[0]}
+              </Text>
             )}
             {session?.user?.image ? (
               <Avatar
