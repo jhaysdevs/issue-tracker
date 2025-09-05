@@ -58,14 +58,10 @@ export const IssueContextDebug = ({ ...props }: React.ComponentProps<'div'>) => 
     return null
   }
 
+  // Call hook before any conditional logic
+  let context
   try {
-    const context = useIssueContext()
-    return (
-      <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }} {...props}>
-        Context Debug: Status={context.selectedStatus}, Loading={context.isLoading.toString()},
-        TotalCount={context.totalCount}
-      </div>
-    )
+    context = useIssueContext()
   } catch (error) {
     return (
       <div style={{ fontSize: '12px', color: 'red', padding: '4px' }} {...props}>
@@ -73,6 +69,13 @@ export const IssueContextDebug = ({ ...props }: React.ComponentProps<'div'>) => 
       </div>
     )
   }
+
+  return (
+    <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }} {...props}>
+      Context Debug: Status={context.selectedStatus}, Loading={context.isLoading.toString()},
+      TotalCount={context.totalCount}
+    </div>
+  )
 }
 
 export default IssueProvider
