@@ -12,7 +12,6 @@ import {
   QueryClientProvider,
   StatusProvider,
   ThemeProvider,
-  ToastProvider,
 } from './providers'
 
 export const metadata: Metadata = {
@@ -48,10 +47,8 @@ export default function RootLayout({
             <QueryClientProvider>
               <AuthProvider>
                 <StatusProvider>
-                  <ToastProvider>
-                    <NavBar />
-                    <main className='pt-16 px-5'>{children}</main>
-                  </ToastProvider>
+                  <NavBar />
+                  <main className='pt-16 px-5'>{children}</main>
                 </StatusProvider>
               </AuthProvider>
             </QueryClientProvider>

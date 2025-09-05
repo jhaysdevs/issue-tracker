@@ -5,7 +5,6 @@ import { useUsers } from '@/app/lib/hooks'
 import { Issue, User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
 import axios from 'axios'
-import toast from 'react-hot-toast'
 
 const AssigneeSelect = ({ issue }: { issue: Issue | null }) => {
   const { data: users, error, isLoading } = useUsers()
@@ -21,7 +20,6 @@ const AssigneeSelect = ({ issue }: { issue: Issue | null }) => {
       })
       .catch((error) => {
         console.error(error)
-        toast.error('Error assigning issue')
       })
   }
 
