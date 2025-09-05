@@ -26,7 +26,7 @@ A Next.js application for issue management with authentication, real-time update
 - Responsive UI with Radix UI components
 - Type-safe database operations with Prisma
 - Form validation with Zod schemas
-- Toast notifications for user feedback
+- Error handling with console logging
 
 ## Tech Stack
 
@@ -179,7 +179,6 @@ issue-tracker/
 │   │   ├── AuthProvider.tsx
 │   │   ├── QueryClientProvider.tsx
 │   │   ├── ThemeProvider.tsx
-│   │   ├── ToastProvider.tsx
 │   │   ├── FontProvider.tsx
 │   │   ├── IssueProvider.tsx
 │   │   ├── StatusProvider.tsx
@@ -232,7 +231,6 @@ FontProvider
     └── AuthProvider
         └── ThemeProvider
             └── StatusProvider
-                └── ToastProvider
 ```
 
 ### Database Schema
@@ -298,7 +296,7 @@ pnpm format       # Format code with Prettier
 
 - TypeScript strict mode with proper typing
 - React Hook Form with Zod validation
-- Error handling with toast notifications
+- Error handling with console logging
 - Prisma-generated types for database operations
 - Radix UI components for consistency
 - Feature-specific components in `_components` directories
