@@ -52,7 +52,7 @@ const IssuePieChart = ({ statuses }: IssuePieChartProps) => {
         <div className='bg-gray-800 border border-gray-600 rounded-lg p-3 shadow-lg'>
           <p className='text-gray-200 font-medium'>{data.name}</p>
           <p className='text-gray-300'>
-            Count: <span className='font-semibold'>{data.value}</span>
+            Total Issues: <span className='font-semibold'>{data.value}</span>
           </p>
         </div>
       )
