@@ -13,7 +13,7 @@ import IssueStatusUpdate from '@/app/issues/_components/IssueStatusUpdate'
 import { issueSchema } from '@/app/validationSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { Callout, Container, Flex, Separator, TextField } from '@radix-ui/themes'
+import { Callout, Container, Flex, TextField } from '@radix-ui/themes'
 import axios from 'axios'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -81,7 +81,6 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           <BackButton />
           <UpdateIssueButton onClick={handleSubmit(onSubmit)} isSubmitting={isSubmitting} />
         </Flex>
-        <Separator />
         <TextField.Root
           className='mb-3'
           placeholder='Title'
