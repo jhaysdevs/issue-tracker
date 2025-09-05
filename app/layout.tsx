@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 
-import '@/app/globals.css'
+import '@/app/styles.scss'
 import '@/app/theme-config.css'
 import '@radix-ui/themes/styles.css'
+import 'easymde/dist/easymde.min.css'
 
 import NavBar from './NavBar'
 import {
@@ -27,20 +28,32 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body suppressHydrationWarning>
-        <FontProvider>
-          <QueryClientProvider>
-            <AuthProvider>
-              <ThemeProvider>
+        {/* <div
+          className='bg-wrapper'
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: -1,
+            pointerEvents: 'none',
+          }}
+        /> */}
+        <ThemeProvider>
+          <FontProvider>
+            <QueryClientProvider>
+              <AuthProvider>
                 <StatusProvider>
                   <ToastProvider>
                     <NavBar />
                     <main className='pt-16 px-5'>{children}</main>
                   </ToastProvider>
                 </StatusProvider>
-              </ThemeProvider>
-            </AuthProvider>
-          </QueryClientProvider>
-        </FontProvider>
+              </AuthProvider>
+            </QueryClientProvider>
+          </FontProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

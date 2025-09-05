@@ -33,7 +33,7 @@ export default async function Home() {
   }))
 
   return (
-    <Container mb='5' mt='3'>
+    <Container mb='5'>
       <Flex direction={{ initial: 'column', md: 'row' }} gap='5'>
         <Flex direction='column' gap='5'>
           <IssueSummary statuses={statuses} />
@@ -44,3 +44,5 @@ export default async function Home() {
     </Container>
   )
 }
+
+export const dynamic = 'force-dynamic'

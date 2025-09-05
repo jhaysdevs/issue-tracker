@@ -1,8 +1,8 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { MoonIcon, PersonIcon, SunIcon } from '@radix-ui/react-icons'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
@@ -24,10 +24,10 @@ const NavBar = () => {
             ? 'color(display-p3 0.098 0.008 0.224 / 0.126)'
             : 'lab(16.1051 -1.18239 -11.7533)',
       }}>
-      <div className='mx-auto px-3'>
+      <div className='mx-auto px-5'>
         <Flex justify='between' align='center' py='3'>
           <Flex align='center' gap='2'>
-            <Link href='/' style={{ marginLeft: '5px' }}>
+            <Link href='/'>
               <AiFillBug className='text-2xl' />
             </Link>
             <NavLinks />
@@ -47,10 +47,10 @@ const NavLinks = () => {
   ]
 
   return (
-    <NavigationMenu.Root className='flex'>
+    <NavigationMenu.Root>
       <NavigationMenu.List className='flex'>
         {links.map((link) => (
-          <NavigationMenu.Item key={link.href}>
+          <NavigationMenu.Item key={link.href} style={{ marginLeft: '-2px' }}>
             <NavigationMenu.Link asChild>
               <Link
                 className={classnames(
@@ -59,6 +59,7 @@ const NavLinks = () => {
                     'bg-accent text-accent-foreground': link.href === currentPath,
                   }
                 )}
+                style={{ margin: '0 -6px' }}
                 href={link.href}>
                 {link.label}
               </Link>
@@ -73,6 +74,19 @@ const NavLinks = () => {
 const AuthStatus = () => {
   const { status: isLoggedIn, data: session } = useSession()
   const { theme, toggleTheme } = useTheme()
+  const pathname = usePathname()
+
+  // Define protected routes from middleware matcher
+  const protectedRoutes = ['/issues/new', '/issues/edit', '/users']
+  const isProtectedRoute = protectedRoutes.some(
+    (route) => pathname.startsWith(route) || pathname.match(/^\/issues\/edit\/\d+/)
+  )
+
+  const handleLogout = () => {
+    // If on a protected route, redirect to dashboard, otherwise stay on current page
+    const redirectUrl = isProtectedRoute ? '/' : pathname
+    signOut({ callbackUrl: redirectUrl })
+  }
 
   if (isLoggedIn === 'loading') return <Skeleton width='3rem' />
   if (isLoggedIn === 'unauthenticated')
@@ -87,7 +101,9 @@ const AuthStatus = () => {
       <DropdownMenu.Root>
         <DropdownMenu.Trigger className='cursor-pointer'>
           <Flex align='center' gap='2'>
-            {session?.user?.name && <Text>Hi, {session?.user?.name.split(' ')[0]}</Text>}
+            {session?.user?.name && (
+              <Text id='logged-in-user'>Hi, {session?.user?.name.split(' ')[0]}</Text>
+            )}
             {session?.user?.image ? (
               <Avatar
                 src={session?.user?.image}
@@ -115,10 +131,8 @@ const AuthStatus = () => {
             </Flex>
           </DropdownMenu.Item>
           <DropdownMenu.Separator />
-          <DropdownMenu.Item>
-            <Link className='w-full nav-link' href='/api/auth/signout'>
-              <strong>Logout</strong>
-            </Link>
+          <DropdownMenu.Item onClick={handleLogout}>
+            <strong>Logout</strong>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>

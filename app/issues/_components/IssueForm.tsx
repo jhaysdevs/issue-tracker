@@ -15,7 +15,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { InfoCircledIcon } from '@radix-ui/react-icons'
 import { Callout, Container, Flex, Separator, TextField } from '@radix-ui/themes'
 import axios from 'axios'
-import 'easymde/dist/easymde.min.css'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 

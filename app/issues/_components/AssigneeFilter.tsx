@@ -57,7 +57,6 @@ const AssigneeFilter = () => {
           <Select.Item value='all'>All Assignees</Select.Item>
           <Select.Item value='unassigned'>Unassigned</Select.Item>
           <Select.Separator />
-          <Select.Label>Filter by:</Select.Label>
           {users?.map((user: User) => (
             <Select.Item key={user.id} value={user.id}>
               {user.name}
