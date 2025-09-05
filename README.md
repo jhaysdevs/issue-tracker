@@ -86,6 +86,8 @@ DATABASE_URL="mysql://issues:issues@localhost:33060/issue_tracker"
 
 # NextAuth.js
 NEXTAUTH_SECRET="your-secret-key"
+
+# Google OAuth API - https://console.cloud.google.com/apis/credentials
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
 ```
