@@ -46,6 +46,28 @@ body {
 
   .nav-link {
     @apply text-zinc-400 hover:text-zinc-200;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: currentColor;
+      transform: translateX(-50%);
+      transition: width 0.3s ease-out;
+    }
+
+    &:hover::before,
+    &:focus::before {
+      width: calc(100% - 24px);
+    }
+
+    &.nav-link-active::before {
+      width: calc(100% - 24px);
+    }
   }
 
   /* Table row hover styles */
@@ -396,6 +418,28 @@ body {
 
   .nav-link {
     @apply text-zinc-600 hover:text-zinc-800 transition-colors;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: currentColor;
+      transform: translateX(-50%);
+      transition: width 0.3s ease-out;
+    }
+
+    &:hover::before,
+    &:focus::before {
+      width: calc(100% - 24px);
+    }
+
+    &.nav-link-active::before {
+      width: calc(100% - 24px);
+    }
   }
 
   /* Light mode select item styles */

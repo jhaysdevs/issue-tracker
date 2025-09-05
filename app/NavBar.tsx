@@ -57,9 +57,9 @@ const NavLinks = () => {
             <NavigationMenu.Link asChild>
               <Link
                 className={classnames(
-                  'block select-none rounded-md px-3 py-2 text-base font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                  'nav-link relative block select-none rounded-md px-3 py-2 text-base font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
                   {
-                    'bg-accent text-accent-foreground': link.href === currentPath,
+                    'bg-accent text-accent-foreground nav-link-active': link.href === currentPath,
                   }
                 )}
                 style={{ margin: '0 -6px' }}
