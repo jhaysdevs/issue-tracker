@@ -1,18 +1,20 @@
 import { prisma } from '@/prisma/client'
-import { Status } from '@prisma/client'
-import { Container, Flex } from '@radix-ui/themes'
+import { Container, Flex, Grid } from '@radix-ui/themes'
 
 import IssueChart from './IssueChart'
+import IssuePieChart from './IssuePieChart'
 import IssueSummary from './IssueSummary'
 import LatestIssues from './LatestIssues'
 import { StatusBadges } from './lib/status'
 
-export default async function Home() {
+const Home = async () => {
   // Get counts for all status types (excluding 'ALL')
   const statusCounts = await Promise.all(
     StatusBadges.filter((status) => status.key !== 'ALL').map(async (status) => {
       const count = await prisma.issue.count({
-        where: { status: status.key as Status },
+        where: {
+          status: status.key as any,
+        },
       })
       return {
         key: status.key,
@@ -33,16 +35,19 @@ export default async function Home() {
   }))
 
   return (
-    <Container mb='5'>
-      <Flex direction={{ initial: 'column', md: 'row' }} gap='5'>
-        <Flex direction='column' gap='5'>
-          <IssueSummary statuses={statuses} />
+    <Container size='4'>
+      <Flex direction='column' gap='6' className='pb-8'>
+        <IssueSummary statuses={statuses} />
+
+        <Grid columns={{ initial: '1', md: '2' }} gap='6'>
           <IssueChart statuses={statuses} />
-        </Flex>
-        <LatestIssues grow />
+          <IssuePieChart statuses={statuses} />
+        </Grid>
+
+        <LatestIssues />
       </Flex>
     </Container>
   )
 }
 
-export const dynamic = 'force-dynamic'
+export default Home
