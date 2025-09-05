@@ -58,21 +58,8 @@ export const IssueContextDebug = ({ ...props }: React.ComponentProps<'div'>) => 
     return null
   }
 
-  try {
-    const context = useIssueContext()
-    return (
-      <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }} {...props}>
-        Context Debug: Status={context.selectedStatus}, Loading={context.isLoading.toString()},
-        TotalCount={context.totalCount}
-      </div>
-    )
-  } catch (error) {
-    return (
-      <div style={{ fontSize: '12px', color: 'red', padding: '4px' }} {...props}>
-        Context Error: {error instanceof Error ? error.message : 'Unknown error'}
-      </div>
-    )
-  }
+  // Call hook at the top level
+  const context = useIssueContext()
 
   return (
     <div style={{ fontSize: '12px', color: 'gray', padding: '4px' }} {...props}>
