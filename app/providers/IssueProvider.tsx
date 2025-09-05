@@ -53,6 +53,11 @@ export const IssueProvider = ({ children }: IssueProviderProps) => {
 
 // Debug component to test context
 export const IssueContextDebug = ({ ...props }: React.ComponentProps<'div'>) => {
+  // Only show in development or local environment
+  if (process.env.NODE_ENV === 'production') {
+    return null
+  }
+
   try {
     const context = useIssueContext()
     return (
