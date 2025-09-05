@@ -1,0 +1,380 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+
+  main {
+    padding-top: 76px;
+  }
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Light mode (default) */
+.light {
+  --background: #ededed;
+  --foreground: #171717;
+}
+
+/* Dark mode */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  .nav-link {
+    @apply text-zinc-400 hover:text-zinc-200;
+  }
+
+  /* Table row hover styles */
+  .hover\:bg-gray-100 {
+    @apply hover:bg-gray-800;
+  }
+
+  /* Gray text colors */
+  .text-gray-500 {
+    @apply text-gray-400;
+  }
+
+  /* Prose content styles */
+  .prose {
+    @apply text-gray-200;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-gray-100;
+    }
+
+    p {
+      @apply text-gray-200;
+    }
+
+    strong {
+      @apply text-gray-100;
+    }
+
+    code {
+      @apply bg-gray-800 text-gray-200;
+    }
+
+    pre {
+      @apply bg-gray-800 text-gray-200;
+    }
+
+    blockquote {
+      @apply border-gray-600 text-gray-300;
+    }
+
+    ul,
+    ol {
+      @apply text-gray-200;
+    }
+
+    li {
+      @apply text-gray-200;
+    }
+  }
+
+  /* SimpleMDE editor styles */
+  .EasyMDEContainer {
+    @apply bg-gray-900 border-gray-600;
+
+    .CodeMirror {
+      @apply bg-gray-900 text-gray-200;
+      background-color: rgb(17 24 39) !important;
+
+      &.CodeMirror-focused {
+        background-color: rgb(17 24 39) !important;
+      }
+
+      .CodeMirror-cursor {
+        @apply border-gray-200;
+        border-color: rgb(229 231 235) !important;
+      }
+
+      .CodeMirror-gutters {
+        background-color: rgb(17 24 39) !important;
+        border-color: rgb(75 85 99) !important;
+      }
+
+      .CodeMirror-linenumber {
+        color: rgb(107 114 128) !important;
+      }
+
+      .CodeMirror-line {
+        color: rgb(229 231 235) !important;
+      }
+
+      .CodeMirror-selected {
+        background-color: rgb(55 65 81) !important;
+
+        &.CodeMirror-focused {
+          background-color: rgb(55 65 81) !important;
+        }
+      }
+    }
+
+    .editor-toolbar {
+      @apply bg-gray-800 border-gray-600;
+
+      &.fullscreen {
+        background-color: rgb(31 41 55) !important;
+        border-color: rgb(75 85 99) !important;
+      }
+
+      button {
+        @apply text-gray-300 hover:text-gray-100 hover:bg-gray-700;
+
+        &.active {
+          @apply bg-gray-700 text-gray-100;
+          background-color: rgb(55 65 81) !important;
+          border-color: rgb(107 114 128) !important;
+        }
+
+        &:hover {
+          background-color: rgb(55 65 81) !important;
+          border-color: rgb(107 114 128) !important;
+        }
+      }
+    }
+
+    .editor-preview {
+      @apply bg-gray-900 text-gray-200;
+      background-color: rgb(17 24 39) !important;
+      color: rgb(229 231 235) !important;
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        @apply text-gray-100;
+      }
+
+      code {
+        @apply bg-gray-800 text-gray-200;
+      }
+
+      pre {
+        @apply bg-gray-800 text-gray-200;
+      }
+
+      blockquote {
+        @apply border-gray-600 text-gray-300;
+      }
+    }
+
+    /* Preview mode overrides */
+    &.editor-preview-active {
+      background-color: rgb(17 24 39) !important;
+
+      .editor-preview {
+        background-color: rgb(17 24 39) !important;
+        color: rgb(229 231 235) !important;
+
+        * {
+          background-color: rgb(17 24 39) !important;
+          color: rgb(229 231 235) !important;
+        }
+      }
+
+      .CodeMirror {
+        background-color: rgb(17 24 39) !important;
+        color: rgb(229 231 235) !important;
+
+        .CodeMirror-line {
+          color: rgb(229 231 235) !important;
+        }
+
+        .CodeMirror-gutters {
+          background-color: rgb(17 24 39) !important;
+          border-color: rgb(75 85 99) !important;
+        }
+
+        .CodeMirror-linenumber {
+          color: rgb(107 114 128) !important;
+        }
+      }
+
+      * {
+        background-color: rgb(17 24 39) !important;
+        color: rgb(229 231 235) !important;
+      }
+    }
+  }
+
+  /* Form elements */
+  .rt-TextFieldRoot {
+    @apply bg-gray-800 border-gray-600;
+
+    &:focus-within {
+      @apply border-gray-400 ring-gray-400;
+    }
+  }
+
+  .rt-TextFieldInput {
+    @apply text-gray-200 bg-transparent;
+
+    &::placeholder {
+      @apply text-gray-400;
+    }
+  }
+
+  /* Select components */
+  .rt-SelectTrigger {
+    @apply bg-gray-800 border-gray-600 text-gray-200;
+
+    &:hover {
+      @apply bg-gray-700 border-gray-500;
+    }
+  }
+
+  .rt-SelectContent {
+    @apply bg-gray-800 border-gray-600;
+  }
+
+  .rt-SelectItem {
+    @apply text-gray-200;
+    background-color: transparent !important;
+    color: rgb(229 231 235) !important;
+    transition: color 0.2s ease;
+
+    &:hover {
+      background-color: transparent !important;
+      color: var(--accent-9) !important;
+    }
+
+    &[data-highlighted] {
+      background-color: transparent !important;
+      color: var(--accent-9) !important;
+    }
+  }
+
+  .rt-SelectLabel {
+    @apply text-gray-400;
+  }
+
+  .rt-SelectSeparator {
+    @apply bg-gray-600;
+    width: 100% !important;
+    margin: 0 !important;
+    height: 1px !important;
+  }
+
+  /* Callout */
+  .rt-CalloutRoot {
+    @apply bg-red-900/20 border-red-800;
+  }
+
+  .rt-CalloutText {
+    @apply text-red-200;
+  }
+
+  /* Separator */
+  .rt-Separator {
+    @apply bg-gray-600;
+  }
+
+  /* Card */
+  .rt-Card {
+    @apply bg-gray-800 border-gray-600;
+  }
+
+  /* Skeleton */
+  .rt-Skeleton {
+    @apply bg-gray-700;
+  }
+
+  /* react-loading-skeleton */
+  .react-loading-skeleton {
+    background-color: rgb(55 65 81) !important;
+
+    &::after {
+      background: linear-gradient(90deg, transparent, rgb(75 85 99), transparent) !important;
+    }
+  }
+
+  /* Radix UI Button */
+  .rt-Button {
+    &:not([disabled]) {
+      &:hover {
+        background-color: rgb(55 65 81) !important;
+        color: rgb(229 231 235) !important;
+      }
+
+      &:active {
+        background-color: rgb(75 85 99) !important;
+      }
+    }
+  }
+
+  /* Radix UI Dropdown Menu Item */
+  .rt-DropdownMenuItem {
+    &:hover {
+      background-color: rgb(55 65 81) !important;
+      color: rgb(229 231 235) !important;
+    }
+
+    &[data-highlighted] {
+      background-color: rgb(55 65 81) !important;
+      color: rgb(229 231 235) !important;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@layer utilities {
+  .nav-link {
+    @apply text-zinc-600 hover:text-zinc-800 transition-colors;
+  }
+
+  /* Light mode select item styles */
+  .rt-SelectItem {
+    background-color: transparent !important;
+    transition: text-shadow 0.2s ease;
+
+    &:hover {
+      background-color: transparent !important;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    &[data-highlighted] {
+      background-color: transparent !important;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+
+  /* Light mode separator styles */
+  .rt-SelectSeparator {
+    width: 100% !important;
+    margin: 0 !important;
+    height: 1px !important;
+  }
+}
+
+.radix-themes .rt-Button {
+  cursor: pointer;
+}
