@@ -55,7 +55,7 @@ body {
       left: 50%;
       width: 0;
       height: 1px;
-      background-color: currentColor;
+      background-color: #3f3f3f;
       transform: translateX(-50%);
       transition: width 0.3s ease-out;
     }
@@ -427,7 +427,7 @@ body {
       left: 50%;
       width: 0;
       height: 1px;
-      background-color: currentColor;
+      background-color: color(display-p3 0.098 0.008 0.224 / 0.126);
       transform: translateX(-50%);
       transition: width 0.3s ease-out;
     }
