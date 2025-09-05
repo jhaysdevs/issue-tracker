@@ -19,7 +19,7 @@ const DeleteIssueButton = ({
   const [showAuthDialog, setShowAuthDialog] = useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const router = useRouter()
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
   const handleDeleteClick = () => {
     if (!session) {

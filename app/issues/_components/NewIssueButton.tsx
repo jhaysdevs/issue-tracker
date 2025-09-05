@@ -3,14 +3,13 @@
 import { useState } from 'react'
 
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import { Pencil2Icon } from '@radix-ui/react-icons'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 
-interface NewIssueButtonProps extends React.ComponentProps<typeof Button> {}
-
-const NewIssueButton = ({ ...props }: NewIssueButtonProps) => {
+const NewIssueButton = ({ ...props }: React.ComponentProps<typeof Button>) => {
   const [showAuthDialog, setShowAuthDialog] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
@@ -25,10 +24,10 @@ const NewIssueButton = ({ ...props }: NewIssueButtonProps) => {
   return (
     <>
       <Button asChild {...props} onClick={handleNewIssueClick}>
-        <a href='/issues/new'>
+        <Link href='/issues/new'>
           <Pencil2Icon />
           New Issue
-        </a>
+        </Link>
       </Button>
 
       {showAuthDialog && (

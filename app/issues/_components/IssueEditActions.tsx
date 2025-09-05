@@ -1,6 +1,3 @@
-import { getServerSession } from 'next-auth'
-
-import authOptions from '@/app/auth/authOptions'
 import { BackButton } from '@/app/components'
 import { Issue } from '@prisma/client'
 import { Flex } from '@radix-ui/themes'
