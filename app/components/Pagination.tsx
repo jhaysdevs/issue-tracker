@@ -143,7 +143,7 @@ const Pagination = ({
             onFocus={() => setIsEditing(true)}
             onBlur={handlePageInputBlur}
             onKeyDown={handlePageInputKeyDown}
-            className={`text-center bg-transparent border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 ${
+            className={`text-center bg-white border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 ${
               theme === 'light' ? 'border-gray-300' : 'border-gray-600'
             }`}
             style={{ width: `${inputWidth}px` }}
@@ -180,7 +180,7 @@ const Pagination = ({
             newSearchParams.set('page', '1') // Reset to first page when changing perPage
             router.push(`?${newSearchParams.toString()}`)
           }}
-          size='2'>
+          size='1'>
           <Select.Trigger />
           <Select.Content>
             <Select.Item value='10'>10</Select.Item>
