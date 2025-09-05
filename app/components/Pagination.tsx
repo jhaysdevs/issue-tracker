@@ -143,8 +143,8 @@ const Pagination = ({
             onFocus={() => setIsEditing(true)}
             onBlur={handlePageInputBlur}
             onKeyDown={handlePageInputKeyDown}
-            className={`text-center bg-white border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 ${
-              theme === 'light' ? 'border-gray-300' : 'border-gray-600'
+            className={`text-center border rounded px-1 py-0.5 text-sm focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 ${
+              theme === 'light' ? 'bg-white border-gray-300' : 'bg-gray-800 border-gray-600'
             }`}
             style={{ width: `${inputWidth}px` }}
           />{' '}
