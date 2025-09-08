@@ -112,7 +112,9 @@ const AuthStatus = () => {
   if (isLoggedIn === 'loading') return <Skeleton width='3rem' />
   if (isLoggedIn === 'unauthenticated')
     return (
-      <Link className='nav-link' href='/api/auth/signin'>
+      <Link
+        className='nav-link'
+        href={`/api/auth/signin?callbackUrl=${encodeURIComponent(pathname)}`}>
         <strong>Login</strong>
       </Link>
     )

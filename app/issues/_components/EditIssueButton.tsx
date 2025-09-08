@@ -46,7 +46,13 @@ const EditIssueButton = ({ issueId, ...props }: EditIssueButtonProps) => {
                   Cancel
                 </Button>
               </AlertDialog.Cancel>
-              <Button color='blue' onClick={() => router.push('/api/auth/signin')}>
+              <Button
+                color='blue'
+                onClick={() =>
+                  router.push(
+                    `/api/auth/signin?callbackUrl=${encodeURIComponent(`/issues/edit/${issueId}`)}`
+                  )
+                }>
                 Sign In
               </Button>
             </Flex>

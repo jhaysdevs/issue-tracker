@@ -99,7 +99,13 @@ const DeleteIssueButton = ({
                   Cancel
                 </Button>
               </AlertDialog.Cancel>
-              <Button color='blue' onClick={() => router.push('/api/auth/signin')}>
+              <Button
+                color='blue'
+                onClick={() =>
+                  router.push(
+                    `/api/auth/signin?callbackUrl=${encodeURIComponent(`/issues/${issueId}`)}`
+                  )
+                }>
                 Sign In
               </Button>
             </Flex>
