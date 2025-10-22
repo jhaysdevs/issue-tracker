@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import '@/app/styles.scss'
 import '@/app/theme-config.css'
 import '@radix-ui/themes/styles.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import 'easymde/dist/easymde.min.css'
 
 import NavBar from './NavBar'
@@ -20,6 +21,16 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default function RootLayout({
@@ -29,6 +40,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <head>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+        />
+      </head>
       <body suppressHydrationWarning>
         {/* <div
           className='bg-wrapper'
@@ -48,7 +65,7 @@ export default function RootLayout({
               <AuthProvider>
                 <StatusProvider>
                   <NavBar />
-                  <main className='pt-16 px-5'>{children}</main>
+                  <main className='pt-4 pt-md-5 px-2 px-md-3 px-lg-4'>{children}</main>
                 </StatusProvider>
               </AuthProvider>
             </QueryClientProvider>
