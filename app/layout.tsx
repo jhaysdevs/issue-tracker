@@ -65,7 +65,7 @@ export default function RootLayout({
               <AuthProvider>
                 <StatusProvider>
                   <NavBar />
-                  <main className='pt-4 pt-md-5 px-2 px-md-3 px-lg-4'>{children}</main>
+                  <main className='px-2 px-md-3 px-lg-4'>{children}</main>
                 </StatusProvider>
               </AuthProvider>
             </QueryClientProvider>
